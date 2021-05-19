@@ -1,0 +1,45 @@
+//Start ofUsercode
+//End of usercode
+%%
+%public
+%class scanner
+%type int
+
+%{
+    public enum JavaToken {
+    WHILE,
+    DO,
+    IF,
+    ELSE,
+    FOR
+    }
+%}
+
+%eofval{
+System.out.println("EOF reached");
+return -1;
+%eofval}
+%unicode
+
+ws = [ \t\r\n\b\015]+
+int = [0123456789]+
+%%
+{ws} { System.out.println(yytext()+" :whitespace"); }
+{int} { System.out.println(yytext()+" :integer"); }
+{int}"."{int} { System.out.println(yytext()+" :float"); }
+"'".+"'" { System.out.println(yytext()+" :single quote string"); }
+"(" { System.out.println(yytext()+" :bracket open"); }
+")" { System.out.println(yytext()+" :bracket close"); }
+"{" { System.out.println(yytext()+" :curly bracket open"); }
+"}" { System.out.println(yytext()+" :curly bracket close"); }
+";" { System.out.println(yytext()+" :semicolon"); }
+"+" { System.out.println(yytext()+" :add"); }
+"-" { System.out.println(yytext()+":substract"); }
+"*" { System.out.println(yytext()+" :multiply"); }
+"/" { System.out.println(yytext()+" :divide"); }
+"while" { System.out.println(yytext()+" this.JavaToken.WHILE"); }
+"do" { System.out.println(yytext()+" this.JavaToken.DO"); }
+"if" { System.out.println(yytext()+" this.JavaToken.IF"); }
+"else" { System.out.println(yytext()+" this.JavaToken.ELSE"); }
+"for" { System.out.println(yytext()+" this.JavaToken.FOR"); }
+. { System.out.println("ERROR: "+yytext()); }
