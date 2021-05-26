@@ -5,15 +5,31 @@
 %class scanner
 %type int
 
+
 %{
     public enum JavaToken {
     WHILE,
     DO,
     IF,
     ELSE,
-    FOR
+    TYPE,
+    FLOAT,
+	INT,
+	STRING,
+    IDENTIFIER,
+    ACCESSRIGHT,
+    STATIC,
+    ABSTRACT,
+    CLASS,
+    SEMICOLON,
+    EQUALS,
+    OPERATOR
     }
 %}
+
+%intwrap{
+
+%intwrap}
 
 %eofval{
 System.out.println("EOF reached");
@@ -23,23 +39,37 @@ return -1;
 
 ws = [ \t\r\n\b\015]+
 int = [0123456789]+
+type = (int|string|float)
+identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)
+identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
+accessright = (public|protected|private)
+static = (static)
+abstract = (abstract)
+class = (class)
 %%
 {ws} { System.out.println(yytext()+" :whitespace"); }
-{int} { System.out.println(yytext()+" :integer"); }
-{int}"."{int} { System.out.println(yytext()+" :float"); }
-"'".+"'" { System.out.println(yytext()+" :single quote string"); }
 "(" { System.out.println(yytext()+" :bracket open"); }
 ")" { System.out.println(yytext()+" :bracket close"); }
 "{" { System.out.println(yytext()+" :curly bracket open"); }
 "}" { System.out.println(yytext()+" :curly bracket close"); }
 ";" { System.out.println(yytext()+" :semicolon"); }
-"+" { System.out.println(yytext()+" :add"); }
-"-" { System.out.println(yytext()+":substract"); }
-"*" { System.out.println(yytext()+" :multiply"); }
-"/" { System.out.println(yytext()+" :divide"); }
-"while" { System.out.println(yytext()+" this.JavaToken.WHILE"); }
-"do" { System.out.println(yytext()+" this.JavaToken.DO"); }
-"if" { System.out.println(yytext()+" this.JavaToken.IF"); }
-"else" { System.out.println(yytext()+" this.JavaToken.ELSE"); }
-"for" { System.out.println(yytext()+" this.JavaToken.FOR"); }
+"+" { System.out.println(yytext()+" :operator"); }
+"-" { System.out.println(yytext()+":operator"); }
+"*" { System.out.println(yytext()+" :operator"); }
+"/" { System.out.println(yytext()+" :operator"); }
+"=" { System.out.println(yytext()+" :equals"); }
+"while" { System.out.println(yytext()+" :while"); }
+"do" { System.out.println(yytext()+" :do"); }
+"if" { System.out.println(yytext()+" :if"); }
+"else" { System.out.println(yytext()+" :else"); }
+"for" { System.out.println(yytext()+" :for"); }
+{static} { System.out.println(yytext()+" :static"); }
+{abstract} { System.out.println(yytext()+" :abstract"); }
+{class} { System.out.println(yytext()+" :class"); }
+{type} { System.out.println(yytext()+" :type"); }
+{identifierfirst} { System.out.println(yytext()+" :identifier"); }
+{identifierfirst}{identifierfollow} { System.out.println(yytext()+" :identifier"); }
+""{int} { System.out.println(yytext()+" :integer"); }
+{int}"."{int} { System.out.println(yytext()+" :float"); }
+"'".+"'" { System.out.println(yytext()+" :string"); }
 . { System.out.println("ERROR: "+yytext()); }
