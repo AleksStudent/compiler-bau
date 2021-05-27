@@ -10,12 +10,14 @@
     public enum JavaToken {
     WHILE,
     DO,
+    FOR,
     IF,
     ELSE,
     TYPE,
     FLOAT,
 	INT,
 	STRING,
+    BOOLEAN,
     IDENTIFIER,
     ACCESSRIGHT,
     STATIC,
@@ -39,13 +41,14 @@ return -1;
 
 ws = [ \t\r\n\b\015]+
 int = [0123456789]+
-type = (int|string|float)
-identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)
-identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
-accessright = (public|protected|private)
+type = (int|string|float|boolean)
+bool = (true|false)
 static = (static)
 abstract = (abstract)
 class = (class)
+accessright = (public|protected|private)
+identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)
+identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
 %%
 {ws} { System.out.println(yytext()+" :whitespace"); }
 "(" { System.out.println(yytext()+" :bracket open"); }
@@ -67,9 +70,13 @@ class = (class)
 {abstract} { System.out.println(yytext()+" :abstract"); }
 {class} { System.out.println(yytext()+" :class"); }
 {type} { System.out.println(yytext()+" :type"); }
+{bool} { System.out.println(yytext()+" :boolean"); }
+{accessright} { System.out.println(yytext()+" :accessright"); }
 {identifierfirst} { System.out.println(yytext()+" :identifier"); }
 {identifierfirst}{identifierfollow} { System.out.println(yytext()+" :identifier"); }
 ""{int} { System.out.println(yytext()+" :integer"); }
+"-"{int} { System.out.println(yytext()+" :integer"); }
 {int}"."{int} { System.out.println(yytext()+" :float"); }
+"-"{int}"."{int} { System.out.println(yytext()+" :float"); }
 "'".+"'" { System.out.println(yytext()+" :string"); }
 . { System.out.println("ERROR: "+yytext()); }
