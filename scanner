@@ -60,10 +60,10 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 %%
 
 {ws} { return new WHITESPACE(yytext()); }
-"(" { return new LBRACKET(yytext()); }
-")" { return new RBRACKET(yytext()); }
-"{" { return new LBRACE(yytext()); }
-"}" { return new RBRACE(yytext()); }
+"(" { return new LBRACE(yytext()); }
+")" { return new RBRACE(yytext()); }
+"{" { return new LBRACKET(yytext()); }
+"}" { return new RBRACKET(yytext()); }
 ";" { return new SEMICOLON(yytext()); }
 "+" { return new OPERATOR(yytext()); }
 "-" { return new OPERATOR(yytext()); }
