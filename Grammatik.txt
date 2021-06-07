@@ -1,0 +1,58 @@
+programm->class
+class-> CLASS IDENTIFIER  block 
+	 
+statement→ifthenstatement
+			|ifthenelsestatement
+			|whilestatement
+			|block
+			|emptystatement
+			|returnstatement
+			|stmtExprStmt
+			|LocalVarDecl
+ifthenstatement→IF LBRACE expression RBRACE statement
+ifthenelsestatement→IF LBRACE expression RBRACE statement ELSE statement
+whilestatement→WHILE LBRACE expression RBRACE statement
+block→LBRACKET RBRACKET
+	|LBRACKET statements RBRACKET
+statements→statement
+		|statements statement
+emptystatement→SEMICOLON
+returnstatement→RETURN SEMICOLON
+				|RETURN expression SEMICOLON
+
+stmtExprExpr->	statementExpression				
+stmtExprStmt->statementExpression
+LocalVarDecl-> TYPE IDENTIFIER SEMICOLON			  
+		
+	
+expression→ THIS
+			|SUPER
+			|localOrFieldVar
+			|INTEGER
+			|binary
+			|unary
+			|BOOL
+			|instVar
+			|STRING
+			|JNULL
+			|CHAR
+			|stmtExprExpr
+localOrFieldVar-> IDENTIFIER
+instVar-> localOrFieldVar expression
+binary-> expression OPERATOR expression 
+		
+unary -> UNARYOPERATOR expression 
+		
+
+statementExpression->new
+					|methodCall
+					|assign
+
+
+new->  IDENTIFIER EQUALS expression SEMICOLON
+methodCall -> IDENTIFIER LBRACE expression RBRACE SEMICOLON			
+			| IDENTIFIER LBRACE RBRACE SEMICOLON
+			
+assign     -> expression EQUALS expression SEMICOLON
+Field-> TYPE IDENTIFIER
+	
