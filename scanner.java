@@ -31,7 +31,13 @@ public class scanner {
     CLASS,
     SEMICOLON,
     EQUALS,
-    OPERATOR
+    OPERATOR,
+    LBRACE,
+    RBRACE,
+    LBRACKET,
+    RBRACKET,
+    RETURN,
+    TRUE
     }
 	private java.io.BufferedReader yy_reader;
 	private int yy_buffer_index;
@@ -244,16 +250,16 @@ public class scanner {
 		/* 29 */ YY_NO_ANCHOR,
 		/* 30 */ YY_NO_ANCHOR,
 		/* 31 */ YY_NO_ANCHOR,
-		/* 32 */ YY_NOT_ACCEPT,
+		/* 32 */ YY_NO_ANCHOR,
 		/* 33 */ YY_NO_ANCHOR,
-		/* 34 */ YY_NO_ANCHOR,
+		/* 34 */ YY_NOT_ACCEPT,
 		/* 35 */ YY_NO_ANCHOR,
-		/* 36 */ YY_NOT_ACCEPT,
+		/* 36 */ YY_NO_ANCHOR,
 		/* 37 */ YY_NO_ANCHOR,
-		/* 38 */ YY_NO_ANCHOR,
-		/* 39 */ YY_NOT_ACCEPT,
+		/* 38 */ YY_NOT_ACCEPT,
+		/* 39 */ YY_NO_ANCHOR,
 		/* 40 */ YY_NO_ANCHOR,
-		/* 41 */ YY_NO_ANCHOR,
+		/* 41 */ YY_NOT_ACCEPT,
 		/* 42 */ YY_NO_ANCHOR,
 		/* 43 */ YY_NO_ANCHOR,
 		/* 44 */ YY_NO_ANCHOR,
@@ -307,40 +313,50 @@ public class scanner {
 		/* 92 */ YY_NO_ANCHOR,
 		/* 93 */ YY_NO_ANCHOR,
 		/* 94 */ YY_NO_ANCHOR,
-		/* 95 */ YY_NO_ANCHOR
+		/* 95 */ YY_NO_ANCHOR,
+		/* 96 */ YY_NO_ANCHOR,
+		/* 97 */ YY_NO_ANCHOR,
+		/* 98 */ YY_NO_ANCHOR,
+		/* 99 */ YY_NO_ANCHOR,
+		/* 100 */ YY_NO_ANCHOR,
+		/* 101 */ YY_NO_ANCHOR,
+		/* 102 */ YY_NO_ANCHOR,
+		/* 103 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,65538,
 "35:8,36:2,1,35:2,1,35:18,36,35:6,34,2,3,9,7,35,8,33,10,32:10,35,6,35,11,35:" +
-"3,31:26,35:6,23,25,24,17,16,19,27,13,14,31:2,15,31,26,18,29,31,21,20,22,28," +
+"3,31:26,35:6,25,27,26,17,16,19,28,13,14,31:2,15,31,24,18,29,31,21,20,22,23," +
 "30,12,31:3,4,35,5,35:65410,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,96,
-"0,1,2,1:6,3,1:3,4,5,1,6,7:5,8,9,10,7:7,8,11,12,13,9,14,15,10,16,17,18,19,20" +
+	private int yy_rmap[] = unpackFromString(1,104,
+"0,1,2,1:6,3,1:3,4,5,1,6,7:5,8,9,10,7:9,8,11,12,13,9,14,15,10,16,17,18,19,20" +
 ",21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45" +
-",46,47,48,49,50,51,52,53,7,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69," +
-"70")[0];
+",46,47,48,49,50,51,52,53,54,55,56,57,7,58,59,60,61,62,63,64,65,66,67,68,69," +
+"70,71,72,73,74,75,76")[0];
 
-	private int yy_nxt[][] = unpackFromString(71,37,
-"1,2,3,4,5,6,7,8,9,10,11,12,13,78,33,78,65,37,78,51,80,78,67,94,82,89,78:3,8" +
-"4,78:2,14,15,34,15,2,-1:38,2,-1:34,2,-1:32,16,-1:16,17,66,17:19,-1:36,14,32" +
-",-1:35,16,39,-1:15,17:21,-1:36,22,-1:6,36:32,23,36:2,-1:32,24,-1:16,17:7,18" +
-",17:6,35,17:6,-1:6,36:35,-1:12,17:10,20,17:10,-1:16,17:6,19,17:14,-1:16,17:" +
-"9,21,17:11,-1:16,17:4,25,17:16,-1:16,17:4,26,17:16,-1:16,17:4,27,17:16,-1:1" +
-"6,17:8,28,17:12,-1:16,17:15,20,17:5,-1:16,17:12,29,17:8,-1:16,17:12,30,17:8" +
-",-1:16,17:14,20,17:6,-1:16,17:4,30,17:16,-1:16,17:10,31,17:10,-1:16,17:5,30" +
-",17:15,-1:16,17:3,68,17:2,38,17:4,69,17:9,-1:16,17:8,40,17:12,-1:16,17:16,4" +
-"1,17:4,-1:16,17:3,42,17:17,-1:16,17:11,35,17:9,-1:16,17:8,41,17:12,-1:16,17" +
-":8,43,17:12,-1:16,17:14,44,17:6,-1:16,17:2,45,17:18,-1:16,17:2,46,17:18,-1:" +
-"16,17:11,47,17:9,-1:16,17:10,48,17:10,-1:16,17:12,49,17:8,-1:16,17:4,50,17:" +
-"16,-1:16,17:3,52,17:17,-1:16,17:2,54,17:18,-1:16,17:9,53,17:11,-1:16,17:6,5" +
-"5,17:14,-1:16,17:3,56,17:17,-1:16,17:11,57,17:9,-1:16,17:2,58,17:18,-1:16,1" +
-"7:10,59,17:10,-1:16,17:3,60,17:17,-1:16,17:4,61,17:16,-1:16,17:11,62,17:9,-" +
-"1:16,17:11,63,17:9,-1:16,17:10,64,17:10,-1:16,17:9,71,17,72,17:9,-1:16,17:1" +
-"0,79,17:10,-1:16,17:13,73,17:7,-1:16,17:3,70,17:17,-1:16,17:3,74,17:17,-1:1" +
-"6,17:9,90,17:6,81,17:4,-1:16,17:18,75,17:2,-1:16,17:9,76,17:11,-1:16,17:12," +
-"77,17:8,-1:16,17:6,83,17:14,-1:16,17:6,88,17:14,-1:16,17:2,85,17:3,95,17:14" +
-",-1:16,17:10,86,17:10,-1:16,17:4,87,17:16,-1:16,17:8,91,17:12,-1:16,17:13,9" +
-"3,17:7,-1:16,17:10,92,17:10,-1:4");
+	private int yy_nxt[][] = unpackFromString(77,37,
+"1,2,3,4,5,6,7,8,9,10,11,12,13,84,35,84,70,39,84,55,86,88,72,84:2,102,90,97," +
+"84,92,84:2,14,15,36,15,2,-1:38,2,-1:34,2,-1:32,16,-1:16,17,71,17:19,-1:36,1" +
+"4,34,-1:35,16,41,-1:15,17:21,-1:36,22,-1:6,38:32,23,38:2,-1:32,24,-1:16,17:" +
+"7,18,17:4,37,17:8,-1:6,38:35,-1:12,17:10,20,17:10,-1:16,17:6,19,17:14,-1:16" +
+",17:9,21,17:11,-1:16,17:4,25,17:16,-1:16,17:4,26,17:16,-1:16,17:4,27,17:16," +
+"-1:16,17:4,28,17:16,-1:16,17:8,29,17:12,-1:16,17:16,20,17:4,-1:16,17:14,30," +
+"17:6,-1:16,17:12,31,17:8,-1:16,17:14,32,17:6,-1:16,17:12,20,17:8,-1:16,17:4" +
+",32,17:16,-1:16,17:10,33,17:10,-1:16,17:5,32,17:15,-1:16,17:3,73,17:2,40,17" +
+":6,74,17:7,-1:16,17:8,42,17:12,-1:16,17:11,43,17:9,-1:16,17:3,44,17:17,-1:1" +
+"6,17:13,37,17:7,-1:16,17:8,45,17:12,-1:16,17:8,46,17:12,-1:16,17:12,47,17:8" +
+",-1:16,17:2,48,17:18,-1:16,17:9,49,17:11,-1:16,17:2,50,17:18,-1:16,17:13,51" +
+",17:7,-1:16,17:10,52,17:10,-1:16,17:14,53,17:6,-1:16,17:4,54,17:16,-1:16,17" +
+":3,56,17:17,-1:16,17:2,58,17:18,-1:16,17:9,57,17:11,-1:16,17:6,59,17:14,-1:" +
+"16,17:3,60,17:17,-1:16,17:13,61,17:7,-1:16,17:2,62,17:18,-1:16,17:10,63,17:" +
+"10,-1:16,17:11,64,17:9,-1:16,17:3,65,17:17,-1:16,17:4,66,17:16,-1:16,17:13," +
+"67,17:7,-1:16,17:13,68,17:7,-1:16,17:10,69,17:10,-1:16,17:9,76,17:3,77,17:7" +
+",-1:16,17:10,85,17:10,-1:16,17:10,78,17:10,-1:16,17:4,87,17:16,-1:16,17:15," +
+"79,17:5,-1:16,17:3,75,17:17,-1:16,17:3,80,17:17,-1:16,17:9,98,17,89,17:9,-1" +
+":16,17:18,81,17:2,-1:16,17:9,82,17:11,-1:16,17:14,83,17:6,-1:16,17:6,91,17:" +
+"14,-1:16,17:6,96,17:14,-1:16,17:2,93,17:3,103,17:14,-1:16,17:10,94,17:10,-1" +
+":16,17:4,95,17:16,-1:16,17:8,99,17:12,-1:16,17:15,101,17:5,-1:16,17:10,100," +
+"17:10,-1:4");
 
 	public java.lang.Integer yylex ()
 		throws java.io.IOException {
@@ -365,8 +381,7 @@ public class scanner {
 			yy_next_state = yy_nxt[yy_rmap[yy_state]][yy_cmap[yy_lookahead]];
 			if (YY_EOF == yy_lookahead && true == yy_initial) {
 
-System.out.println("EOF reached");
-return -1;
+    return new EOF();
 			}
 			if (YY_F != yy_next_state) {
 				yy_state = yy_next_state;
@@ -393,55 +408,55 @@ return -1;
 					case -2:
 						break;
 					case 2:
-						{ System.out.println(yytext()+" :whitespace"); }
+						{ return new WHITESPACE(yytext()); }
 					case -3:
 						break;
 					case 3:
-						{ System.out.println(yytext()+" :bracket open"); }
+						{ return new LBRACKET(yytext()); }
 					case -4:
 						break;
 					case 4:
-						{ System.out.println(yytext()+" :bracket close"); }
+						{ return new RBRACKET(yytext()); }
 					case -5:
 						break;
 					case 5:
-						{ System.out.println(yytext()+" :curly bracket open"); }
+						{ return new LBRACE(yytext()); }
 					case -6:
 						break;
 					case 6:
-						{ System.out.println(yytext()+" :curly bracket close"); }
+						{ return new RBRACE(yytext()); }
 					case -7:
 						break;
 					case 7:
-						{ System.out.println(yytext()+" :semicolon"); }
+						{ return new SEMICOLON(yytext()); }
 					case -8:
 						break;
 					case 8:
-						{ System.out.println(yytext()+" :operator"); }
+						{ return new OPERATOR(yytext()); }
 					case -9:
 						break;
 					case 9:
-						{ System.out.println(yytext()+":operator"); }
+						{ return new OPERATOR(yytext()); }
 					case -10:
 						break;
 					case 10:
-						{ System.out.println(yytext()+" :operator"); }
+						{ return new OPERATOR(yytext()); }
 					case -11:
 						break;
 					case 11:
-						{ System.out.println(yytext()+" :operator"); }
+						{ return new OPERATOR(yytext()); }
 					case -12:
 						break;
 					case 12:
-						{ System.out.println(yytext()+" :equals"); }
+						{ return new EQUALS(yytext()); }
 					case -13:
 						break;
 					case 13:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -14:
 						break;
 					case 14:
-						{ System.out.println(yytext()+" :integer"); }
+						{ return new INT(yytext()); }
 					case -15:
 						break;
 					case 15:
@@ -449,312 +464,344 @@ return -1;
 					case -16:
 						break;
 					case 16:
-						{ System.out.println(yytext()+" :integer"); }
+						{ return new INT(yytext()); }
 					case -17:
 						break;
 					case 17:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -18:
 						break;
 					case 18:
-						{ System.out.println(yytext()+" :if"); }
+						{ return new IF(yytext()); }
 					case -19:
 						break;
 					case 19:
-						{ System.out.println(yytext()+" :do"); }
+						{ return new DO(yytext()); }
 					case -20:
 						break;
 					case 20:
-						{ System.out.println(yytext()+" :type"); }
+						{ return new TYPE(yytext()); }
 					case -21:
 						break;
 					case 21:
-						{ System.out.println(yytext()+" :for"); }
+						{ return new FOR(yytext()); }
 					case -22:
 						break;
 					case 22:
-						{ System.out.println(yytext()+" :float"); }
+						{ return new FLOAT(yytext()); }
 					case -23:
 						break;
 					case 23:
-						{ System.out.println(yytext()+" :string"); }
+						{ return new STRING(yytext()); }
 					case -24:
 						break;
 					case 24:
-						{ System.out.println(yytext()+" :float"); }
+						{ return new FLOAT(yytext()); }
 					case -25:
 						break;
 					case 25:
-						{ System.out.println(yytext()+" :else"); }
+						{ return new ELSE(yytext()); }
 					case -26:
 						break;
 					case 26:
-						{ System.out.println(yytext()+" :boolean"); }
+						{ return new TRUE(yytext()); }
 					case -27:
 						break;
 					case 27:
-						{ System.out.println(yytext()+" :while"); }
+						{ return new WHILE(yytext()); }
 					case -28:
 						break;
 					case 28:
-						{ System.out.println(yytext()+" :class"); }
+						{ return new BOOLEAN(yytext()); }
 					case -29:
 						break;
 					case 29:
-						{ System.out.println(yytext()+" :static"); }
+						{ return new CLASS(yytext()); }
 					case -30:
 						break;
 					case 30:
-						{ System.out.println(yytext()+" :accessright"); }
+						{ return new STATIC(yytext()); }
 					case -31:
 						break;
 					case 31:
-						{ System.out.println(yytext()+" :abstract"); }
+						{ return new RETURN(yytext()); }
 					case -32:
 						break;
-					case 33:
-						{ System.out.println(yytext()+" :identifier"); }
+					case 32:
+						{ return new ACCESSRIGHT(yytext()); }
 					case -33:
 						break;
-					case 34:
-						{ System.out.println("ERROR: "+yytext()); }
+					case 33:
+						{ return new ABSTRACT(yytext()); }
 					case -34:
 						break;
 					case 35:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -35:
 						break;
-					case 37:
-						{ System.out.println(yytext()+" :identifier"); }
+					case 36:
+						{ System.out.println("ERROR: "+yytext()); }
 					case -36:
 						break;
-					case 38:
-						{ System.out.println(yytext()+" :identifier"); }
+					case 37:
+						{ return new IDENTIFIER(yytext()); }
 					case -37:
 						break;
-					case 40:
-						{ System.out.println(yytext()+" :identifier"); }
+					case 39:
+						{ return new IDENTIFIER(yytext()); }
 					case -38:
 						break;
-					case 41:
-						{ System.out.println(yytext()+" :identifier"); }
+					case 40:
+						{ return new IDENTIFIER(yytext()); }
 					case -39:
 						break;
 					case 42:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -40:
 						break;
 					case 43:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -41:
 						break;
 					case 44:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -42:
 						break;
 					case 45:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -43:
 						break;
 					case 46:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -44:
 						break;
 					case 47:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -45:
 						break;
 					case 48:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -46:
 						break;
 					case 49:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -47:
 						break;
 					case 50:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -48:
 						break;
 					case 51:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -49:
 						break;
 					case 52:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -50:
 						break;
 					case 53:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -51:
 						break;
 					case 54:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -52:
 						break;
 					case 55:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -53:
 						break;
 					case 56:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -54:
 						break;
 					case 57:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -55:
 						break;
 					case 58:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -56:
 						break;
 					case 59:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -57:
 						break;
 					case 60:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -58:
 						break;
 					case 61:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -59:
 						break;
 					case 62:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -60:
 						break;
 					case 63:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -61:
 						break;
 					case 64:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -62:
 						break;
 					case 65:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -63:
 						break;
 					case 66:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -64:
 						break;
 					case 67:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -65:
 						break;
 					case 68:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -66:
 						break;
 					case 69:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -67:
 						break;
 					case 70:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -68:
 						break;
 					case 71:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -69:
 						break;
 					case 72:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -70:
 						break;
 					case 73:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -71:
 						break;
 					case 74:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -72:
 						break;
 					case 75:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -73:
 						break;
 					case 76:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -74:
 						break;
 					case 77:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -75:
 						break;
 					case 78:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -76:
 						break;
 					case 79:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -77:
 						break;
 					case 80:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -78:
 						break;
 					case 81:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -79:
 						break;
 					case 82:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -80:
 						break;
 					case 83:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -81:
 						break;
 					case 84:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -82:
 						break;
 					case 85:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -83:
 						break;
 					case 86:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -84:
 						break;
 					case 87:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -85:
 						break;
 					case 88:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -86:
 						break;
 					case 89:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -87:
 						break;
 					case 90:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -88:
 						break;
 					case 91:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -89:
 						break;
 					case 92:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -90:
 						break;
 					case 93:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -91:
 						break;
 					case 94:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -92:
 						break;
 					case 95:
-						{ System.out.println(yytext()+" :identifier"); }
+						{ return new IDENTIFIER(yytext()); }
 					case -93:
+						break;
+					case 96:
+						{ return new IDENTIFIER(yytext()); }
+					case -94:
+						break;
+					case 97:
+						{ return new IDENTIFIER(yytext()); }
+					case -95:
+						break;
+					case 98:
+						{ return new IDENTIFIER(yytext()); }
+					case -96:
+						break;
+					case 99:
+						{ return new IDENTIFIER(yytext()); }
+					case -97:
+						break;
+					case 100:
+						{ return new IDENTIFIER(yytext()); }
+					case -98:
+						break;
+					case 101:
+						{ return new IDENTIFIER(yytext()); }
+					case -99:
+						break;
+					case 102:
+						{ return new IDENTIFIER(yytext()); }
+					case -100:
+						break;
+					case 103:
+						{ return new IDENTIFIER(yytext()); }
+					case -101:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
@@ -774,4 +821,18 @@ return -1;
 			}
 		}
 	}
+}
+class scanner extends scanner implements browserparser.yyInput {
+	public scanner (java.io.Reader reader) {
+		super (reader);
+	}
+	//public int token() is not longer necessary
+
+	public yyTokenclass advance() throws java.io.IOException {
+		yyTokenclass ret = yylex();
+		return ret;
+	}
+
+	//public Object value () is not longer necessary
+
 }
