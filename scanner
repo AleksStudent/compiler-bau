@@ -18,8 +18,9 @@
     ELSE,
     TYPE,
     FLOAT,
-	INT,
-	STRING,
+    INT,
+    STRING,
+    CHAR,
     BOOLEAN,
     IDENTIFIER,
     ACCESSRIGHT,
@@ -28,11 +29,18 @@
     CLASS,
     SEMICOLON,
     EQUALS,
+    COMMA,
+    POINT,
+    UNARYOPERATOR,
     OPERATOR,
     LBRACE,
     RBRACE,
     LBRACKET,
     RBRACKET,
+    THIS,
+    SUPER,
+    NEW,
+    NULL,
     RETURN,
     TRUE
     }
@@ -70,6 +78,14 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "*" { return new OPERATOR(yytext()); }
 "/" { return new OPERATOR(yytext()); }
 "=" { return new EQUALS(yytext()); }
+"," { retuen new COMMA(yytext()); }
+"." { retuen new POINT(yytext()); }
+"&&" { retuen new UNARYOPERATOR(yytext()); }
+"||" { retuen new UNARYOPERATOR(yytext()); }
+"!" { retuen new UNARYOPERATOR(yytext()); }
+"this" { return new THIS(yytext()); }
+"super" { return new SUPER(yytext()); }
+"null" { return new NULL(yytext()); }
 "while" { return new WHILE(yytext()); }
 "do" { return new DO(yytext()); }
 "if" { return new IF(yytext()); }
@@ -77,6 +93,7 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "for" { return new FOR(yytext()); }
 "true" { return new TRUE(yytext()); }
 "return" { return new RETURN(yytext()); }
+"new" { return new NEW(yytext()); }
 {static} { return new STATIC(yytext()); }
 {abstract} { return new ABSTRACT(yytext()); }
 {class} { return new CLASS(yytext()); }
@@ -90,4 +107,5 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 {int}"."{int} { return new FLOAT(yytext()); }
 "-"{int}"."{int} { return new FLOAT(yytext()); }
 "'".+"'" { return new STRING(yytext()); }
+"'".{1}"'" { return new CHAR(yytext()); }
 . { System.out.println("ERROR: "+yytext()); }
