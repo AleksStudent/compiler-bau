@@ -1,5 +1,7 @@
 import java.util.Vector;
 
+import org.objectweb.asm.ClassWriter;
+
 public class Method {
 
 	public JString name;
@@ -12,6 +14,15 @@ public class Method {
 		this.returnType = returnType;
 		this.parameters = parameters;
 		this.block = block;
+	}
+	
+	/**
+	 * generate bytecode with classwriter of asm library
+	 * 
+	 * @param cw
+	 */
+	public void codeGen(ClassWriter cw) {
+
 	}
 
 	@Override

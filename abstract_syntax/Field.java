@@ -1,3 +1,5 @@
+import org.objectweb.asm.ClassWriter;
+
 public class Field {
 
 	public JString name;
@@ -6,6 +8,15 @@ public class Field {
 	public Field(final JString name, final Type type) {
 		this.name = name;
 		this.type = type;
+	}
+	
+	/**
+	 * generate bytecode with classwriter of asm library
+	 * 
+	 * @param cw
+	 */
+	public void codeGen(ClassWriter cw) {
+
 	}
 
 	@Override
