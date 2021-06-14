@@ -148,6 +148,7 @@ stmtExpr : assign { $$ = new StmtExpr(); }
          | methodCall { $$ = new StmtExpr(); }
 
 new : NEW IDENTIFIER LBRACE expressions RBRACE { $$ = new New($2, $4); }
+    | NEW IDENTIFIER LBRACE RBRACE { $$ = new New($2, new Vector()); }
 
 methodCall : IDENTIFIER LBRACE expressions RBRACE { $$ = new MethodCall(new Jnull(), $1, $3); }
            | IDENTIFIER LBRACE RBRACE { $$ = new MethodCall(new Jnull(), $1, new Jnull()); }
