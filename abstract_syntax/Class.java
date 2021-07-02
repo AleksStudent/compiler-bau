@@ -19,6 +19,14 @@ public class Class {
 	public void codeGen(ClassWriter cw) {
 		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.name, null, "java/lang/Object", null);
 		
+		// create constructor
+		MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);
+		constructor.visitCode();
+		constructor.visitVarInsn(Opcodes.ALOAD, 0);
+		constructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+		// end constructor
+		constructor.visitEnd();
+
 		for (Field field : this.fields)
 			field.codeGen(cw);
 
