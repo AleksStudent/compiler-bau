@@ -19,16 +19,11 @@ public class BytecodeGenerator {
 	public BytecodeGenerator(Class i_class) throws IOException {
 		this.classToCode = i_class;
 
+		// define class writer
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.classToCode.name, null, "java/lang/Object", null);
-
-		for (Field field : classToCode.fields)
-			field.codeGen(cw);
-
-		for (Method method : classToCode.methods)
-			method.codeGen(cw);
-
+		
+		// begin bytecode generation
+		classToCode.codeGen(cw);
 		writeClassfile(cw);
-
 	}
 }

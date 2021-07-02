@@ -1,5 +1,9 @@
 import java.util.Vector;
 
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 public class Class {
 
 	public String name;
@@ -10,6 +14,17 @@ public class Class {
 		this.fields = fields;
 		this.methods = methods;
 		this.name = name;
+	}
+	
+	public void codeGen(ClassWriter cw) {
+		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.name, null, "java/lang/Object", null);
+		
+		for (Field field : this.fields)
+			field.codeGen(cw);
+
+		for (Method method : this.methods)
+			method.codeGen(cw);
+
 	}
 
 	@Override
