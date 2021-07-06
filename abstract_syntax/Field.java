@@ -1,4 +1,5 @@
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
 
 public class Field {
 
@@ -16,7 +17,9 @@ public class Field {
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw) {
-
+		cw.visitField(Opcodes.ACC_PUBLIC, name.str, type.getType(), null, null);
+		cw.visitEnd();
+		
 	}
 
 	@Override

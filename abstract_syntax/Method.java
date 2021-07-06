@@ -23,8 +23,13 @@ public class Method {
 	 * 
 	 * @param cw
 	 */
-	public void codeGen(ClassWriter cw) {		
-		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name.str, "()V", null, null);
+	public void codeGen(ClassWriter cw) {	
+		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name.str, "()V", returnType.getType(), null);
+		
+		for (Parameter parameter: parameters) {
+			method.visitFieldInsn(Opcodes.ACC_PUBLIC, null, parameter.name.str, parameter.type.getType());
+		}
+		
 		method.visitCode();
 		// generate code from inside the method
 		this.block.codeGen(cw, method);
