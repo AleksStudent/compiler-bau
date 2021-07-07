@@ -5,6 +5,10 @@ public class Integer extends Expr {
 	public Integer(final int num) {
 		this.num = num;
 	}
+	
+	public int getValue() {
+		return this.num;
+	}
 
 	@Override
 	public String toString() {

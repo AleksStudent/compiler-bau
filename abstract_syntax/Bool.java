@@ -5,6 +5,10 @@ public class Bool extends Expr {
 	public Bool(final boolean bool) {
 		this.bool = bool;
 	}
+	
+	public boolean getValue() {
+		return this.bool;
+	}
 
 	@Override
 	public String toString() {

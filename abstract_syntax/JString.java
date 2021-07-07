@@ -5,6 +5,10 @@ public class JString extends Expr {
 	public JString(final String str) {
 		this.str = str;
 	}
+	
+	public String getValue() {
+		return this.str;
+	}
 
 	@Override
 	public String toString() {
