@@ -2,7 +2,8 @@ import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+
+import org.objectweb.asm.Label;
 
 public class Block extends Stmt {
 
@@ -13,7 +14,12 @@ public class Block extends Stmt {
 	}
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
+		Label newBlock = new Label();
+		method.visitLabel(newBlock);
 		
+		for (Stmt statement: statements) {
+			statement.codeGen(cw, method);
+		}
 	}
 
 	@Override
