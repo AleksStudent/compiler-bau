@@ -23,12 +23,14 @@ public class Method {
 	 * 
 	 * @param cw
 	 */
-	public void codeGen(ClassWriter cw) {	
-		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name.str, "()V", returnType.getType(), null);
-		
+	public void codeGen(ClassWriter cw) {
+		String parameterInput = "";
 		for (Parameter parameter: parameters) {
-			method.visitFieldInsn(Opcodes.ACC_PUBLIC, null, parameter.name.str, parameter.type.getType());
+			parameterInput += parameter.type.getType();
 		}
+		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
+		
+		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name.str, methodSignature, null, null);	
 		
 		method.visitCode();
 		// generate code from inside the method
