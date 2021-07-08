@@ -23,10 +23,13 @@ public class Method {
 	 * 
 	 * @param cw
 	 */
-	public void codeGen(ClassWriter cw) {
+	public void codeGen(ClassWriter cw, Class i_class) {
 		String parameterInput = "";
+		Vector<LocalVarDecl> localVars = new Vector<LocalVarDecl>();
+		
 		for (Parameter parameter: parameters) {
 			parameterInput += parameter.type.getType();
+			localVars.add(new LocalVarDecl(parameter.type, parameter.name.str));
 		}
 		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
 		
@@ -34,8 +37,9 @@ public class Method {
 		
 		method.visitCode();
 		// generate code from inside the method
-		this.block.codeGen(cw, method);
+		this.block.codeGen(cw, method, i_class, localVars);
 		// end method
+		method.visitMaxs(1, localVars.size() + 1);
 		method.visitEnd();
 	}
 

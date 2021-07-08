@@ -16,7 +16,7 @@ public class Class {
 		this.name = name;
 	}
 	
-	public void codeGen(ClassWriter cw) {
+	public void codeGen(ClassWriter cw, Class i_class) {
 		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.name, null, "java/lang/Object", null);
 		
 		// create constructor
@@ -31,7 +31,7 @@ public class Class {
 			field.codeGen(cw);
 
 		for (Method method : this.methods)
-			method.codeGen(cw);
+			method.codeGen(cw, i_class);
 
 	}
 

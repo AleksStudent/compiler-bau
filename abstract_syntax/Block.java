@@ -13,12 +13,12 @@ public class Block extends Stmt {
 		this.statements = statements;
 	}
 	
-	public void codeGen(ClassWriter cw, MethodVisitor method) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		Label newBlock = new Label();
 		method.visitLabel(newBlock);
 		
 		for (Stmt statement: statements) {
-			statement.codeGen(cw, method);
+			statement.codeGen(cw, method, i_class, localVars);
 		}
 	}
 

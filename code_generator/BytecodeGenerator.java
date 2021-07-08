@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Vector;
 
 import org.objectweb.asm.*;
 
@@ -23,7 +24,7 @@ public class BytecodeGenerator {
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 		
 		// begin bytecode generation
-		classToCode.codeGen(cw);
+		classToCode.codeGen(cw, i_class);
 		writeClassfile(cw);
 	}
 }
