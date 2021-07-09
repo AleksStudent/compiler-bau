@@ -1,8 +1,8 @@
 public class Char extends Expr {
 
-	public char ch;
+	public String ch;
 
-	public Char(final char ch) {
+	public Char(final String ch) {
 		this.ch = ch;
 	}
 

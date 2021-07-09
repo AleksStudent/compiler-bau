@@ -1,8 +1,8 @@
 public class Bool extends Expr {
 
-	public boolean bool;
+	public String bool;
 
-	public Bool(final boolean bool) {
+	public Bool(final String bool) {
 		this.bool = bool;
 	}
 

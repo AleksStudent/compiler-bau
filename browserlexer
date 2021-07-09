@@ -1,59 +1,15 @@
-//Start ofUsercode
-//End of usercode
+import java.lang.Integer;
+
 %%
-%jayscanner scanner
+%jayscanner browserscanner
 %jayparser browserparser
-%public
-%class scanner
-%type int
 
-
-
-%{
-    public enum JavaToken {
-    WHILE,
-    DO,
-    FOR,
-    IF,
-    ELSE,
-    TYPE,
-    FLOAT,
-    INT,
-    STRING,
-    CHAR,
-    BOOLEAN,
-    IDENTIFIER,
-    ACCESSRIGHT,
-    STATIC,
-    ABSTRACT,
-    CLASS,
-    SEMICOLON,
-    EQUALS,
-    COMMA,
-    POINT,
-    UNARYOPERATOR,
-    OPERATOR,
-    LBRACE,
-    RBRACE,
-    LBRACKET,
-    RBRACKET,
-    THIS,
-    SUPER,
-    NEW,
-    NULL,
-    RETURN,
-    TRUE
-    }
-%}
-
-%intwrap{
-
-%intwrap}
-
+%class browserlexer
 %eofval{
-    return new EOF();
+  return new EOF();
 %eofval}
-%unicode
+
+
 
 ws = [ \t\r\n\b\015]+
 int = [0123456789]+
@@ -67,7 +23,9 @@ identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E
 identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
 %%
 
-{ws} { return new WHITESPACE(yytext()); }
+
+
+
 "(" { return new LBRACE(yytext()); }
 ")" { return new RBRACE(yytext()); }
 "{" { return new LBRACKET(yytext()); }
@@ -78,26 +36,25 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "*" { return new OPERATOR(yytext()); }
 "/" { return new OPERATOR(yytext()); }
 "=" { return new EQUALS(yytext()); }
-"," { retuen new COMMA(yytext()); }
-"." { retuen new POINT(yytext()); }
-"&&" { retuen new UNARYOPERATOR(yytext()); }
-"||" { retuen new UNARYOPERATOR(yytext()); }
-"!" { retuen new UNARYOPERATOR(yytext()); }
-"this" { return new THIS(yytext()); }
-"super" { return new SUPER(yytext()); }
+"," { return new COMMA(yytext()); }
+"." { return new POINT(yytext()); }
+"-" { return new UNARYOPERATOR(yytext()); }
+"!" { return new UNARYOPERATOR(yytext()); }
+"this" { return new JTHIS(yytext()); }
+"super" { return new JSUPER(yytext()); }
 "null" { return new NULL(yytext()); }
-"while" { return new WHILE(yytext()); }
+"while" { return new JWHILE(yytext()); }
 "do" { return new DO(yytext()); }
-"if" { return new IF(yytext()); }
+"if" { return new JIF(yytext()); }
 "else" { return new ELSE(yytext()); }
 "for" { return new FOR(yytext()); }
 "true" { return new TRUE(yytext()); }
-"return" { return new RETURN(yytext()); }
-"new" { return new NEW(yytext()); }
+"return" { return new JRETURN(yytext()); }
+"new" { return new JNEW(yytext()); }
 {static} { return new STATIC(yytext()); }
 {abstract} { return new ABSTRACT(yytext()); }
-{class} { return new CLASS(yytext()); }
-{type} { return new TYPE(yytext()); }
+{class} { return new JCLASS(yytext()); }
+{type} { return new JTYPE(yytext()); }
 {bool} { return new BOOLEAN(yytext()); }
 {accessright} { return new ACCESSRIGHT(yytext()); }
 {identifierfirst} { return new IDENTIFIER(yytext()); }
@@ -107,5 +64,7 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 {int}"."{int} { return new FLOAT(yytext()); }
 "-"{int}"."{int} { return new FLOAT(yytext()); }
 "'".+"'" { return new STRING(yytext()); }
-"'".{1}"'" { return new CHAR(yytext()); }
+"'"."'" { return new CHAR(yytext()); }
 . { System.out.println("ERROR: "+yytext()); }
+{ws} {  }
+

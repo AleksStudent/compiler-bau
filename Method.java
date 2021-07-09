@@ -2,12 +2,12 @@ import java.util.Vector;
 
 public class Method {
 
-	public JString name;
+	public String name;
 	public Type returnType;
 	public Vector<Parameter> parameters;
 	public Block block;
 
-	public Method(final JString name, final Type returnType, final Vector<Parameter> parameters, final Block block) {
+	public Method(final String name, final Type returnType, final Vector<Parameter> parameters, final Block block) {
 		this.name = name;
 		this.returnType = returnType;
 		this.parameters = parameters;

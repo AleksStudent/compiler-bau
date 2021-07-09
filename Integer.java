@@ -1,8 +1,8 @@
 public class Integer extends Expr {
 
-	public int num;
+	public String num;
 
-	public Integer(final int num) {
+	public Integer(final String num) {
 		this.num = num;
 	}
 
