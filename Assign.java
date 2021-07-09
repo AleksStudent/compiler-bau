@@ -1,21 +1,18 @@
 public class Assign extends StmtExpr {
 
 	public String name;
-	public Expr exprLeft;
-	public Expr exprRight;
+	public Expr expr;
 
-	public Assign(final String name, final Expr exprLeft, final Expr exprRight) {
+	public Assign(final String name, final Expr expr) {
 		this.name = name;
-		this.exprLeft = exprLeft;
-		this.exprRight = exprRight;
+		this.expr = expr;
 	}
 
 	@Override
 	public String toString() {
 		return "Assign{" +
 				"name='" + this.name + '\'' +
-				", exprLeft=" + this.exprLeft +
-				", exprRight=" + this.exprRight +
+				", exprLeft=" + this.expr +
 				'}';
 	}
 

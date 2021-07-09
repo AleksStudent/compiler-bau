@@ -1,4 +1,4 @@
-public class Stmt {
+public abstract class Stmt implements TypeCheckable {
 
 
 }

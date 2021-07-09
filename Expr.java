@@ -1,4 +1,4 @@
-public class Expr {
+public abstract class Expr implements TypeCheckable {
 
 
 }

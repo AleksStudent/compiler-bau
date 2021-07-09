@@ -1,3 +1,3 @@
-public class StmtExpr {
-	
+public abstract class StmtExpr implements TypeCheckable {
+
 }
