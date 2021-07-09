@@ -1,9 +1,9 @@
-public class Block{
+class Block{
 
-	public int myNum = 2;
+	int myNum = 2;
 
-	public Block() {
-		return myNum;
-	}
+	int Block() {
+		return 2;
+	};
 
 }
