@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Bool extends Expr {
 
 	public String bool;
@@ -13,4 +15,8 @@ public class Bool extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_BOOL;
+	}
 }

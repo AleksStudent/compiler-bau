@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Integer extends Expr {
 
 	public String num;
@@ -13,4 +15,8 @@ public class Integer extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_INT;
+	}
 }

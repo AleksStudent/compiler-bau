@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Char extends Expr {
 
 	public String ch;
@@ -13,4 +15,8 @@ public class Char extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_CHAR;
+	}
 }

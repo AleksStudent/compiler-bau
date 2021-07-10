@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class JString extends Expr {
 
 	public String str;
@@ -13,4 +15,8 @@ public class JString extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_STRING;
+	}
 }
