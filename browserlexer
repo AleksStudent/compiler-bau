@@ -1,0 +1,70 @@
+import java.lang.Integer;
+
+%%
+%jayscanner browserscanner
+%jayparser browserparser
+
+%class browserlexer
+%eofval{
+  return new EOF();
+%eofval}
+
+
+
+ws = [ \t\r\n\b\015]+
+int = [0123456789]+
+type = (int|string|float|boolean)
+bool = (true|false)
+static = (static)
+abstract = (abstract)
+class = (class)
+accessright = (public|protected|private)
+identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)
+identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
+%%
+
+
+
+{ws} {  }
+"(" { return new LBRACE(yytext()); }
+")" { return new RBRACE(yytext()); }
+"{" { return new LBRACKET(yytext()); }
+"}" { return new RBRACKET(yytext()); }
+";" { return new SEMICOLON(yytext()); }
+"+" { return new OPERATOR(yytext()); }
+"-" { return new OPERATOR(yytext()); }
+"*" { return new OPERATOR(yytext()); }
+"/" { return new OPERATOR(yytext()); }
+"=" { return new EQUALS(yytext()); }
+"," { return new COMMA(yytext()); }
+"." { return new POINT(yytext()); }
+"-" { return new UNARYOPERATOR(yytext()); }
+"!" { return new UNARYOPERATOR(yytext()); }
+"this" { return new JTHIS(yytext()); }
+"super" { return new JSUPER(yytext()); }
+"null" { return new NULL(yytext()); }
+"while" { return new JWHILE(yytext()); }
+"do" { return new DO(yytext()); }
+"if" { return new JIF(yytext()); }
+"else" { return new ELSE(yytext()); }
+"for" { return new FOR(yytext()); }
+"true" { return new TRUE(yytext()); }
+"return" { return new JRETURN(yytext()); }
+"new" { return new JNEW(yytext()); }
+{static} { return new STATIC(yytext()); }
+{abstract} { return new ABSTRACT(yytext()); }
+{class} { return new JCLASS(yytext()); }
+{type} { return new JTYPE(yytext()); }
+{bool} { return new BOOLEAN(yytext()); }
+{accessright} { return new ACCESSRIGHT(yytext()); }
+{identifierfirst} { return new IDENTIFIER(yytext()); }
+{identifierfirst}{identifierfollow} { return new IDENTIFIER(yytext()); }
+""{int} { return new INT(yytext()); }
+"-"{int} { return new INT(yytext()); }
+{int}"."{int} { return new FLOAT(yytext()); }
+"-"{int}"."{int} { return new FLOAT(yytext()); }
+"'".+"'" { return new STRING(yytext()); }
+"'"."'" { return new CHAR(yytext()); }
+. { System.out.println("ERROR: "+yytext()); }
+
+
