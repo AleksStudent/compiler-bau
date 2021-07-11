@@ -13,7 +13,7 @@ import java.lang.Integer;
 
 ws = [ \t\r\n\b\015]+
 int = [0123456789]+
-type = (int|string|float|boolean)
+type = (int|String|float|boolean)
 bool = (true|false)
 static = (static)
 abstract = (abstract)
@@ -63,8 +63,8 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "-"{int} { return new INT(yytext()); }
 {int}"."{int} { return new FLOAT(yytext()); }
 "-"{int}"."{int} { return new FLOAT(yytext()); }
-"'".+"'" { return new STRING(yytext()); }
-"'"."'" { return new CHAR(yytext()); }
+"\"".+"\"" { return new STRING(yytext()); }
+"'"."'" { return new JCHAR(yytext()); }
 . { System.out.println("ERROR: "+yytext()); }
 
 
