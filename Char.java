@@ -10,7 +10,7 @@ public class Char extends Expr {
 	}
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
-		method.visitLdcInsn(java.lang.Integer.parseInt(getValue()));
+		method.visitLdcInsn(java.lang.Integer.parseInt(Character.toString(getValue())));
 		System.out.println("[Char] Writing: " + getValue());
 	}
 	
