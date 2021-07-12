@@ -41,6 +41,9 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "." { return new POINT(yytext()); }
 "-" { return new UNARYOPERATOR(yytext()); }
 "!" { return new UNARYOPERATOR(yytext()); }
+"<" { return new BINARYOPERATOR(yytext()); }
+">" { return new BINARYOPERATOR(yytext()); }
+"==" { return new BINARYOPERATOR(yytext()); }
 "this" { return new JTHIS(yytext()); }
 "super" { return new JSUPER(yytext()); }
 "null" { return new NULL(yytext()); }
