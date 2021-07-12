@@ -1,3 +1,10 @@
+import java.util.Vector;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Label;
+
 public class If extends Stmt {
 
 	public Expr cond;
@@ -8,6 +15,11 @@ public class If extends Stmt {
 		this.cond = cond;
 		this.stmt = stmt;
 		this.optional = optional;
+	}
+	
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		System.out.println("[If] Creating Construct");
+		((Binary) cond).codeGen(cw, method, i_class, localVars, stmt, optional);
 	}
 
 	@Override
