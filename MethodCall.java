@@ -28,6 +28,11 @@ public class MethodCall extends StmtExpr {
         if (thisClass.methods.stream().noneMatch(method -> method.name.equals(name))) {
             throw new NotFoundException(String.format("MethodCall-Error: Method with name %s does not exist in this Context", name));
         }
+        Type exprType=expr.typeCheck(localVars, thisClass);
+        //only allowed class is the class itself
+        if(!exprType.equals(thisClass.type)){
+            throw new UnexpectedTypeException(String.format("MethodCall-Error: Expected Receiver of Type %s, got Receiver of Type %s",thisClass.type,exprType));
+        }
         Method currentMethod = thisClass.methods.stream().filter(method -> method.name.equals(name)).collect(Collectors.toList()).get(0);
         if(expressions.size()!=currentMethod.parameters.size()){
             throw new MethodParametersMismatchException(String.format("MethodCall-Error: Expected %s Parameters, found %s",currentMethod.parameters.size(),expressions.size()));

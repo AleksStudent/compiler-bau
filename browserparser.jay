@@ -72,8 +72,8 @@ class browserparser {
 %start programm
 
 %%
-programm : class { $$ = new Program($1); }
-         | emptyClass { $$ = new Program($1); }
+programm : class { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram;}
+         | emptyClass { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram; }
 
 class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET { $$ = new Class($4, $5); }
 

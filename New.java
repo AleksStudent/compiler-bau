@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -25,23 +26,11 @@ public class New extends StmtExpr {
         if (!type.equals(Type.TYPE_VOID) && !type.equals(Type.TYPE_NULL) && !Type.PRIMITIVE_TYPES.contains(type)) {
             //Only possible Class is the class itself
             if (type.equals(thisClass.type)) {
-                //check if constructor exists
-                String constructorMethodName = thisClass.type.getType();
-                if (thisClass.methods.stream().anyMatch(method -> method.name.equals(constructorMethodName))) {
-                    Method constructor = thisClass.methods.stream().filter(method -> method.name.equals(constructorMethodName)).collect(Collectors.toList()).get(0);
-                    if (expressions.size() != constructor.parameters.size()) {
-                        throw new MethodParametersMismatchException(String.format("New-Error: Expected %s Parameters in Constructor, found %s", constructor.parameters.size(), expressions.size()));
-                    }
-                    for (int i = 0; i < expressions.size(); i++) {
-                        Type expressionType = expressions.get(i).typeCheck(localVars, thisClass);
-                        Type parameterType = constructor.parameters.get(i).type;
-                        if (!expressionType.equals(parameterType)) {
-                            throw new UnexpectedTypeException(String.format("New-Error: Given Expression %s with Type %s does not match expected type %s of parameter %s", expressions.get(i), expressionType, parameterType, constructor.parameters.get(i).name));
-                        }
-                    }
+                //only empty constructor possible
+                if(expressions.size()==0){
                     return type;
-                } else {
-                    throw new NotFoundException(String.format("New-Error: Constructor of Type %s not found", type));
+                }else{
+                    throw new MethodParametersMismatchException("New-Error: No Parameters allowed in empty Constructor");
                 }
             } else {
                 throw new UnexpectedTypeException(String.format("New-Error: Type %s does not equal expected Class-Type %s", type, thisClass.type));

@@ -26,8 +26,8 @@ public class Assign extends StmtExpr {
         if (localVariable || classVariable) {
             Type exprType = expr.typeCheck(localVars, thisClass);
             Type variableType = localVariable ? localVars.get(name) : thisClass.fields.stream().filter(field -> field.name.equals(name)).collect(Collectors.toList()).get(0).type;
-            if (variableType.equals(exprType) || !Type.PRIMITIVE_TYPES.contains(variableType) && exprType.equals(Type.TYPE_NULL)) {
-                return Type.TYPE_VOID;
+            if (variableType.equals(exprType) || (!Type.PRIMITIVE_TYPES.contains(variableType) && exprType.equals(Type.TYPE_NULL))) {
+                return variableType;
             } else{
                 throw new UnexpectedTypeException(String.format("Assign-Error: The Type %s of Expression %s does not match the Type %s of Variable %s",exprType,expr,variableType,name));
             }

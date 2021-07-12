@@ -24,7 +24,6 @@ public class While extends Stmt {
 		if(!condType.equals(Type.TYPE_BOOL)){
 			throw new UnexpectedTypeException(String.format("While-Error: Expected Condition of Type boolean but found %s", condType));
 		}
-		//TODO do we need to check if block/single statement
 		return stmt.typeCheck(localVars,thisClass);
 	}
 }
