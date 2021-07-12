@@ -1,7 +1,5 @@
 import java.util.Map;
 
 public interface TypeCheckable {
-
-	Type typeCheck(Map map, Class clazz);
-
+	Type typeCheck(Map<String,Type> localVars, Class thisClass);
 }

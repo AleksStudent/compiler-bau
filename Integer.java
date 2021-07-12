@@ -1,3 +1,5 @@
+import java.util.Map;
+
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
@@ -8,12 +10,12 @@ public class Integer extends Expr {
 	public Integer(final String num) {
 		this.num = num;
 	}
-	
+
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
 		method.visitLdcInsn(this.getValue());
 		System.out.println("[Integer] Writing: " + this.num);
 	}
-	
+
 	public int getValue() {
 		return java.lang.Integer.parseInt(this.num);
 	}
@@ -25,4 +27,8 @@ public class Integer extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_INT;
+	}
 }

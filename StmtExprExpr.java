@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class StmtExprExpr extends Expr {
 
 	public StmtExpr expr;
@@ -13,4 +15,8 @@ public class StmtExprExpr extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return expr.typeCheck(localVars, thisClass);
+	}
 }

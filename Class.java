@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
@@ -6,18 +8,18 @@ import org.objectweb.asm.Opcodes;
 
 public class Class {
 
-	public Vector<Field> fields;
-	public Vector<Method> methods;
-	public String name;
+    public Type type;
+    public Vector<Field> fields;
+    public Vector<Method> methods;
 
-	public Class(final Vector<Field> fields, final Vector<Method> methods) {
-		this.fields = fields;
-		this.methods = methods;
-		this.name = "";
-	}
+    public Class(final Type type, final Vector<Field> fields, final Vector<Method> methods) {
+        this.type = type;
+        this.fields = fields;
+        this.methods = methods;
+    }
 
 	public void codeGen(ClassWriter cw, Class i_class) {
-		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.name, null, "java/lang/Object", null);
+		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.type.getType(), null, "java/lang/Object", null);
 
 		System.out.println("[Class] Creating Constructor");
 		// create constructor
@@ -39,12 +41,23 @@ public class Class {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Class{" +
-				"fields=" + this.fields +
-				", methods=" + this.methods +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Class{" +
+                "fields=" + this.fields +
+                ", methods=" + this.methods +
+                '}';
+    }
 
+    public Type typeCheck() {
+        Class thisClass = this;
+        for (Field field : fields) {
+            field.typeCheck(new HashMap<>(), thisClass);
+        }
+        for (Method method : methods) {
+            method.typeCheck(new HashMap<>(), thisClass);
+        }
+        Type.VALID_VAR_TYPES.add(type);
+        return type;
+    }
 }

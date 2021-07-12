@@ -1,3 +1,5 @@
+import java.util.Map;
+
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -9,14 +11,14 @@ public class Bool extends Expr {
 	public Bool(final String bool) {
 		this.bool = bool;
 	}
-	
+
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
 		int codeToWrite = Opcodes.ICONST_0;
 		if (this.bool == "true") codeToWrite = Opcodes.ICONST_1;
 		method.visitInsn(codeToWrite);
 		System.out.println("[Bool] Writing: " + this.bool);
 	}
-	
+
 	public boolean getValue() {
 		return this.bool == "true" ? true : false;
 	}
@@ -28,4 +30,8 @@ public class Bool extends Expr {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		return Type.TYPE_BOOL;
+	}
 }

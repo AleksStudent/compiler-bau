@@ -1,34 +1,43 @@
+import java.util.Map;
+
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
-public class Field {
+public class Field implements TypeCheckable {
 
-	public String name;
-	public Type type;
+    public String name;
+    public Type type;
 
-	public Field(final String name, final Type type) {
-		this.name = name;
-		this.type = type;
-	}
-	
+    public Field(final String name, final Type type) {
+        this.name = name;
+        this.type = type;
+    }
+
 	/**
 	 * generate bytecode with classwriter of asm library
-	 * 
+	 *
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw) {
 		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getType(), null, null);
 		cw.visitEnd();
 		System.out.println("[Field] Created Field: " + name + ", " + type.getType());
-		
+
 	}
 
-	@Override
-	public String toString() {
-		return "Field{" +
-				"name='" + this.name + '\'' +
-				", type=" + this.type +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Field{" +
+                "name='" + this.name + '\'' +
+                ", type=" + this.type +
+                '}';
+    }
 
+    @Override
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+        if (!Type.VALID_VAR_TYPES.contains(type)) {
+            throw new UnexpectedTypeException(String.format("Field-Error: Field %s with Type %s has invalid Type", name, type));
+        }
+        return type;
+    }
 }
