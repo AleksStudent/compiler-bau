@@ -16,6 +16,7 @@ public class LocalOrFieldVar extends Expr {
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		if (isFieldVar(name, i_class.fields)) {
 			Field foundField = getFieldVar(name, i_class.fields);
+			System.out.println("[LocalOrFieldVar] Field Var: " + this.name + ", Type: " + foundField.type.getType());
             method.visitVarInsn(Opcodes.ALOAD, 0);
 
             method.visitFieldInsn(Opcodes.GETFIELD, "", this.name, foundField.type.getType());
@@ -26,8 +27,9 @@ public class LocalOrFieldVar extends Expr {
 					indexOfVar = localVars.indexOf(varDecl) + 1;
 				}
 			}
-			if (indexOfVar == 0) System.out.print("ERROR: Variable on Stack not found!!!");
+			if (indexOfVar == 0) System.out.println("[LocalOrFieldVar] ERROR: Variable on Stack not found!!!");
 			
+			System.out.println("[LocalOrFieldVar] Local Var: " + this.name + ", Type: " + localVars.get(indexOfVar - 1).type.getType());
 			int opCode = Opcodes.ILOAD;
 			if (localVars.get(indexOfVar - 1).type.isString) opCode = Opcodes.ALOAD;
 			method.visitVarInsn(opCode, indexOfVar);
@@ -36,14 +38,14 @@ public class LocalOrFieldVar extends Expr {
 	
 	public boolean isFieldVar(String name, Vector<Field> fields) {
 		for (Field field: fields) {
-			if (field.name.str == name) return true;
+			if (field.name == name) return true;
 		}
 		return false;
 	}
 	
 	public Field getFieldVar(String name, Vector<Field> fields) {
 		for (Field field: fields) {
-			if (field.name.str == name) return field;
+			if (field.name == name) return field;
 		}
 		return null;
 	}

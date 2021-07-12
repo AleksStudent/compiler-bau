@@ -10,11 +10,12 @@ public class Integer extends Expr {
 	}
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
-		method.visitLdcInsn(new Integer(this.num));
+		method.visitLdcInsn(this.getValue());
+		System.out.println("[Integer] Writing: " + this.num);
 	}
 	
 	public int getValue() {
-		return this.num;
+		return java.lang.Integer.parseInt(this.num);
 	}
 
 	@Override

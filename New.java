@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Vector;
 
 public class New extends StmtExpr {
@@ -16,6 +17,12 @@ public class New extends StmtExpr {
 				"type=" + this.type +
 				", expressions=" + this.expressions +
 				'}';
+	}
+
+	@Override
+	public Type typeCheck(Map map, Class clazz) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

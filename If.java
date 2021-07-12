@@ -18,6 +18,7 @@ public class If extends Stmt {
 	}
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		System.out.println("[If] Creating Construct");
 		((Binary) cond).codeGen(cw, method, i_class, localVars, stmt, optional);
 	}
 

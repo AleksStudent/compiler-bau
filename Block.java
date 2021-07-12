@@ -16,6 +16,7 @@ public class Block extends Stmt {
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		Label newBlock = new Label();
 		method.visitLabel(newBlock);
+		System.out.println("[Block] Reading Statements...");
 		
 		for (Stmt statement: statements) {
 			statement.codeGen(cw, method, i_class, localVars);

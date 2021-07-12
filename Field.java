@@ -17,8 +17,9 @@ public class Field {
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw) {
-		cw.visitField(Opcodes.ACC_PUBLIC, name.str, type.getType(), null, null);
+		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getType(), null, null);
 		cw.visitEnd();
+		System.out.println("[Field] Created Field: " + name + ", " + type.getType());
 		
 	}
 

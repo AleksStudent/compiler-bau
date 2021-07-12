@@ -1,9 +1,9 @@
+import java.util.Map;
 import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 
 
 public class MethodCall extends StmtExpr {
@@ -30,7 +30,7 @@ public class MethodCall extends StmtExpr {
 		
 		Method foundMethod = null;
 		for (Method methodIt: i_class.methods) {
-			if (methodIt.name.str == this.name) foundMethod = methodIt;
+			if (methodIt.name == this.name) foundMethod = methodIt;
 		}
 		
 		String methodSignature = "()V";
@@ -38,10 +38,10 @@ public class MethodCall extends StmtExpr {
 		if (foundMethod != null) {
 			methodSignature = "(" + parameterInput + ")" + foundMethod.returnType.getType();
 		} else {
-			methodSignature = "(" + parameterInput + ")" + Type.VOID_TYPE.getClassName();
+			methodSignature = "(" + parameterInput + ")" + org.objectweb.asm.Type.VOID_TYPE.getClassName();
 		}
 		
-		
+		System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
 		method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.name, this.name, methodSignature, false);
 	}
 
@@ -52,6 +52,12 @@ public class MethodCall extends StmtExpr {
 				", name='" + this.name + '\'' +
 				", expressions=" + this.expressions +
 				'}';
+	}
+
+	@Override
+	public Type typeCheck(Map map, Class clazz) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

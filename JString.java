@@ -12,6 +12,7 @@ public class JString extends Expr {
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
 		method.visitLdcInsn(this.str);
+		System.out.println("[String] Writing: " + this.str);
 	}
 	
 	public String getValue() {

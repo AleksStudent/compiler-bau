@@ -12,12 +12,13 @@ public class Bool extends Expr {
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
 		int codeToWrite = Opcodes.ICONST_0;
-		if (this.bool == true) codeToWrite = Opcodes.ICONST_1;
+		if (this.bool == "true") codeToWrite = Opcodes.ICONST_1;
 		method.visitInsn(codeToWrite);
+		System.out.println("[Bool] Writing: " + this.bool);
 	}
 	
 	public boolean getValue() {
-		return this.bool;
+		return this.bool == "true" ? true : false;
 	}
 
 	@Override

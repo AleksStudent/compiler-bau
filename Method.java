@@ -24,16 +24,18 @@ public class Method {
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw, Class i_class) {
+		System.out.println("[Method] Creating " + this.name);
 		String parameterInput = "";
 		Vector<LocalVarDecl> localVars = new Vector<LocalVarDecl>();
 		
 		for (Parameter parameter: parameters) {
 			parameterInput += parameter.type.getType();
-			localVars.add(new LocalVarDecl(parameter.type, parameter.name.str));
+			localVars.add(new LocalVarDecl(parameter.type, parameter.name));
 		}
 		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
+		System.out.println("[Method] Parameter Input: " + methodSignature);
 		
-		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name.str, methodSignature, null, null);	
+		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name, methodSignature, null, null);	
 		
 		method.visitCode();
 		// generate code from inside the method

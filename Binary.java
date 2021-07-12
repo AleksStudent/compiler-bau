@@ -32,6 +32,7 @@ public class Binary extends Expr {
 		}
 
 		if (selectedCode != 0) {
+			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
 			this.exprLeft.codeGen(cw, method, i_class, localVar);
 			this.exprRight.codeGen(cw, method, i_class, localVar);
 			Label successLabel = new Label();
@@ -54,6 +55,7 @@ public class Binary extends Expr {
 		}
 		
 		if (selectedCode != 0) {
+			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
 			this.exprLeft.codeGen(cw, method, i_class, localVar);
 			
 			Label successLabel = new Label();
@@ -105,6 +107,7 @@ public class Binary extends Expr {
 		}
 		
 		if (selectedCode != 0) {
+			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
 			this.exprLeft.codeGen(cw, method, i_class, localVar);
 			this.exprRight.codeGen(cw, method, i_class, localVar);
 			method.visitInsn(selectedCode);

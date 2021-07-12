@@ -1,4 +1,4 @@
-class Block{
+class Block2{
 
 	int myNum = 2;
 
