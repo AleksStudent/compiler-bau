@@ -1,5 +1,8 @@
 import java.util.Map;
 
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+
 public class Field implements TypeCheckable {
 
     public String name;
@@ -9,6 +12,18 @@ public class Field implements TypeCheckable {
         this.name = name;
         this.type = type;
     }
+
+	/**
+	 * generate bytecode with classwriter of asm library
+	 *
+	 * @param cw
+	 */
+	public void codeGen(ClassWriter cw) {
+		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getType(), null, null);
+		cw.visitEnd();
+		System.out.println("[Field] Created Field: " + name + ", " + type.getType());
+
+	}
 
     @Override
     public String toString() {

@@ -1,16 +1,28 @@
 import java.util.Map;
 
+import java.util.Vector;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Label;
+
 public class If extends Stmt {
 
     public Expr cond;
     public Stmt ifStmt;
     public Stmt optionalElseStmt;
 
-    public If(final Expr cond, final Stmt ifStmt, final Stmt optionalElseStmt) {
-        this.cond = cond;
-        this.ifStmt = ifStmt;
-        this.optionalElseStmt = optionalElseStmt;
-    }
+	public If(final Expr cond, final Stmt ifStmt, final Stmt optionalElseStmt) {
+		this.cond = cond;
+		this.ifStmt = ifStmt;
+		this.optionalElseStmt = optionalElseStmt;
+	}
+
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		System.out.println("[If] Creating Construct");
+		((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt);
+	}
 
     @Override
     public String toString() {
