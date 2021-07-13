@@ -32,10 +32,11 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "{" { return new LBRACKET(yytext()); }
 "}" { return new RBRACKET(yytext()); }
 ";" { return new SEMICOLON(yytext()); }
-"+" { return new OPERATOR(yytext()); }
-"-" { return new OPERATOR(yytext()); }
-"*" { return new OPERATOR(yytext()); }
-"/" { return new OPERATOR(yytext()); }
+"+" { return new BINARYOPERATOR(yytext()); }
+"-" { return new BINARYOPERATOR(yytext()); }
+"*" { return new BINARYOPERATOR(yytext()); }
+"/" { return new BINARYOPERATOR(yytext()); }
+"%" { return new BINARYOPERATOR(yytext()); }
 "=" { return new EQUALS(yytext()); }
 "," { return new COMMA(yytext()); }
 "." { return new POINT(yytext()); }
@@ -70,8 +71,6 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 {identifierfirst}{identifierfollow} { return new IDENTIFIER(yytext()); }
 ""{int} { return new INT(yytext()); }
 "-"{int} { return new INT(yytext()); }
-{int}"."{int} { return new FLOAT(yytext()); }
-"-"{int}"."{int} { return new FLOAT(yytext()); }
 "\"".+"\"" { return new STRING(yytext()); }
 "'"."'" { return new JCHAR(yytext()); }
-. { System.out.println("ERROR: "+yytext()); }
+. { return new ERROR(yytext()); }
