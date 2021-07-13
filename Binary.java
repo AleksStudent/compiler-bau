@@ -13,6 +13,7 @@ public class Binary extends Expr {
     public String operator;
     public Expr exprLeft;
     public Expr exprRight;
+    public Type type;
 
 
     public static Map<String, List<Type>> VALID_OPERATORS = new HashMap<>() {{
@@ -51,192 +52,244 @@ public class Binary extends Expr {
         this.exprRight = exprRight;
     }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar,
-			Stmt failedTask, Stmt successTask) {
-		int selectedCode = 0;
+    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar,
+                        Stmt failedTask, Stmt successTask) {
+        int selectedCode = 0;
 
-		switch (operator) {
-		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
-		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
-		}
+        switch (operator) {
+            case "==":
+                selectedCode = Opcodes.IF_ICMPNE;
+                break;
+            case "!=":
+                selectedCode = Opcodes.IF_ICMPEQ;
+                break;
+            case ">":
+                selectedCode = Opcodes.IF_ICMPLT;
+                break;
+            case ">=":
+                selectedCode = Opcodes.IF_ICMPLE;
+                break;
+            case "<":
+                selectedCode = Opcodes.IF_ICMPGT;
+                break;
+            case "<=":
+                selectedCode = Opcodes.IF_ICMPGE;
+                break;
+        }
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			Label successLabel = new Label();
-			Label failedLabel = new Label();
+        if (selectedCode != 0) {
+            System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
+            Label successLabel = new Label();
+            Label failedLabel = new Label();
 
-			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
+            method.visitJumpInsn(selectedCode, failedLabel);
+            method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
-			method.visitLabel(successLabel);
-			successTask.codeGen(cw, method, i_class, localVar);
+            method.visitLabel(successLabel);
+            successTask.codeGen(cw, method, i_class, localVar);
 
-			method.visitLabel(failedLabel);
-			failedTask.codeGen(cw, method, i_class, localVar);
-			return;
-		}
+            method.visitLabel(failedLabel);
+            failedTask.codeGen(cw, method, i_class, localVar);
+            return;
+        }
 
-		switch (operator) {
-		case "&&": selectedCode = Opcodes.IFEQ; break;
-		case "||": selectedCode = Opcodes.IFNE; break;
-		}
+        switch (operator) {
+            case "&&":
+                selectedCode = Opcodes.IFEQ;
+                break;
+            case "||":
+                selectedCode = Opcodes.IFNE;
+                break;
+        }
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
+        if (selectedCode != 0) {
+            System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
 
-			Label successLabel = new Label();
-			Label deciderLabel = new Label();
-			Label failedLabel = new Label();
+            Label successLabel = new Label();
+            Label deciderLabel = new Label();
+            Label failedLabel = new Label();
 
-			method.visitJumpInsn(selectedCode, failedLabel);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+            method.visitJumpInsn(selectedCode, failedLabel);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
 
-			if (selectedCode == Opcodes.IFEQ) {
-				method.visitJumpInsn(selectedCode, failedLabel);
+            if (selectedCode == Opcodes.IFEQ) {
+                method.visitJumpInsn(selectedCode, failedLabel);
 
-				method.visitLabel(successLabel);
-				successTask.codeGen(cw, method, i_class, localVar);
+                method.visitLabel(successLabel);
+                successTask.codeGen(cw, method, i_class, localVar);
 
-				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
+                method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
-				method.visitLabel(failedLabel);
-				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar);
+                method.visitLabel(failedLabel);
+                method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+                failedTask.codeGen(cw, method, i_class, localVar);
 
-				method.visitLabel(deciderLabel);
-				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-			} else {
-				method.visitJumpInsn(Opcodes.IFEQ, successLabel);
+                method.visitLabel(deciderLabel);
+                method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+            } else {
+                method.visitJumpInsn(Opcodes.IFEQ, successLabel);
 
-				method.visitLabel(failedLabel);
-				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar);
+                method.visitLabel(failedLabel);
+                method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+                failedTask.codeGen(cw, method, i_class, localVar);
 
-				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
+                method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
-				method.visitLabel(successLabel);
-				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				successTask.codeGen(cw, method, i_class, localVar);
+                method.visitLabel(successLabel);
+                method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+                successTask.codeGen(cw, method, i_class, localVar);
 
-				method.visitLabel(deciderLabel);
-				method.visitFrame(Opcodes.F_SAME1, 0, null, 1, null);
-			}
-			return;
-		}
+                method.visitLabel(deciderLabel);
+                method.visitFrame(Opcodes.F_SAME1, 0, null, 1, null);
+            }
+            return;
+        }
 
-		switch (operator) {
-		case "+": selectedCode = Opcodes.IADD; break;
-		case "-": selectedCode = Opcodes.ISUB; break;
-		case "*": selectedCode = Opcodes.IMUL; break;
-		case "/": selectedCode = Opcodes.IDIV; break;
-		case "%": selectedCode = Opcodes.IREM; break;
-		}
+        switch (operator) {
+            case "+":
+                selectedCode = Opcodes.IADD;
+                break;
+            case "-":
+                selectedCode = Opcodes.ISUB;
+                break;
+            case "*":
+                selectedCode = Opcodes.IMUL;
+                break;
+            case "/":
+                selectedCode = Opcodes.IDIV;
+                break;
+            case "%":
+                selectedCode = Opcodes.IREM;
+                break;
+        }
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			method.visitInsn(selectedCode);
-			return;
-		}
+        if (selectedCode != 0) {
+            System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
+            method.visitInsn(selectedCode);
+            return;
+        }
 
-		System.out.println("ERROR: No Operator selected");
+        System.out.println("ERROR: No Operator selected");
 
-	}
-	
-	
-	public void codeGenWhile(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Stmt run) {
-		int selectedCode = 0;
+    }
 
-		switch (operator) {
-		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
-		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
-		}
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());	
-			Label initLabel = new Label();
-			Label successLabel = new Label();
-			Label failedLabel = new Label();
-			
-			method.visitLabel(initLabel);
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			
+    public void codeGenWhile(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Stmt run) {
+        int selectedCode = 0;
 
-			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
+        switch (operator) {
+            case "==":
+                selectedCode = Opcodes.IF_ICMPNE;
+                break;
+            case "!=":
+                selectedCode = Opcodes.IF_ICMPEQ;
+                break;
+            case ">":
+                selectedCode = Opcodes.IF_ICMPLT;
+                break;
+            case ">=":
+                selectedCode = Opcodes.IF_ICMPLE;
+                break;
+            case "<":
+                selectedCode = Opcodes.IF_ICMPGT;
+                break;
+            case "<=":
+                selectedCode = Opcodes.IF_ICMPGE;
+                break;
+        }
 
-			method.visitLabel(successLabel);
-			run.codeGen(cw, method, i_class, localVar);
-			method.visitJumpInsn(Opcodes.GOTO, initLabel);
-			return;
-		}
+        if (selectedCode != 0) {
+            System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
+            Label initLabel = new Label();
+            Label successLabel = new Label();
+            Label failedLabel = new Label();
 
-		switch (operator) {
-		case "&&": selectedCode = Opcodes.IFEQ; break;
-		case "||": selectedCode = Opcodes.IFNE; break;
-		}
+            method.visitLabel(initLabel);
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			Label initLabel = new Label();
-			Label successLabel = new Label();
-			Label failedLabel = new Label();
 
-			method.visitLabel(initLabel);
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
+            method.visitJumpInsn(selectedCode, failedLabel);
+            method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
-			method.visitJumpInsn(selectedCode, failedLabel);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+            method.visitLabel(successLabel);
+            run.codeGen(cw, method, i_class, localVar);
+            method.visitJumpInsn(Opcodes.GOTO, initLabel);
+            return;
+        }
 
-			if (selectedCode == Opcodes.IFEQ) {
-				method.visitJumpInsn(selectedCode, failedLabel);
+        switch (operator) {
+            case "&&":
+                selectedCode = Opcodes.IFEQ;
+                break;
+            case "||":
+                selectedCode = Opcodes.IFNE;
+                break;
+        }
 
-				method.visitLabel(successLabel);
-				run.codeGen(cw, method, i_class, localVar);
-				method.visitJumpInsn(Opcodes.GOTO, initLabel);
+        if (selectedCode != 0) {
+            System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
+            Label initLabel = new Label();
+            Label successLabel = new Label();
+            Label failedLabel = new Label();
 
-			} else {
-				method.visitJumpInsn(Opcodes.IFEQ, successLabel);
+            method.visitLabel(initLabel);
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
 
-				method.visitLabel(successLabel);
-				run.codeGen(cw, method, i_class, localVar);
-				method.visitJumpInsn(Opcodes.GOTO, initLabel);
-			}
-			return;
-		}
+            method.visitJumpInsn(selectedCode, failedLabel);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
 
-		switch (operator) {
-		case "+": selectedCode = Opcodes.IADD; break;
-		case "-": selectedCode = Opcodes.ISUB; break;
-		case "*": selectedCode = Opcodes.IMUL; break;
-		case "/": selectedCode = Opcodes.IDIV; break;
-		case "%": selectedCode = Opcodes.IREM; break;
-		}
+            if (selectedCode == Opcodes.IFEQ) {
+                method.visitJumpInsn(selectedCode, failedLabel);
 
-		if (selectedCode != 0) {
-			System.out.println("[Binary]: Invalid Binary Operators for While");
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			method.visitInsn(selectedCode);
-			return;
-		}
+                method.visitLabel(successLabel);
+                run.codeGen(cw, method, i_class, localVar);
+                method.visitJumpInsn(Opcodes.GOTO, initLabel);
 
-		System.out.println("[Binary]: ERROR NO OPERATOR SET");
+            } else {
+                method.visitJumpInsn(Opcodes.IFEQ, successLabel);
 
-	}
+                method.visitLabel(successLabel);
+                run.codeGen(cw, method, i_class, localVar);
+                method.visitJumpInsn(Opcodes.GOTO, initLabel);
+            }
+            return;
+        }
+
+        switch (operator) {
+            case "+":
+                selectedCode = Opcodes.IADD;
+                break;
+            case "-":
+                selectedCode = Opcodes.ISUB;
+                break;
+            case "*":
+                selectedCode = Opcodes.IMUL;
+                break;
+            case "/":
+                selectedCode = Opcodes.IDIV;
+                break;
+            case "%":
+                selectedCode = Opcodes.IREM;
+                break;
+        }
+
+        if (selectedCode != 0) {
+            System.out.println("[Binary]: Invalid Binary Operators for While");
+            this.exprLeft.codeGen(cw, method, i_class, localVar);
+            this.exprRight.codeGen(cw, method, i_class, localVar);
+            method.visitInsn(selectedCode);
+            return;
+        }
+
+        System.out.println("[Binary]: ERROR NO OPERATOR SET");
+
+    }
 
     @Override
     public String toString() {
@@ -254,7 +307,8 @@ public class Binary extends Expr {
         if (VALID_OPERATORS.containsKey(operator)) {
             if (exprLeftType.equals(exprRightType)) {
                 if (VALID_OPERATORS.get(operator).contains(exprLeftType)) {
-                    return OPERATOR_RETURN_TYPE.get(operator);
+                    type = OPERATOR_RETURN_TYPE.get(operator);
+                    return type;
                 } else {
                     throw new UnexpectedTypeException(String.format("Binary-Error: The Operator %s does not support Expressions of Type %s", operator, exprLeftType));
                 }
@@ -264,11 +318,12 @@ public class Binary extends Expr {
         } else if (SPECIAL_OPERATORS.contains(operator)) {
             if (!(exprLeftType.equals(Type.TYPE_VOID) || exprRightType.equals(Type.TYPE_VOID))) {
                 if (exprLeftType.equals(exprRightType) || exprLeftType.equals(Type.TYPE_NULL) || exprRightType.equals(Type.TYPE_NULL)) {
-                    return Type.TYPE_BOOL;
-                }else{
-                    throw new UnexpectedTypeException(String.format("Binary-Error: The Left-Expression %s of Type %s does not have the same Type as the Right-Expression %s of Type %s",exprLeft,exprLeftType,exprRight,exprRightType));
+                    type = Type.TYPE_BOOL;
+                    return type;
+                } else {
+                    throw new UnexpectedTypeException(String.format("Binary-Error: The Left-Expression %s of Type %s does not have the same Type as the Right-Expression %s of Type %s", exprLeft, exprLeftType, exprRight, exprRightType));
                 }
-            }else{
+            } else {
                 throw new UnexpectedTypeException("Binary-Error: One of the Expressions has type void");
             }
         } else {
@@ -277,9 +332,9 @@ public class Binary extends Expr {
         }
     }
 
-	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+        // TODO Auto-generated method stub
+
+    }
 }

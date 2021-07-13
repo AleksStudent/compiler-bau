@@ -11,13 +11,11 @@ public class Class {
     public Type type;
     public Vector<Field> fields;
     public Vector<Method> methods;
-    public String name;
 
     public Class(final Type type, final Vector<Field> fields, final Vector<Method> methods) {
         this.type = type;
         this.fields = fields;
         this.methods = methods;
-        this.name = "";
     }
 
 	public void codeGen(ClassWriter cw, Class i_class) {
@@ -46,20 +44,21 @@ public class Class {
     @Override
     public String toString() {
         return "Class{" +
-                "fields=" + this.fields +
-                ", methods=" + this.methods +
+                "type=" + type +
+                ", fields=" + fields +
+                ", methods=" + methods +
                 '}';
     }
 
     public Type typeCheck() {
         Class thisClass = this;
+        Type.VALID_VAR_TYPES.add(type);
         for (Field field : fields) {
             field.typeCheck(new HashMap<>(), thisClass);
         }
         for (Method method : methods) {
             method.typeCheck(new HashMap<>(), thisClass);
         }
-        Type.VALID_VAR_TYPES.add(type);
         return type;
     }
 }

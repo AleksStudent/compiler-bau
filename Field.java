@@ -40,6 +40,9 @@ public class Field implements TypeCheckable {
         if (!Type.VALID_VAR_TYPES.contains(type)) {
             throw new UnexpectedTypeException(String.format("Field-Error: Field %s with Type %s has invalid Type", name, type));
         }
+        if(thisClass.fields.stream().filter(field -> field.name.equals(name)).count()>1){
+            throw new DuplicateException(String.format("Field-Error: Field with name %s is not unique",name));
+        }
         return type;
     }
 
