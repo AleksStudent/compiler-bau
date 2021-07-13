@@ -19,7 +19,9 @@ public class New extends StmtExpr {
 	}
 	
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
-		//method.visitTypeInsn(Opcodes.NEW, type.name);
+		String typeString = type.getType();
+		
+		method.visitTypeInsn(Opcodes.NEW, typeString);
 		method.visitInsn(Opcodes.DUP);
 		
 		for (Expr expression: expressions) {
@@ -31,19 +33,14 @@ public class New extends StmtExpr {
 		String stringOperand = "(String)String";
 		String selectedOperand;
 		
-		/*switch(type.name) {
-			case Type.TYPE_STRING.getType(): selectedOperand = stringOperand; break;
+		switch(typeString) {
+			case "string": selectedOperand = stringOperand; break;
 			default: selectedOperand = objectOperand; break;
 		}
 
-		method.visitMethodInsn(Opcodes.INVOKESPECIAL, type.name, "<init>", selectedOperand, false);
-		*/
+		method.visitMethodInsn(Opcodes.INVOKESPECIAL, typeString, "<init>", selectedOperand, false);
+		
 	}
-
-    public New(final Type type, final Vector<Expr> expressions) {
-        this.type = type;
-        this.expressions = expressions;
-    }
 
     @Override
     public String toString() {
