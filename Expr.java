@@ -10,7 +10,7 @@ public class Expr implements TypeCheckable {
 	}
 
 	@Override
-	public Type typeCheck(Map map, Class clazz) {
+	public Type typeCheck(Map<String, Type> map, Class clazz) {
 		// TODO Auto-generated method stub
 		return null;
 	}
