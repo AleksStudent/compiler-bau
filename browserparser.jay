@@ -23,6 +23,7 @@ class browserparser {
 %token COMMA
 %token POINT
 %token UNARYOPERATOR
+%token BINARYOPERATOR
 %token OPERATOR
 %token LBRACE
 %token RBRACE
@@ -93,7 +94,7 @@ method : type IDENTIFIER LBRACE parameters RBRACE block { $$ = new Method($2, $1
        | type IDENTIFIER LBRACE RBRACE block { $$ = new Method($2, $1, new Vector(), $5); }
 
 parameters : parameter { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
-           | parameters COMMA parameter { Vector fs = $1 ; fs.addElement($2); $$ = fs; }
+           | parameters COMMA parameter { Vector fs = $1 ; fs.addElement($3); $$ = fs; }
 
 parameter : type IDENTIFIER{ $$ = new Parameter($2, $1); }
 

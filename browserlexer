@@ -39,6 +39,7 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "=" { return new EQUALS(yytext()); }
 "," { return new COMMA(yytext()); }
 "." { return new POINT(yytext()); }
+"+" { return new UNARYOPERATOR(yytext()); }
 "-" { return new UNARYOPERATOR(yytext()); }
 "!" { return new UNARYOPERATOR(yytext()); }
 "<" { return new BINARYOPERATOR(yytext()); }
