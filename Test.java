@@ -1,8 +1,8 @@
-class Block2{
+class Test{
 
 	int myNum = 2;
 
-	int Block() {
+	int Test() {
 		return 2;
 	};
 

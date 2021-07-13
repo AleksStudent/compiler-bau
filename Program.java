@@ -32,4 +32,7 @@ public class Program {
 				'}';
 	}
 
+	public void typeCheck(){
+		clazz.typeCheck();
+	}
 }
