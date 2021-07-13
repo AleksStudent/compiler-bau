@@ -1,4 +1,4 @@
-class TestClass{
+class Test{
 
 	int myNum;
 	String myText;
@@ -43,6 +43,7 @@ class TestClass{
 
 		}
 
+	int Test() {
 		return 2;
 	}
 

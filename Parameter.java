@@ -1,4 +1,6 @@
-public class Parameter {
+import java.util.Map;
+
+public class Parameter implements TypeCheckable{
 
 	public String name;
 	public Type type;
@@ -16,4 +18,11 @@ public class Parameter {
 				'}';
 	}
 
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		if(!Type.VALID_VAR_TYPES.contains(type)){
+			throw new UnexpectedTypeException(String.format("Parameter-Error: The Parameter %s with Type %s has invalid Type", name, type));
+		}
+		return type;
+	}
 }

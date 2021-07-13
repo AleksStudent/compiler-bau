@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class While extends Stmt {
 
 	public Expr cond;
@@ -15,5 +17,13 @@ public class While extends Stmt {
 				", stmt=" + stmt +
 				'}';
 	}
-	
+
+	@Override
+	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+		Type condType=cond.typeCheck(localVars,thisClass);
+		if(!condType.equals(Type.TYPE_BOOL)){
+			throw new UnexpectedTypeException(String.format("While-Error: Expected Condition of Type boolean but found %s", condType));
+		}
+		return stmt.typeCheck(localVars,thisClass);
+	}
 }

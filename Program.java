@@ -1,4 +1,4 @@
-public class Program {
+public class Program{
 
 	public Class clazz;
 
@@ -13,4 +13,7 @@ public class Program {
 				'}';
 	}
 
+	public void typeCheck(){
+		clazz.typeCheck();
+	}
 }
