@@ -30,7 +30,7 @@ public class Assign extends StmtExpr {
 		System.out.println("[Assign] Start Assing");
 		int indexOf = 0;
 		for (LocalVarDecl varDecl: localVar) {
-			if (varDecl.name == this.name) {
+			if (varDecl.name.equals(this.name)) {
 				indexOf = localVar.indexOf(varDecl) + 1;
 				System.out.println("[Assign] Found Local Var at Index: " + indexOf + " with Content: ");
 				System.out.println(localVar.get(indexOf - 1).toString());
@@ -42,10 +42,9 @@ public class Assign extends StmtExpr {
 		if (indexOf == 0) {
 			System.out.println("[Assign] No Local Var found... Trying Fields");
 			for (Field field :i_class.fields) {
-				if (field.name == this.name) {
-					fieldType = field.type.getType();
-					if (field.type.isString) fieldType = "String";
-					System.out.println("[Assign] Found Field Var");
+				if (field.name.equals(this.name)) {
+					fieldType = field.type.getASMType();
+					System.out.println("[Assign] Found Field Var: " + this.name + ", " + fieldType);
 					break;
 				}
 			}
@@ -57,7 +56,7 @@ public class Assign extends StmtExpr {
 			((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
 
 			int opCode = Opcodes.ISTORE;
-			if (fieldType == "String") {
+			if (fieldType.equals(Type.getASMType(Type.TYPE_STRING))) {
 				opCode = Opcodes.ASTORE;
 				System.out.println("[Assign] Selected Reference");
 			} else {

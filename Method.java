@@ -31,12 +31,16 @@ public class Method implements TypeCheckable {
 
 		for (Parameter parameter: parameters) {
 			parameterInput += parameter.type.getType();
-			localVars.add(new LocalVarDecl(parameter.type, parameter.name));
 		}
 		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
 		System.out.println("[Method] Parameter Input: " + methodSignature);
 
 		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name, methodSignature, null, null);
+		
+		// 2nd parameter loop as the first was needed for type declarations
+		for (Parameter parameter: parameters) {
+			parameter.codeGen(cw, method, i_class, localVars);
+		}
 
 		method.visitCode();
 		// generate code from inside the method

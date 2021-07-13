@@ -22,6 +22,30 @@ public class Type {
     public String getType() {
         return type;
     }
+    
+    public static String getASMType(Type i_type) {
+    	switch (i_type.type) {
+    	case "void": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	case "null": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	case "int": return org.objectweb.asm.Type.INT_TYPE.getClassName();
+    	case "char": return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
+    	case "bool": return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
+    	case "string": return "String";
+    	default: return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	}
+    }
+    
+    public String getASMType() {
+    	switch (getType()) {
+    	case "void": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	case "null": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	case "int": return org.objectweb.asm.Type.INT_TYPE.getClassName();
+    	case "char": return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
+    	case "bool": return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
+    	case "string": return "String";
+    	default: return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	}
+    }
 
     @Override
     public boolean equals(Object o) {
