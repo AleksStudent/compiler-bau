@@ -77,4 +77,10 @@ public class Method implements TypeCheckable {
         }
         return returnType;
     }
+
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		// TODO Auto-generated method stub
+		
+	}
 }
