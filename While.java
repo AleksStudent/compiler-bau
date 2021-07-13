@@ -1,4 +1,8 @@
 import java.util.Map;
+import java.util.Vector;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 
 public class While extends Stmt {
 
@@ -8,6 +12,11 @@ public class While extends Stmt {
 	public While(Expr cond, Stmt stmt) {
 		this.cond = cond;
 		this.stmt = stmt;
+	}
+	
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		((Binary) cond).codeGenWhile(cw, method, i_class, localVars, stmt);
 	}
 
 	@Override

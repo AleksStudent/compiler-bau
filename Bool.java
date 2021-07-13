@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -14,7 +15,7 @@ public class Bool extends Expr {
 
 	public void codeGen(ClassWriter cw, MethodVisitor method) {
 		int codeToWrite = Opcodes.ICONST_0;
-		if (this.bool == "true") codeToWrite = Opcodes.ICONST_1;
+		if (this.bool.equals("true")) codeToWrite = Opcodes.ICONST_1;
 		method.visitInsn(codeToWrite);
 		System.out.println("[Bool] Writing: " + this.bool);
 	}
@@ -33,5 +34,11 @@ public class Bool extends Expr {
 	@Override
 	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
 		return Type.TYPE_BOOL;
+	}
+
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -11,11 +11,13 @@ public class Class {
     public Type type;
     public Vector<Field> fields;
     public Vector<Method> methods;
+    public String name;
 
     public Class(final Type type, final Vector<Field> fields, final Vector<Method> methods) {
         this.type = type;
         this.fields = fields;
         this.methods = methods;
+        this.name = "";
     }
 
 	public void codeGen(ClassWriter cw, Class i_class) {

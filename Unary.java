@@ -1,5 +1,10 @@
 import java.util.*;
 
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 public class Unary extends Expr {
 
     public String operator;
@@ -21,6 +26,33 @@ public class Unary extends Expr {
         this.operator = operator;
         this.expr = expr;
     }
+    
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		int opCode = 0;
+		expr.codeGen(cw, method, i_class, localVars);
+		
+		if (operator.equals("+")) {
+			System.out.println("[Unary] +");
+		} else if (operator.equals("-")) {
+			System.out.println("[Unary] -");
+			method.visitInsn(Opcodes.INEG);
+		} else if (operator.equals("!")) {
+			System.out.println("[Unary] !");
+			Label trueLabel = new Label();
+			Label falseLabel = new Label();
+			
+			method.visitJumpInsn(Opcodes.IFNE, trueLabel);
+			method.visitInsn(Opcodes.ICONST_1);
+			
+			method.visitJumpInsn(Opcodes.GOTO, falseLabel);
+			method.visitLabel(falseLabel);
+			method.visitInsn(Opcodes.ICONST_0);
+		} else {
+			System.out.println("[Unary] ?");
+		}
+		
+	}
 
     @Override
     public String toString() {

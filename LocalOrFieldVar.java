@@ -17,16 +17,18 @@ public class LocalOrFieldVar extends Expr {
 	}
 
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		if (isFieldVar(name, i_class.fields)) {
+		if (!local) {
 			Field foundField = getFieldVar(name, i_class.fields);
 			System.out.println("[LocalOrFieldVar] Field Var: " + this.name + ", Type: " + foundField.type.getType());
+			
+			// load reference for "this"
+			// could happen that double load happens
             method.visitVarInsn(Opcodes.ALOAD, 0);
-
             method.visitFieldInsn(Opcodes.GETFIELD, "", this.name, foundField.type.getType());
 		} else {
 			int indexOfVar = 0;
 			for (LocalVarDecl varDecl: localVars) {
-				if (varDecl.name == this.name) {
+				if (varDecl.name.equals(this.name)) {
 					indexOfVar = localVars.indexOf(varDecl) + 1;
 				}
 			}
@@ -34,28 +36,30 @@ public class LocalOrFieldVar extends Expr {
 
 			System.out.println("[LocalOrFieldVar] Local Var: " + this.name + ", Type: " + localVars.get(indexOfVar - 1).type.getType());
 			int opCode = Opcodes.ILOAD;
-			if (localVars.get(indexOfVar - 1).type.isString) opCode = Opcodes.ALOAD;
+			if (localVars.get(indexOfVar - 1).type.equals(Type.TYPE_STRING)) opCode = Opcodes.ALOAD;
 			method.visitVarInsn(opCode, indexOfVar);
 		}
 	}
 
 	public boolean isFieldVar(String name, Vector<Field> fields) {
+		// could be done with the "local" variable but this was later introduced
 		for (Field field: fields) {
-			if (field.name == name) return true;
+			if (field.name.equals(name) && this.local) return true;
 		}
 		return false;
 	}
 
+
 	public Field getFieldVar(String name, Vector<Field> fields) {
 		for (Field field: fields) {
-			if (field.name == name) return field;
+			if (field.name.equals(name)) return field;
 		}
 		return null;
 	}
 
 	public LocalVarDecl getLocalVar(String name, Vector<LocalVarDecl> localVar) {
 		for (LocalVarDecl var: localVar) {
-			if (var.name == name) return var;
+			if (var.name.equals(name) && this.local) return var;
 		}
 		return null;
 	}

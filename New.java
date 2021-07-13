@@ -4,15 +4,43 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 public class New extends StmtExpr {
 
-    public Type type;
-    public Vector<Expr> expressions;
+	public Type type;
+	public Vector<Expr> expressions;
 
-    public New(final Type type, final Vector<Expr> expressions) {
-        this.type = type;
-        this.expressions = expressions;
-    }
+	public New(final Type type, final Vector<Expr> expressions) {
+		this.type = type;
+		this.expressions = expressions;
+	}
+	
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+		String typeString = type.getType();
+		
+		method.visitTypeInsn(Opcodes.NEW, typeString);
+		method.visitInsn(Opcodes.DUP);
+		
+		for (Expr expression: expressions) {
+			expression.codeGen(cw, method, i_class, localVar);
+		}
+		
+		// String(String): String, Object(): void
+		String objectOperand = "()V";
+		String stringOperand = "(String)String";
+		String selectedOperand;
+		
+		switch(typeString) {
+			case "string": selectedOperand = stringOperand; break;
+			default: selectedOperand = objectOperand; break;
+		}
+
+		method.visitMethodInsn(Opcodes.INVOKESPECIAL, typeString, "<init>", selectedOperand, false);
+		
+	}
 
     @Override
     public String toString() {
