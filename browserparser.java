@@ -1,9 +1,9 @@
-import java.util.Vector;
 // created by jay 0.8 (c) 1998 Axel.Schreiner@informatik.uni-osnabrueck.de
 
 					// line 2 "browserparser.jay"
+import java.util.Vector;
 class browserparser {
-					// line 6 "-"
+					// line 7 "-"
  yyError yytemperror = new yyError();
  public final int yyErrorCode = yytemperror.tokennr; 
 
@@ -67,7 +67,7 @@ class browserparser {
   /** debugging support, requires the package jay.yydebug.
       Set to null to suppress debugging messages.
     */
-  protected jay.yydebug.yyDebug yydebug;
+//t  protected jay.yydebug.yyDebug yydebug;
 
   protected static final int yyFinal = 2;
 
@@ -75,12 +75,12 @@ class browserparser {
       @param token single character or %token value.
       @return token name or [illegal] or [unknown].
     */
-  public static final String yyname (int token) {
-    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
-    String name;
-    if ((name = YyNameClass.yyName[token]) != null) return name;
-    return "[unknown]";
-  }
+//t  public static final String yyname (int token) {
+//t    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
+//t    String name;
+//t    if ((name = YyNameClass.yyName[token]) != null) return name;
+//t    return "[unknown]";
+//t  }
 
   /** computes list of expected tokens on error by tracing the tables.
       @param state for which to compute the list.
@@ -120,7 +120,7 @@ class browserparser {
     */
   public Object yyparse (yyInput yyLex, Object yydebug)
 				throws java.io.IOException, yyException {
-    this.yydebug = (jay.yydebug.yyDebug)yydebug;
+//t    this.yydebug = (jay.yydebug.yyDebug)yydebug;
     return yyparse(yyLex);
   }
 
@@ -169,7 +169,7 @@ class browserparser {
       }
       yyStates[yyTop] = yyState;
       yyVals[yyTop] = yyVal;
-      if (yydebug != null) yydebug.push(yyState, yyVal);
+//t      if (yydebug != null) yydebug.push(yyState, yyVal);
 
       yyDiscarded: for (;;) {	// discarding a token does not change stack
         int yyN;
@@ -184,10 +184,10 @@ class browserparser {
              if "null", create EOF token */
             if (yyToken == null) {yyToken = new EOF();}
 
-            if (yydebug != null)
-          /* modified by diho, 14.04.2004
-             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
-              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
+//t            if (yydebug != null)
+//t          /* modified by diho, 14.04.2004
+//t             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
+//t              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -195,8 +195,8 @@ class browserparser {
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
               && yyN < YyTableClass.yyTable.length && YyCheckClass.yyCheck[yyN] == yyToken.tokennr) {
-            if (yydebug != null)
-              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
+//t            if (yydebug != null)
+//t              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
             yyState = YyTableClass.yyTable[yyN];		// shift to yyN
           /* modified by diho, 14.04.2004 
              replaced yyLex.value() by yyToken.value*/
@@ -219,7 +219,7 @@ class browserparser {
   
             case 0:
               yyerror("syntax error", yyExpecting(yyState));
-              if (yydebug != null) yydebug.error("syntax error");
+//t              if (yydebug != null) yydebug.error("syntax error");
   
             case 1: case 2:
               yyErrorFlag = 3;
@@ -227,31 +227,31 @@ class browserparser {
                 if ((yyN = YySindexClass.yySindex[yyStates[yyTop]]) != 0
                     && (yyN += yyErrorCode) >= 0 && yyN < YyTableClass.yyTable.length
                     && YyCheckClass.yyCheck[yyN] == yyErrorCode) {
-                  if (yydebug != null)
-                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
+//t                  if (yydebug != null)
+//t                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
                   yyState = YyTableClass.yyTable[yyN];
           /* modified by diho, 14.04.2004 
              replaced yyLex.value by yyToken.value*/
                   yyVal = yyToken.value;
                   continue yyLoop;
                 }
-                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
+//t                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
               } while (-- yyTop >= 0);
-              if (yydebug != null) yydebug.reject();
+//t              if (yydebug != null) yydebug.reject();
               throw new yyException("irrecoverable syntax error");
   
             case 3:
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0)*/
               if (yyToken == null) {
-                if (yydebug != null) yydebug.reject();
+//t                if (yydebug != null) yydebug.reject();
                 throw new yyException("irrecoverable syntax error at end-of-file");
               }
-              if (yydebug != null)
+//t              if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value by yyToken.value*/
-                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
-  							yyToken.value);
+//t                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
+//t  							yyToken.value);
           /* modified by diho, 14.04.2004 
              orig: yyToken = -1*/
               yyToken = new yyTokenclass();
@@ -259,277 +259,293 @@ class browserparser {
             }
         }
         int yyV = yyTop + 1-YyLenClass.yyLen[yyN];
-        if (yydebug != null)
-          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
+//t        if (yydebug != null)
+//t          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
         yyVal = yyDefault(yyV > yyTop ? null : yyVals[yyV]);
         switch (yyN) {
 case 1:
-					// line 75 "browserparser.jay"
-  { yyVal = new Program(((Class)yyVals[0+yyTop])); }
+					// line 77 "browserparser.jay"
+  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); BytecodeGenerator.codeGen(finalProgram); yyVal=finalProgram;}
   break;
 case 2:
-					// line 76 "browserparser.jay"
-  { yyVal = new Program(((Class)yyVals[0+yyTop])); }
+					// line 78 "browserparser.jay"
+  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); BytecodeGenerator.codeGen(finalProgram); yyVal=finalProgram; }
   break;
 case 3:
-					// line 78 "browserparser.jay"
-  { yyVal = new Class(((Vector)yyVals[-2+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+					// line 80 "browserparser.jay"
+  { yyVal = new Class(new Type(((String)yyVals[-5+yyTop])), ((Vector)yyVals[-2+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 4:
-					// line 80 "browserparser.jay"
-  { yyVal = new Class( new Vector(), new Vector() ); }
+					// line 82 "browserparser.jay"
+  { yyVal = new Class(new Type(((String)yyVals[-3+yyTop])), new Vector(), new Vector()); }
   break;
 case 5:
-					// line 82 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 84 "browserparser.jay"
+  { Vector fs = new Vector(); fs.addElement(((Field)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 6:
-					// line 83 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 85 "browserparser.jay"
+  { Vector fs = ((Vector)yyVals[-1+yyTop]) ; fs.addElement(((Field)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 7:
-					// line 85 "browserparser.jay"
+					// line 87 "browserparser.jay"
   { yyVal = new Field(((String)yyVals[-1+yyTop]), ((Type)yyVals[-2+yyTop])); }
   break;
 case 8:
-					// line 87 "browserparser.jay"
-  { yyVal = new Type(); }
+					// line 89 "browserparser.jay"
+  { yyVal = new Type(((String)yyVals[0+yyTop])); }
   break;
 case 9:
-					// line 89 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 91 "browserparser.jay"
+  { Vector fs = new Vector(); fs.addElement(((Method)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 10:
-					// line 90 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 92 "browserparser.jay"
+  { Vector fs = ((Vector)yyVals[-1+yyTop]) ; fs.addElement(((Method)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 11:
-					// line 92 "browserparser.jay"
+					// line 94 "browserparser.jay"
   { yyVal = new Method(((String)yyVals[-4+yyTop]), ((Type)yyVals[-5+yyTop]), ((Vector)yyVals[-2+yyTop]), ((Block)yyVals[0+yyTop])); }
   break;
 case 12:
-					// line 94 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 95 "browserparser.jay"
+  { yyVal = new Method(((String)yyVals[-3+yyTop]), ((Type)yyVals[-4+yyTop]), new Vector(), ((Block)yyVals[0+yyTop])); }
   break;
 case 13:
-					// line 95 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 97 "browserparser.jay"
+  { Vector fs = new Vector(); fs.addElement(((Parameter)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 14:
-					// line 97 "browserparser.jay"
-  { yyVal = new Parameter(((String)yyVals[0+yyTop]), ((Type)yyVals[-1+yyTop])); }
+					// line 98 "browserparser.jay"
+  { Vector fs = ((Vector)yyVals[-2+yyTop]) ; fs.addElement(((Parameter)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 15:
-					// line 99 "browserparser.jay"
-  { yyVal = new Block( new Vector() ); }
+					// line 100 "browserparser.jay"
+  { yyVal = new Parameter(((String)yyVals[0+yyTop]), ((Type)yyVals[-1+yyTop])); }
   break;
 case 16:
-					// line 100 "browserparser.jay"
-  { yyVal = new Block(((Vector)yyVals[-1+yyTop])); }
+					// line 102 "browserparser.jay"
+  { yyVal = new Block(new Vector()); }
   break;
 case 17:
-					// line 102 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 103 "browserparser.jay"
+  { yyVal = new Block(((Vector)yyVals[-1+yyTop])); }
   break;
 case 18:
-					// line 103 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 105 "browserparser.jay"
+  { Vector fs = new Vector(); fs.addElement(((Stmt)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 19:
-					// line 105 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 106 "browserparser.jay"
+  { Vector fs = ((Vector)yyVals[-1+yyTop]) ; fs.addElement(((Stmt)yyVals[0+yyTop])); yyVal = fs; }
   break;
 case 20:
-					// line 106 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 108 "browserparser.jay"
+  {}
   break;
 case 21:
-					// line 107 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 109 "browserparser.jay"
+  {}
   break;
 case 22:
-					// line 108 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 110 "browserparser.jay"
+  {}
   break;
 case 23:
-					// line 109 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 111 "browserparser.jay"
+  {}
   break;
 case 24:
-					// line 110 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 112 "browserparser.jay"
+  {}
   break;
 case 25:
-					// line 111 "browserparser.jay"
-  { yyVal = new Stmt(); }
+					// line 113 "browserparser.jay"
+  {}
   break;
 case 26:
-					// line 113 "browserparser.jay"
-  { yyVal = new If(((Expr)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop]), new Stmt()); }
+					// line 114 "browserparser.jay"
+  {}
   break;
 case 27:
-					// line 115 "browserparser.jay"
-  { yyVal = new If(((Expr)yyVals[-4+yyTop]), ((Stmt)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop])); }
+					// line 116 "browserparser.jay"
+  { yyVal = new If(((Expr)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop]), new Block(new Vector())); }
   break;
 case 28:
-					// line 117 "browserparser.jay"
-  { yyVal = new While(((Expr)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop])); }
+					// line 118 "browserparser.jay"
+  { yyVal = new If(((Expr)yyVals[-4+yyTop]), ((Stmt)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop])); }
   break;
 case 29:
-					// line 119 "browserparser.jay"
-  { yyVal = new Return(((Expr)yyVals[-1+yyTop])); }
+					// line 120 "browserparser.jay"
+  { yyVal = new While(((Expr)yyVals[-2+yyTop]), ((Stmt)yyVals[0+yyTop])); }
   break;
 case 30:
-					// line 121 "browserparser.jay"
-  { yyVal = new StmtExprExpr(((StmtExpr)yyVals[0+yyTop])); }
+					// line 122 "browserparser.jay"
+  { yyVal = new Return(((Expr)yyVals[-1+yyTop])); }
   break;
 case 31:
-					// line 123 "browserparser.jay"
-  { yyVal = new StmtExprStmt(((StmtExpr)yyVals[0+yyTop])); }
+					// line 124 "browserparser.jay"
+  { yyVal = new StmtExprExpr(((StmtExpr)yyVals[0+yyTop])); }
   break;
 case 32:
-					// line 125 "browserparser.jay"
-  { yyVal = new LocalVarDecl(((Type)yyVals[-2+yyTop]), ((String)yyVals[-1+yyTop])); }
+					// line 126 "browserparser.jay"
+  { yyVal = new StmtExprStmt(((StmtExpr)yyVals[0+yyTop])); }
   break;
 case 33:
-					// line 127 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 128 "browserparser.jay"
+  { yyVal = new LocalVarDecl(((Type)yyVals[-2+yyTop]), ((String)yyVals[-1+yyTop])); }
   break;
 case 34:
-					// line 128 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 130 "browserparser.jay"
+  {}
   break;
 case 35:
-					// line 129 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 131 "browserparser.jay"
+  {}
   break;
 case 36:
-					// line 130 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 132 "browserparser.jay"
+  {}
   break;
 case 37:
-					// line 131 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 133 "browserparser.jay"
+  {}
   break;
 case 38:
-					// line 132 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 134 "browserparser.jay"
+  {}
   break;
 case 39:
-					// line 133 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 135 "browserparser.jay"
+  {}
   break;
 case 40:
-					// line 134 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 136 "browserparser.jay"
+  {}
   break;
 case 41:
-					// line 135 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 137 "browserparser.jay"
+  {}
   break;
 case 42:
-					// line 136 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 138 "browserparser.jay"
+  {}
   break;
 case 43:
-					// line 137 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 139 "browserparser.jay"
+  {}
   break;
 case 44:
-					// line 138 "browserparser.jay"
-  { yyVal = new Expr(); }
+					// line 140 "browserparser.jay"
+  {}
   break;
 case 45:
-					// line 140 "browserparser.jay"
-  { yyVal = new StmtExpr(); }
+					// line 141 "browserparser.jay"
+  {}
   break;
 case 46:
-					// line 141 "browserparser.jay"
-  { yyVal = new StmtExpr(); }
+					// line 143 "browserparser.jay"
+  {}
   break;
 case 47:
-					// line 142 "browserparser.jay"
-  { yyVal = new StmtExpr(); }
+					// line 144 "browserparser.jay"
+  {}
   break;
 case 48:
-					// line 143 "browserparser.jay"
-  { yyVal = new StmtExpr(); }
+					// line 145 "browserparser.jay"
+  {}
   break;
 case 49:
-					// line 145 "browserparser.jay"
-  { yyVal = new This(); }
+					// line 146 "browserparser.jay"
+  {}
   break;
 case 50:
-					// line 147 "browserparser.jay"
-  { yyVal = new Super(); }
+					// line 148 "browserparser.jay"
+  { yyVal = new This(); }
   break;
 case 51:
-					// line 149 "browserparser.jay"
-  { yyVal = new LocalOrFieldVar(((String)yyVals[0+yyTop])); }
+					// line 150 "browserparser.jay"
+  { yyVal = new Super(); }
   break;
 case 52:
-					// line 151 "browserparser.jay"
-  { yyVal = new Integer(((String)yyVals[0+yyTop])); }
+					// line 152 "browserparser.jay"
+  { yyVal = new LocalOrFieldVar(((String)yyVals[0+yyTop])); }
   break;
 case 53:
-					// line 153 "browserparser.jay"
-  { yyVal = new Binary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[-2+yyTop]), ((Expr)yyVals[0+yyTop])); }
+					// line 154 "browserparser.jay"
+  { yyVal = new Integer(((String)yyVals[0+yyTop])); }
   break;
 case 54:
-					// line 155 "browserparser.jay"
-  { yyVal = new Unary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[0+yyTop])); }
+					// line 156 "browserparser.jay"
+  { yyVal = new Binary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[-2+yyTop]), ((Expr)yyVals[0+yyTop])); }
   break;
 case 55:
-					// line 157 "browserparser.jay"
-  { yyVal = new Bool(((String)yyVals[0+yyTop])); }
+					// line 158 "browserparser.jay"
+  { yyVal = new Unary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[0+yyTop])); }
   break;
 case 56:
-					// line 159 "browserparser.jay"
-  { yyVal = new InstVar(((LocalOrFieldVar)yyVals[-2+yyTop]), ((String)yyVals[0+yyTop])); }
+					// line 160 "browserparser.jay"
+  { yyVal = new Bool(((String)yyVals[0+yyTop])); }
   break;
 case 57:
-					// line 161 "browserparser.jay"
-  { yyVal = new JString(((String)yyVals[0+yyTop])); }
+					// line 162 "browserparser.jay"
+  { yyVal = new InstVar(((Expr)yyVals[-2+yyTop]), ((String)yyVals[0+yyTop])); }
   break;
 case 58:
-					// line 163 "browserparser.jay"
-  { yyVal = new Jnull(); }
+					// line 164 "browserparser.jay"
+  { yyVal = new JString(((String)yyVals[0+yyTop])); }
   break;
 case 59:
-					// line 165 "browserparser.jay"
-  { yyVal = new Char(((String)yyVals[0+yyTop])); }
+					// line 166 "browserparser.jay"
+  { yyVal = new Jnull(); }
   break;
 case 60:
-					// line 167 "browserparser.jay"
-  { yyVal = new Assign(((String)yyVals[-2+yyTop]), ((Expr)yyVals[-3+yyTop]), ((Expr)yyVals[-1+yyTop])); }
+					// line 168 "browserparser.jay"
+  { yyVal = new Char(((String)yyVals[0+yyTop])); }
   break;
 case 61:
-					// line 169 "browserparser.jay"
-  { yyVal = new New(((Type)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+					// line 170 "browserparser.jay"
+  { yyVal = new Assign(((String)yyVals[-3+yyTop]), ((Expr)yyVals[-1+yyTop])); }
   break;
 case 62:
-					// line 171 "browserparser.jay"
-  { yyVal = new MethodCall(new Expr(), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+					// line 172 "browserparser.jay"
+  { yyVal = new New(((Type)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 63:
 					// line 173 "browserparser.jay"
-  { yyVal = new MethodCall(new Expr(), ((String)yyVals[-2+yyTop]), new Vector()); }
+  { yyVal = new New(((Type)yyVals[-2+yyTop]), new Vector()); }
   break;
 case 64:
 					// line 175 "browserparser.jay"
-  { yyVal = new Vector(); }
+  { yyVal = new MethodCall(((Expr)yyVals[-5+yyTop]), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 65:
 					// line 176 "browserparser.jay"
+  { yyVal = new MethodCall(new This(), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+  break;
+case 66:
+					// line 178 "browserparser.jay"
+  { yyVal = new MethodCall(((Expr)yyVals[-4+yyTop]), ((String)yyVals[-2+yyTop]), new Vector()); }
+  break;
+case 67:
+					// line 179 "browserparser.jay"
+  { yyVal = new MethodCall(new This(), ((String)yyVals[-2+yyTop]), new Vector()); }
+  break;
+case 68:
+					// line 181 "browserparser.jay"
   { yyVal = new Vector(); }
   break;
-					// line 526 "-"
+case 69:
+					// line 182 "browserparser.jay"
+  { yyVal = new Vector(); }
+  break;
+					// line 543 "-"
         }
         yyTop -= YyLenClass.yyLen[yyN];
         yyState = yyStates[yyTop];
         int yyM = YyLhsClass.yyLhs[yyN];
         if (yyState == 0 && yyM == 0) {
-          if (yydebug != null) yydebug.shift(0, yyFinal);
+//t          if (yydebug != null) yydebug.shift(0, yyFinal);
           yyState = yyFinal;
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -540,15 +556,15 @@ case 65:
           /* modified by diho, 14.04.2004
              if "empty token", get next token */
             if (yyToken == null) {yyToken = new EOF();}
-            if (yydebug != null)
+//t            if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value() by yyToken.value*/
-               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
+//t               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0) */
           if (yyToken.tokennr == 0) {
-            if (yydebug != null) yydebug.accept(yyVal);
+//t            if (yydebug != null) yydebug.accept(yyVal);
             return yyVal;
           }
           continue yyLoop;
@@ -558,7 +574,7 @@ case 65:
           yyState = YyTableClass.yyTable[yyN];
         else
           yyState = YyDgotoClass.yyDgoto[yyM];
-        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
+//t        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
 	 continue yyLoop;
       }
     }
@@ -568,12 +584,12 @@ case 65:
 
     public static final short yyLhs [] = {              -1,
           0,    0,    1,    2,   33,   33,    4,    6,   35,   35,
-          3,   37,   37,    5,   26,   26,   34,   34,   20,   20,
-         20,   20,   20,   20,   20,   23,   24,   22,   25,   19,
-         27,   21,    7,    7,    7,    7,    7,    7,    7,    7,
-          7,    7,    7,    7,   28,   28,   28,   28,    9,    8,
-         16,   10,   17,   18,   11,   12,   13,   14,   15,   32,
-         29,   30,   31,   36,   36,
+          3,    3,   37,   37,    5,   26,   26,   34,   34,   20,
+         20,   20,   20,   20,   20,   20,   23,   24,   22,   25,
+         19,   27,   21,    7,    7,    7,    7,    7,    7,    7,
+          7,    7,    7,    7,    7,   29,   29,   29,   29,    9,
+          8,   16,   10,   17,   18,   11,   12,   13,   14,   15,
+         32,   28,   28,   30,   30,   31,   31,   36,   36,
     };
   } /* End of class YyLhsClass */
 
@@ -581,12 +597,12 @@ case 65:
 
     public static final short yyLen [] = {           2,
           1,    1,    6,    4,    1,    2,    3,    1,    1,    2,
-          6,    1,    3,    2,    2,    3,    1,    2,    1,    1,
-          1,    1,    1,    1,    1,    5,    7,    5,    3,    1,
-          1,    3,    1,    1,    1,    1,    1,    1,    1,    1,
+          6,    5,    1,    3,    2,    2,    3,    1,    2,    1,
+          1,    1,    1,    1,    1,    1,    5,    7,    5,    3,
+          1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
           1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-          1,    1,    3,    2,    1,    3,    1,    1,    1,    4,
-          5,    4,    3,    1,    2,
+          1,    1,    1,    3,    2,    1,    3,    1,    1,    1,
+          4,    5,    4,    6,    4,    5,    3,    1,    3,
     };
   } /* End class YyLenClass */
 
@@ -595,42 +611,44 @@ case 65:
     public static final short yyDefRed [] = {            0,
           0,    0,    1,    2,    0,    0,    8,    4,    5,    0,
           0,    0,    9,    6,    0,    0,    7,    0,    3,   10,
-          0,    0,    0,   12,    0,    0,   14,    0,    0,   13,
-          0,   11,    0,    0,   52,   57,   59,   55,    0,    0,
-         15,   49,   50,    0,   58,    0,    0,    0,   34,   33,
-         36,   39,   40,   41,   42,   43,    0,   37,   38,   44,
-         17,   25,   21,   19,   20,   23,   22,   24,    0,   46,
-         47,   48,   45,    0,    0,    0,    0,    0,   30,    0,
-          0,    0,    0,    0,    0,   16,   18,    0,    0,   63,
-          0,    0,    0,   29,   32,    0,    0,   56,    0,    0,
-         62,    0,    0,   60,   28,    0,   61,    0,   27,
+          0,    0,    0,    0,   13,    0,    0,    0,   12,   15,
+          0,    0,    0,    0,   53,   58,   60,   56,    0,    0,
+         16,   50,   51,    0,   59,    0,    0,    0,   35,   34,
+         37,   40,   41,   42,   43,   44,   36,   38,   39,   45,
+         18,   26,   22,   20,   21,   24,   23,   25,   47,    0,
+         48,   49,   46,    0,   14,   11,    0,    0,    0,    0,
+          0,   31,    0,    0,    0,    0,    0,   17,   19,    0,
+          0,    0,   67,    0,    0,    0,   30,   33,    0,    0,
+          0,    0,   61,    0,   65,   63,    0,    0,   29,    0,
+          0,   62,   66,    0,    0,   64,   28,
     };
   } /* End of class YyDefRedClass */
 
   protected static final class YyDgotoClass {
 
     public static final short yyDgoto [] = {             2,
-          3,    4,   13,    9,   24,   47,   48,   49,   50,   51,
+          3,    4,   13,    9,   25,   47,   48,   49,   50,   51,
          52,   53,   54,   55,   56,   57,   58,   59,   60,   61,
-         62,   63,   64,   65,   66,   67,   68,   79,   70,   71,
-         72,   73,   11,   74,   16,   92,   26,
+         62,   63,   64,   65,   66,   67,   68,   69,   82,   71,
+         72,   73,   11,   74,   16,   95,   27,
     };
   } /* End of class YyDgotoClass */
 
   protected static final class YySindexClass {
 
-    public static final short yySindex [] = {         -256,
-       -247,    0,    0,    0, -272, -260,    0,    0,    0, -242,
-       -228, -238,    0,    0, -226, -258,    0, -259,    0,    0,
-       -220, -228, -239,    0, -219, -257,    0, -228, -231,    0,
-       -155,    0, -224, -223,    0,    0,    0,    0, -222,  151,
-          0,    0,    0, -228,    0,  151, -216, -245,    0,    0,
-          0,    0,    0,    0,    0,    0, -218,    0,    0,    0,
+    public static final short yySindex [] = {         -250,
+       -236,    0,    0,    0, -238, -259,    0,    0,    0, -214,
+       -203, -202,    0,    0, -198, -257,    0, -245,    0,    0,
+       -182, -258, -174, -193,    0, -173, -264, -153,    0,    0,
+       -203, -193, -163, -162,    0,    0,    0,    0, -247,   21,
+          0,    0,    0, -203,    0,   21, -148, -191,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0, -124,  151,  151,   54, -245,    0, -217,
-       -246, -214,  151,  151, -208,    0,    0, -268, -263,    0,
-       -245,   77,  151,    0,    0, -227, -245,    0,  -62,  -62,
-          0, -245,  100,    0,    0, -200,    0,  -62,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0, -121,    0,    0,   21,   21,   21,  -32,
+       -191,    0, -158, -212, -150, -143,   21,    0,    0, -171,
+       -160, -183,    0, -191, -244,   -8,    0,    0, -154, -191,
+        -57,  -57,    0,   21,    0,    0, -239,   16,    0, -134,
+       -191,    0,    0, -230,  -57,    0,    0,
     };
   } /* End of class YySindexClass */
 
@@ -640,83 +658,71 @@ case 65:
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,    0,    0,  -38,    0,
+          0,    0,    0,    0,    0,    0,    0,    0, -223,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,  -15,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,    0,    0, -186,    0,
-          0,    0,    0,    0,    0,    0,    0,    8,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        123,    0,    0,    0,    0,    0,   31,    0,    0,    0,
-          0,  146,    0,    0,    0,  -93,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0, -185,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+       -265,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0, -226,    0,    0,    0,    0, -213, -260,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,  -89,
+       -197,    0,    0,    0,    0,    0,    0,
     };
   } /* End of class YyRindexClass */
 
   protected static final class YyGindexClass {
 
     public static final short yyGindex [] = {            0,
-          0,    0,   47,   55,   37,   -3,  -39,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,    0,    0,    0,  -69,
-          0,    0,    0,    0,    0,   38,    0,  -31,    0,    0,
-          0,    0,    0,    0,    0,  -23,    0,
+          0,    0,  112,  126,  107,    3,  -39,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,  -72,
+          0,    0,    0,    0,    0,  -12,    0,    0,  -28,    0,
+          0,    0,    0,    0,    0,  -90,    0,
     };
   } /* End of class YyGindexClass */
 
 protected static class yyTable0 {
-  protected static final short yyTable0 [] = {            69,
-         78,    7,   10,    7,   87,   83,   81,   15,    6,   84,
-         83,   99,   21,   17,   84,    1,  100,   28,   25,   22,
-          5,    8,   29,   19,   25,   12,   94,   83,   83,  105,
-        106,   84,   84,    7,   17,   88,   89,   91,  109,   22,
-         80,   18,   69,   96,   97,  104,   83,   23,   27,   31,
-         84,   82,  102,   91,   75,   76,   77,   85,   95,   98,
-        108,   93,   20,  102,   30,   14,   32,   69,   69,  103,
-         31,    0,    0,   31,   31,   31,   69,   31,   31,   31,
-         31,   31,    0,    0,    0,    0,    0,   30,    0,    0,
-         31,   30,    0,    0,   31,   31,   31,   31,   31,   31,
-         31,   33,    0,    0,   34,    0,    7,    0,   35,   36,
-         37,   38,   39,    0,    0,    0,    0,    0,    0,    0,
-          0,   40,    0,    0,    0,   31,   41,   42,   43,   44,
-         45,   46,   33,    0,    0,   34,    0,    7,    0,   35,
-         36,   37,   38,   39,    0,    0,    0,    0,    0,    0,
-          0,    0,   40,    0,    0,    0,   31,   86,   42,   43,
-         44,   45,   46,   26,    0,    0,   26,    0,   26,    0,
-         26,   26,   26,   26,   26,    0,    0,    0,    0,    0,
-          0,    0,    0,   26,    0,    0,    0,   26,   26,   26,
-         26,   26,   26,   26,   33,    0,    0,   34,    0,    7,
-          0,   35,   36,   37,   38,   39,    0,    0,    0,    0,
-          0,    0,    0,    0,   40,    0,    0,    0,   31,    0,
-         42,   43,   44,   45,   46,   51,   51,   51,   51,   51,
-          0,    0,    0,    0,   51,   51,    0,   51,   51,   51,
-          0,   51,    0,    0,   51,   51,   51,   51,   35,   35,
-         35,   35,   35,    0,    0,    0,    0,   35,   35,    0,
-          0,   35,   35,    0,   35,    0,    0,   35,   35,   35,
-         35,   54,   54,   54,   54,   54,    0,    0,    0,    0,
-         54,    0,    0,    0,   54,    0,    0,   54,    0,    0,
-         54,   54,   54,   54,   53,   53,   53,   53,   53,    0,
-          0,    0,    0,   53,    0,    0,    0,   53,    0,    0,
-         53,    0,    0,   53,   53,   53,   53,   35,   36,   37,
-         38,   39,    0,    0,    0,    0,    0,    0,    0,    0,
-         40,    0,    0,   90,    0,    0,   42,   43,   44,   45,
-         35,   36,   37,   38,   39,    0,    0,    0,    0,    0,
-          0,    0,    0,   40,    0,    0,  101,    0,    0,   42,
-         43,   44,   45,   35,   36,   37,   38,   39,    0,    0,
-          0,    0,    0,    0,    0,    0,   40,    0,    0,  107,
-          0,    0,   42,   43,   44,   45,   64,   64,   64,   64,
-         64,    0,    0,    0,    0,    0,    0,    0,    0,   64,
-          0,    0,   64,    0,    0,   64,   64,   64,   64,   65,
-         65,   65,   65,   65,   35,   36,   37,   38,   39,    0,
-          0,    0,   65,    0,    0,   65,    0,   40,   65,   65,
-         65,   65,    0,   42,   43,   44,   45,
+  protected static final short yyTable0 [] = {            70,
+         81,   89,    7,    7,    7,  107,   84,   55,   10,   55,
+         31,   29,   54,   15,   54,   55,   32,  114,   21,   76,
+         54,    1,   24,    8,   26,   19,   79,   17,  109,  110,
+        104,    5,   80,   26,   22,  104,  105,   90,   91,   92,
+         94,  112,  117,    6,  104,   70,   83,  100,   68,   52,
+        116,   52,   52,   12,   68,   52,   94,   52,    7,   57,
+         97,   57,   57,   86,  111,   57,   87,   57,   94,   18,
+         17,   32,   70,   70,   32,   32,   32,   69,   32,   32,
+         32,   32,   32,   69,   86,   23,   70,   87,   28,  103,
+         31,   32,   86,   31,   30,   87,   32,   32,   32,   32,
+         32,   32,   32,   33,   86,   22,   34,   87,    7,  101,
+         35,   36,   37,   38,   39,   86,   77,   78,   87,   85,
+        102,   96,   98,   40,   99,  108,  115,   20,   28,   41,
+         42,   43,   44,   45,   46,   33,   14,   75,   34,    0,
+          7,    0,   35,   36,   37,   38,   39,    0,    0,    0,
+          0,    0,    0,    0,    0,   40,    0,    0,    0,    0,
+         28,   88,   42,   43,   44,   45,   46,   27,    0,    0,
+         27,    0,   27,    0,   27,   27,   27,   27,   27,    0,
+          0,    0,    0,    0,    0,    0,    0,   27,    0,    0,
+          0,    0,   27,   27,   27,   27,   27,   27,   27,   33,
+          0,    0,   34,    0,    7,    0,   35,   36,   37,   38,
+         39,    0,    0,    0,    0,    0,    0,    0,    0,   40,
+          0,    0,    0,    0,   28,    0,   42,   43,   44,   45,
+         46,   35,   36,   37,   38,   39,    0,    0,    0,    0,
+          0,    0,    0,    0,   40,    0,    0,    0,   93,    0,
+          0,   42,   43,   44,   45,   35,   36,   37,   38,   39,
+          0,    0,    0,    0,    0,    0,    0,    0,   40,    0,
+          0,    0,  106,    0,    0,   42,   43,   44,   45,   35,
+         36,   37,   38,   39,   35,   36,   37,   38,   39,    0,
+          0,    0,   40,    0,    0,    0,  113,   40,    0,   42,
+         43,   44,   45,    0,   42,   43,   44,   45,
   };
 }
   protected static final class YyTableClass {
 
-  static short[] yyTable = new short[438];
+  static short[] yyTable = new short[309];
   protected static void yyTableInit () {
      int numyycheck;
      int yyTableerun = 0;
      for (numyycheck = 0; numyycheck <= 1000; numyycheck++) {
-        if (yyTableerun < 438) {
+        if (yyTableerun < 309) {
           yyTable[yyTableerun] = yyTable0.yyTable0[numyycheck];
           yyTableerun++;
         }
@@ -725,61 +731,48 @@ protected static class yyTable0 {
   } /* End of class YyTableClass */
 
 protected static class yyCheck0 {
-  protected static final short yyCheck0 [] = {            31,
-         40,  262,    6,  262,   74,  274,   46,   11,  281,  278,
-        274,  280,   16,  273,  278,  272,  280,  275,   22,  279,
-        268,  282,  280,  282,   28,  268,  273,  274,  274,   99,
-        100,  278,  278,  262,  273,   75,   76,   77,  108,  279,
-         44,  268,   74,   83,   84,  273,  274,  268,  268,  281,
-        278,  268,   92,   93,  279,  279,  279,  276,  273,  268,
-        261,  279,   16,  103,   28,   11,   29,   99,  100,   93,
-        257,   -1,   -1,  260,  261,  262,  108,  264,  265,  266,
-        267,  268,   -1,   -1,   -1,   -1,   -1,  274,   -1,   -1,
-        277,  278,   -1,   -1,  281,  282,  283,  284,  285,  286,
-        287,  257,   -1,   -1,  260,   -1,  262,   -1,  264,  265,
-        266,  267,  268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-         -1,  277,   -1,   -1,   -1,  281,  282,  283,  284,  285,
-        286,  287,  257,   -1,   -1,  260,   -1,  262,   -1,  264,
-        265,  266,  267,  268,   -1,   -1,   -1,   -1,   -1,   -1,
-         -1,   -1,  277,   -1,   -1,   -1,  281,  282,  283,  284,
-        285,  286,  287,  257,   -1,   -1,  260,   -1,  262,   -1,
-        264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,   -1,
-         -1,   -1,   -1,  277,   -1,   -1,   -1,  281,  282,  283,
-        284,  285,  286,  287,  257,   -1,   -1,  260,   -1,  262,
-         -1,  264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,
-         -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,  281,   -1,
-        283,  284,  285,  286,  287,  264,  265,  266,  267,  268,
-         -1,   -1,   -1,   -1,  273,  274,   -1,  276,  277,  278,
-         -1,  280,   -1,   -1,  283,  284,  285,  286,  264,  265,
-        266,  267,  268,   -1,   -1,   -1,   -1,  273,  274,   -1,
-         -1,  277,  278,   -1,  280,   -1,   -1,  283,  284,  285,
-        286,  264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,
-        273,   -1,   -1,   -1,  277,   -1,   -1,  280,   -1,   -1,
-        283,  284,  285,  286,  264,  265,  266,  267,  268,   -1,
-         -1,   -1,   -1,  273,   -1,   -1,   -1,  277,   -1,   -1,
-        280,   -1,   -1,  283,  284,  285,  286,  264,  265,  266,
-        267,  268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-        277,   -1,   -1,  280,   -1,   -1,  283,  284,  285,  286,
-        264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,   -1,
-         -1,   -1,   -1,  277,   -1,   -1,  280,   -1,   -1,  283,
-        284,  285,  286,  264,  265,  266,  267,  268,   -1,   -1,
-         -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,  280,
-         -1,   -1,  283,  284,  285,  286,  264,  265,  266,  267,
+  protected static final short yyCheck0 [] = {            28,
+         40,   74,  262,  262,  262,   96,   46,  273,    6,  275,
+        275,   24,  273,   11,  275,  281,  281,  108,   16,   32,
+        281,  272,  281,  283,   22,  283,  274,  273,  101,  102,
+        275,  268,  280,   31,  280,  275,  281,   77,   78,   79,
+         80,  281,  115,  282,  275,   74,   44,   87,  275,  273,
+        281,  275,  276,  268,  281,  279,   96,  281,  262,  273,
+        273,  275,  276,  276,  104,  279,  279,  281,  108,  268,
+        273,  257,  101,  102,  260,  261,  262,  275,  264,  265,
+        266,  267,  268,  281,  276,  268,  115,  279,  282,  273,
+        276,  277,  276,  279,  268,  279,  282,  283,  284,  285,
+        286,  287,  288,  257,  276,  280,  260,  279,  262,  281,
+        264,  265,  266,  267,  268,  276,  280,  280,  279,  268,
+        281,  280,  273,  277,  268,  280,  261,   16,  282,  283,
+        284,  285,  286,  287,  288,  257,   11,   31,  260,   -1,
+        262,   -1,  264,  265,  266,  267,  268,   -1,   -1,   -1,
+         -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,   -1,
+        282,  283,  284,  285,  286,  287,  288,  257,   -1,   -1,
+        260,   -1,  262,   -1,  264,  265,  266,  267,  268,   -1,
+         -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,
+         -1,   -1,  282,  283,  284,  285,  286,  287,  288,  257,
+         -1,   -1,  260,   -1,  262,   -1,  264,  265,  266,  267,
         268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,
-         -1,   -1,  280,   -1,   -1,  283,  284,  285,  286,  264,
+         -1,   -1,   -1,   -1,  282,   -1,  284,  285,  286,  287,
+        288,  264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,
+         -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,  281,   -1,
+         -1,  284,  285,  286,  287,  264,  265,  266,  267,  268,
+         -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,
+         -1,   -1,  281,   -1,   -1,  284,  285,  286,  287,  264,
         265,  266,  267,  268,  264,  265,  266,  267,  268,   -1,
-         -1,   -1,  277,   -1,   -1,  280,   -1,  277,  283,  284,
-        285,  286,   -1,  283,  284,  285,  286,
+         -1,   -1,  277,   -1,   -1,   -1,  281,  277,   -1,  284,
+        285,  286,  287,   -1,  284,  285,  286,  287,
   };
 }
   protected static final class YyCheckClass {
 
-  static short[] yyCheck = new short[438];
+  static short[] yyCheck = new short[309];
   protected static void yyCheckInit () {
      int numyycheck;
      int yyCheckerun = 0;
      for (numyycheck = 0; numyycheck <= 1000; numyycheck++) {
-        if (yyCheckerun < 438) {
+        if (yyCheckerun < 309) {
           yyCheck[yyCheckerun] = yyCheck0.yyCheck0[numyycheck];
           yyCheckerun++;
         }
@@ -789,77 +782,81 @@ protected static class yyCheck0 {
   } /* End of class YyCheckClass */
 
 
-  protected static final class YyRuleClass {
+//t  protected static final class YyRuleClass {
 
-    public static final String yyRule [] = {
-    "$accept : programm",
-    "programm : class",
-    "programm : emptyClass",
-    "class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET",
-    "emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET",
-    "fields : field",
-    "fields : fields field",
-    "field : type IDENTIFIER SEMICOLON",
-    "type : JTYPE",
-    "methods : method",
-    "methods : methods method",
-    "method : type IDENTIFIER LBRACE parameters RBRACE block",
-    "parameters : parameter",
-    "parameters : parameters COMMA parameter",
-    "parameter : type IDENTIFIER",
-    "block : LBRACKET RBRACKET",
-    "block : LBRACKET statements RBRACKET",
-    "statements : statement",
-    "statements : statements statement",
-    "statement : ifthenstatement",
-    "statement : ifthenelsestatement",
-    "statement : whilestatement",
-    "statement : block",
-    "statement : returnstatement",
-    "statement : stmtExprStmt",
-    "statement : localVarDecl",
-    "ifthenstatement : JIF LBRACE expression RBRACE statement",
-    "ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement",
-    "whilestatement : JWHILE LBRACE expression RBRACE statement",
-    "returnstatement : JRETURN expression SEMICOLON",
-    "stmtExprExpr : stmtExpr",
-    "stmtExprStmt : stmtExpr",
-    "localVarDecl : type IDENTIFIER SEMICOLON",
-    "expression : this",
-    "expression : super",
-    "expression : localOrFieldVar",
-    "expression : integer",
-    "expression : binary",
-    "expression : unary",
-    "expression : bool",
-    "expression : instVar",
-    "expression : string",
-    "expression : jnull",
-    "expression : char",
-    "expression : stmtExprExpr",
-    "stmtExpr : assign",
-    "stmtExpr : new",
-    "stmtExpr : methodCall",
-    "stmtExpr : emptyMethodCall",
-    "this : JTHIS",
-    "super : JSUPER",
-    "localOrFieldVar : IDENTIFIER",
-    "integer : INT",
-    "binary : expression OPERATOR expression",
-    "unary : UNARYOPERATOR expression",
-    "bool : BOOLEAN",
-    "instVar : localOrFieldVar POINT IDENTIFIER",
-    "string : STRING",
-    "jnull : NULL",
-    "char : CHAR",
-    "assign : expression EQUALS expression SEMICOLON",
-    "new : JNEW type LBRACE expressions RBRACE",
-    "methodCall : IDENTIFIER LBRACE expressions RBRACE",
-    "emptyMethodCall : IDENTIFIER LBRACE RBRACE",
-    "expressions : expression",
-    "expressions : expressions expression",
-    };
-  } /* End of class YyRuleClass */
+//t    public static final String yyRule [] = {
+//t    "$accept : programm",
+//t    "programm : class",
+//t    "programm : emptyClass",
+//t    "class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET",
+//t    "emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET",
+//t    "fields : field",
+//t    "fields : fields field",
+//t    "field : type IDENTIFIER SEMICOLON",
+//t    "type : JTYPE",
+//t    "methods : method",
+//t    "methods : methods method",
+//t    "method : type IDENTIFIER LBRACE parameters RBRACE block",
+//t    "method : type IDENTIFIER LBRACE RBRACE block",
+//t    "parameters : parameter",
+//t    "parameters : parameters COMMA parameter",
+//t    "parameter : type IDENTIFIER",
+//t    "block : LBRACKET RBRACKET",
+//t    "block : LBRACKET statements RBRACKET",
+//t    "statements : statement",
+//t    "statements : statements statement",
+//t    "statement : ifthenstatement",
+//t    "statement : ifthenelsestatement",
+//t    "statement : whilestatement",
+//t    "statement : block",
+//t    "statement : returnstatement",
+//t    "statement : stmtExprStmt",
+//t    "statement : localVarDecl",
+//t    "ifthenstatement : JIF LBRACE expression RBRACE statement",
+//t    "ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement",
+//t    "whilestatement : JWHILE LBRACE expression RBRACE statement",
+//t    "returnstatement : JRETURN expression SEMICOLON",
+//t    "stmtExprExpr : stmtExpr",
+//t    "stmtExprStmt : stmtExpr",
+//t    "localVarDecl : type IDENTIFIER SEMICOLON",
+//t    "expression : this",
+//t    "expression : super",
+//t    "expression : localOrFieldVar",
+//t    "expression : integer",
+//t    "expression : binary",
+//t    "expression : unary",
+//t    "expression : bool",
+//t    "expression : instVar",
+//t    "expression : string",
+//t    "expression : jnull",
+//t    "expression : char",
+//t    "expression : stmtExprExpr",
+//t    "stmtExpr : assign",
+//t    "stmtExpr : new",
+//t    "stmtExpr : methodCall",
+//t    "stmtExpr : emptyMethodCall",
+//t    "this : JTHIS",
+//t    "super : JSUPER",
+//t    "localOrFieldVar : IDENTIFIER",
+//t    "integer : INT",
+//t    "binary : expression OPERATOR expression",
+//t    "unary : UNARYOPERATOR expression",
+//t    "bool : BOOLEAN",
+//t    "instVar : expression POINT IDENTIFIER",
+//t    "string : STRING",
+//t    "jnull : NULL",
+//t    "char : JCHAR",
+//t    "assign : IDENTIFIER EQUALS expression SEMICOLON",
+//t    "new : JNEW type LBRACE expressions RBRACE",
+//t    "new : JNEW type LBRACE RBRACE",
+//t    "methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE",
+//t    "methodCall : IDENTIFIER LBRACE expressions RBRACE",
+//t    "emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE",
+//t    "emptyMethodCall : IDENTIFIER LBRACE RBRACE",
+//t    "expressions : expression",
+//t    "expressions : expressions COMMA expression",
+//t    };
+//t  } /* End of class YyRuleClass */
 
   protected static final class YyNameClass {
 
@@ -883,17 +880,18 @@ protected static class yyCheck0 {
     null,null,null,null,null,null,null,null,null,null,null,null,null,null,
     null,null,null,null,null,null,null,null,null,null,null,null,null,null,
     null,null,null,null,null,null,null,"JWHILE","DO","FOR","JIF","ELSE",
-    "JTYPE","FLOAT","INT","STRING","CHAR","BOOLEAN","IDENTIFIER",
+    "JTYPE","FLOAT","INT","STRING","JCHAR","BOOLEAN","IDENTIFIER",
     "ACCESSRIGHT","STATIC","ABSTRACT","JCLASS","SEMICOLON","EQUALS",
-    "COMMA","POINT","UNARYOPERATOR","OPERATOR","LBRACE","RBRACE",
-    "LBRACKET","RBRACKET","JTHIS","JSUPER","JNEW","NULL","JRETURN","TRUE",
+    "COMMA","POINT","UNARYOPERATOR","BINARYOPERATOR","OPERATOR","LBRACE",
+    "RBRACE","LBRACKET","RBRACKET","JTHIS","JSUPER","JNEW","NULL",
+    "JRETURN","TRUE",
     };
   } /* End of class YyNameClass */
 
 
-					// line 180 "browserparser.jay"
+					// line 186 "browserparser.jay"
 }
-      					// line 905 "-"
+      					// line 904 "-"
 class yyTokenclass {	
    public int tokennr;	
    public Object value;
@@ -1004,12 +1002,12 @@ class EOF extends yyTokenclass {
       this.tokennr = 265;
    }
 }
-  final class CHAR extends yyTokenclass {
-   CHAR(Object o) {
+  final class JCHAR extends yyTokenclass {
+   JCHAR(Object o) {
       super(o);
       this.tokennr = 266;
    }
-   CHAR() {
+   JCHAR() {
       super();
       this.tokennr = 266;
    }
@@ -1124,114 +1122,124 @@ class EOF extends yyTokenclass {
       this.tokennr = 277;
    }
 }
-  final class OPERATOR extends yyTokenclass {
-   OPERATOR(Object o) {
+  final class BINARYOPERATOR extends yyTokenclass {
+   BINARYOPERATOR(Object o) {
       super(o);
       this.tokennr = 278;
    }
-   OPERATOR() {
+   BINARYOPERATOR() {
       super();
       this.tokennr = 278;
+   }
+}
+  final class OPERATOR extends yyTokenclass {
+   OPERATOR(Object o) {
+      super(o);
+      this.tokennr = 279;
+   }
+   OPERATOR() {
+      super();
+      this.tokennr = 279;
    }
 }
   final class LBRACE extends yyTokenclass {
    LBRACE(Object o) {
       super(o);
-      this.tokennr = 279;
+      this.tokennr = 280;
    }
    LBRACE() {
       super();
-      this.tokennr = 279;
+      this.tokennr = 280;
    }
 }
   final class RBRACE extends yyTokenclass {
    RBRACE(Object o) {
       super(o);
-      this.tokennr = 280;
+      this.tokennr = 281;
    }
    RBRACE() {
       super();
-      this.tokennr = 280;
+      this.tokennr = 281;
    }
 }
   final class LBRACKET extends yyTokenclass {
    LBRACKET(Object o) {
       super(o);
-      this.tokennr = 281;
+      this.tokennr = 282;
    }
    LBRACKET() {
       super();
-      this.tokennr = 281;
+      this.tokennr = 282;
    }
 }
   final class RBRACKET extends yyTokenclass {
    RBRACKET(Object o) {
       super(o);
-      this.tokennr = 282;
+      this.tokennr = 283;
    }
    RBRACKET() {
       super();
-      this.tokennr = 282;
+      this.tokennr = 283;
    }
 }
   final class JTHIS extends yyTokenclass {
    JTHIS(Object o) {
       super(o);
-      this.tokennr = 283;
+      this.tokennr = 284;
    }
    JTHIS() {
       super();
-      this.tokennr = 283;
+      this.tokennr = 284;
    }
 }
   final class JSUPER extends yyTokenclass {
    JSUPER(Object o) {
       super(o);
-      this.tokennr = 284;
+      this.tokennr = 285;
    }
    JSUPER() {
       super();
-      this.tokennr = 284;
+      this.tokennr = 285;
    }
 }
   final class JNEW extends yyTokenclass {
    JNEW(Object o) {
       super(o);
-      this.tokennr = 285;
+      this.tokennr = 286;
    }
    JNEW() {
       super();
-      this.tokennr = 285;
+      this.tokennr = 286;
    }
 }
   final class NULL extends yyTokenclass {
    NULL(Object o) {
       super(o);
-      this.tokennr = 286;
+      this.tokennr = 287;
    }
    NULL() {
       super();
-      this.tokennr = 286;
+      this.tokennr = 287;
    }
 }
   final class JRETURN extends yyTokenclass {
    JRETURN(Object o) {
       super(o);
-      this.tokennr = 287;
+      this.tokennr = 288;
    }
    JRETURN() {
       super();
-      this.tokennr = 287;
+      this.tokennr = 288;
    }
 }
   final class TRUE extends yyTokenclass {
    TRUE(Object o) {
       super(o);
-      this.tokennr = 288;
+      this.tokennr = 289;
    }
    TRUE() {
       super();
-      this.tokennr = 288;
+      this.tokennr = 289;
    }
 }
 final class yyError extends yyTokenclass {

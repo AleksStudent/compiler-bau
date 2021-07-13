@@ -6,22 +6,20 @@ import java.util.Vector;
 import org.objectweb.asm.*;
 
 public class BytecodeGenerator {
-	Class classToCode;
-	Program programToCode;
 
 	static void writeClassfile(ClassWriter cw) throws IOException {
 		byte[] bytes = cw.toByteArray();
 		String className = new ClassReader(bytes).getClassName();
-		File outputFile = new File("./", className + ".class");
+		File outputFile = new File("./", "test" + ".class");
 		FileOutputStream output = new FileOutputStream(outputFile);
 		output.write(bytes);
 		output.close();
 	}
 
-	public BytecodeGenerator(Program i_program) throws IOException {
-		this.programToCode = i_program;
+	static void codeGen(Program i_program) throws IOException {
+		Program programToCode = i_program;
 
 		// begin bytecode generation
-		this.programToCode.codeGen(i_program);
+		programToCode.codeGen(i_program);
 	}
 }

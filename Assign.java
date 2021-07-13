@@ -76,7 +76,7 @@ public class Assign extends StmtExpr {
 				   expr instanceof Jnull) {
 			System.out.println("[Assign] name = someValue");
 			// not very elegant but as all the above mentioned type have codeGen it should be fine
-			((Bool) expr).codeGen(cw, method);
+			expr.codeGen(cw, method, i_class, localVar);
 			if (indexOf == 0) {
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
@@ -86,7 +86,7 @@ public class Assign extends StmtExpr {
 			}
 
 		} else if (expr instanceof JString) {
-			((JString) expr).codeGen(cw, method);
+			expr.codeGen(cw, method, i_class, localVar);
 			if (indexOf == 0) {
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");

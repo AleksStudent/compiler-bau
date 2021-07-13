@@ -21,7 +21,7 @@ public class Field implements TypeCheckable {
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw) {
-		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getType(), null, null);
+		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getASMType(), null, null);
 		cw.visitEnd();
 		System.out.println("[Field] Created Field: " + name + ", " + type.getType());
 

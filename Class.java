@@ -17,11 +17,11 @@ public class Class {
         this.type = type;
         this.fields = fields;
         this.methods = methods;
-        this.name = "";
+        this.name = "Testt";
     }
 
 	public void codeGen(ClassWriter cw, Class i_class) {
-		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, this.type.getType(), null, "java/lang/Object", null);
+		cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC,"Testt", null, "java/lang/Object", null);
 
 		System.out.println("[Class] Creating Constructor");
 		// create constructor

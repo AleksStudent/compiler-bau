@@ -30,9 +30,9 @@ public class Method implements TypeCheckable {
 		Vector<LocalVarDecl> localVars = new Vector<LocalVarDecl>();
 
 		for (Parameter parameter: parameters) {
-			parameterInput += parameter.type.getType();
+			parameterInput += parameter.type.getASMType();
 		}
-		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
+		String methodSignature = "(" + parameterInput + ")" + this.returnType.getASMType();
 		System.out.println("[Method] Parameter Input: " + methodSignature);
 
 		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name, methodSignature, null, null);
