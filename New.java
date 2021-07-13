@@ -31,10 +31,9 @@ public class New extends StmtExpr {
 		String stringOperand = "(String)String";
 		String selectedOperand;
 		
-		/*
-		switch(type.name) {
-			case "String": selectedOperand = stringOperand; break;
-			case "Object": selectedOperand = objectOperand; break;
+		/*switch(type.name) {
+			case Type.TYPE_STRING.getType(): selectedOperand = stringOperand; break;
+			default: selectedOperand = objectOperand; break;
 		}
 
 		method.visitMethodInsn(Opcodes.INVOKESPECIAL, type.name, "<init>", selectedOperand, false);
