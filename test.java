@@ -20,6 +20,7 @@ class TestClass{
 		test8 = new String("abc");
 		test9 = this.test("abc");
 		test10 = this.myNum;
+		test11 = test("abc");
 
 		if (test3) {
 
