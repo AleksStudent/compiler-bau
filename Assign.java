@@ -66,7 +66,7 @@ public class Assign extends StmtExpr {
             }
 
             if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
                 System.out.println("[Assign] Writing to Field Var...");
             } else {
                 method.visitVarInsn(opCode, indexOf);
@@ -80,7 +80,7 @@ public class Assign extends StmtExpr {
             // not very elegant but as all the above mentioned type have codeGen it should be fine
             ((Bool) expr).codeGen(cw, method);
             if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
                 System.out.println("[Assign] Writing to Field Var...");
             } else {
                 method.visitVarInsn(Opcodes.ISTORE, indexOf);
@@ -90,7 +90,7 @@ public class Assign extends StmtExpr {
         } else if (type.equals(Type.TYPE_STRING)) {
             ((JString) expr).codeGen(cw, method);
             if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
                 System.out.println("[Assign] Writing to Field Var...");
             } else {
                 // write reference

@@ -113,7 +113,7 @@ statement : ifthenstatement {}
           | stmtExprStmt {}
           | localVarDecl {}
 
-ifthenstatement : JIF LBRACE expression RBRACE statement { $$ = new If($3, $5, new Jnull()); }
+ifthenstatement : JIF LBRACE expression RBRACE statement { $$ = new If($3, $5, null); }
 
 ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement { $$ = new If($3, $5, $7); }
 

@@ -1,5 +1,4 @@
 ./Assign.java
-./BeispielClass1.java
 ./Binary.java
 ./Block.java
 ./Bool.java
@@ -29,8 +28,6 @@
 ./StmtExprExpr.java
 ./StmtExprStmt.java
 ./Super.java
-./Test.java
-./test2.java
 ./This.java
 ./Type.java
 ./TypeCheckable.java

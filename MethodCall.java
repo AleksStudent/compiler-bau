@@ -43,7 +43,7 @@ public class MethodCall extends StmtExpr {
 		}
 
 		System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
-		method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.name, this.name, methodSignature, false);
+		method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.type.getType(), this.name, methodSignature, false);
 	}
 
     @Override
