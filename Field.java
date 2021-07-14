@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -21,8 +22,8 @@ public class Field implements TypeCheckable {
 	 * @param cw
 	 */
 	public void codeGen(ClassWriter cw) {
-		cw.visitField(Opcodes.ACC_PUBLIC, name, type.getASMType(), null, null);
-		cw.visitEnd();
+		FieldVisitor fw = cw.visitField(Opcodes.ACC_PUBLIC, name, type.getASMType(), null, null);
+		fw.visitEnd();
 		System.out.println("[Field] Created Field: " + name + ", " + type.getType());
 
 	}
@@ -45,7 +46,6 @@ public class Field implements TypeCheckable {
 
 	@Override
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
+		this.codeGen(cw);
 	}
 }

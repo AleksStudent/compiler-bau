@@ -7,7 +7,8 @@ import org.objectweb.asm.Opcodes;
 
 public class Jnull extends Expr {
 
-	public void codeGen(ClassWriter cw, MethodVisitor method) {
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		method.visitInsn(Opcodes.ACONST_NULL);
 		System.out.println("[Null] Writing: null");
 	}
@@ -25,10 +26,4 @@ public class Jnull extends Expr {
     public String toString() {
         return "null";
     }
-
-	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
-	}
 }

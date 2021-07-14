@@ -24,7 +24,7 @@ public class LocalOrFieldVar extends Expr {
 			// load reference for "this"
 			// could happen that double load happens
             method.visitVarInsn(Opcodes.ALOAD, 0);
-            method.visitFieldInsn(Opcodes.GETFIELD, "", this.name, foundField.type.getType());
+            method.visitFieldInsn(Opcodes.GETFIELD, i_class.name, this.name, foundField.type.getASMType());
 		} else {
 			int indexOfVar = 0;
 			for (LocalVarDecl varDecl: localVars) {

@@ -53,7 +53,6 @@ public class Assign extends StmtExpr {
 		// name = expr
 		if (expr instanceof LocalOrFieldVar) {
 			System.out.println("[Assign] Name = Expr");
-			((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
 
 			int opCode = Opcodes.ISTORE;
 			if (fieldType.equals(Type.getASMType(Type.TYPE_STRING))) {
@@ -64,9 +63,12 @@ public class Assign extends StmtExpr {
 			}
 
 			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
+				expr.codeGen(cw, method, i_class, localVar);
 				method.visitVarInsn(opCode, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}
@@ -74,24 +76,30 @@ public class Assign extends StmtExpr {
 		// name = 4 (expr)
 		} else if (expr instanceof Bool || expr instanceof Char || expr instanceof Integer ||
 				   expr instanceof Jnull) {
-			System.out.println("[Assign] name = someValue");
-			// not very elegant but as all the above mentioned type have codeGen it should be fine
-			expr.codeGen(cw, method, i_class, localVar);
+			System.out.println("[Assign] name = " + expr.toString());
+
 			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				expr.codeGen(cw, method, i_class, localVar);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
+				expr.codeGen(cw, method, i_class, localVar);
 				method.visitVarInsn(Opcodes.ISTORE, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}
 
-		} else if (expr instanceof JString) {
-			expr.codeGen(cw, method, i_class, localVar);
+		} else {
+			System.out.println("[Assign] Writing Nested Expression...");
+			System.out.println("[Assign] name = " + expr.toString());
 			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				expr.codeGen(cw, method, i_class, localVar);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
 				// write reference
+				expr.codeGen(cw, method, i_class, localVar);
 				method.visitVarInsn(Opcodes.ASTORE, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}

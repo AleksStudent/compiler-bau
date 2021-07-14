@@ -227,10 +227,7 @@ public class Binary extends Expr {
 		}
 
 		if (selectedCode != 0) {
-			System.out.println("[Binary]: Invalid Binary Operators for While");
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			method.visitInsn(selectedCode);
+			this.codeGen(cw, method, i_class, localVar);
 			return;
 		}
 
@@ -279,7 +276,25 @@ public class Binary extends Expr {
 
 	@Override
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
+		int selectedCode = 0;
+		
+		switch (operator) {
+		case "+": selectedCode = Opcodes.IADD; break;
+		case "-": selectedCode = Opcodes.ISUB; break;
+		case "*": selectedCode = Opcodes.IMUL; break;
+		case "/": selectedCode = Opcodes.IDIV; break;
+		case "%": selectedCode = Opcodes.IREM; break;
+		}
+
+		if (selectedCode != 0) {
+			System.out.println("[Binary]: " + this.exprRight.toString() + operator + this.exprLeft.toString());
+			this.exprLeft.codeGen(cw, method, i_class, localVars);
+			this.exprRight.codeGen(cw, method, i_class, localVars);
+			method.visitInsn(selectedCode);
+			return;
+		}
+		
+		System.out.println("[Binary]: Invalid Binary Operators for While");
 		
 	}
 }

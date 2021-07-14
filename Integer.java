@@ -12,7 +12,8 @@ public class Integer extends Expr {
 		this.num = num;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method) {
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		method.visitLdcInsn(this.getValue());
 		System.out.println("[Integer] Writing: " + this.num);
 	}
@@ -33,9 +34,4 @@ public class Integer extends Expr {
 		return Type.TYPE_INT;
 	}
 
-	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
-	}
 }
