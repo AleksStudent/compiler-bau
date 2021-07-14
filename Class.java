@@ -12,6 +12,7 @@ public class Class {
     public Type type;
     public Vector<Field> fields;
     public Vector<Method> methods;
+    public String name;
 
     public Class(final Type type, final Vector<Field> fields, final Vector<Method> methods) {
         this.type = type;
