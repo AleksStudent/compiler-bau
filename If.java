@@ -43,15 +43,18 @@ public class If extends Stmt {
                 type = ifType;
                 return type;
             } else {
-                Type elseType = ifStmt.typeCheck(localVars, thisClass);
+                Type elseType = optionalElseStmt.typeCheck(localVars, thisClass);
                 if (ifType.equals(elseType)) {
                     type = ifType;
                     return type;
-                } else if (ifType.equals(Type.TYPE_VOID) || elseType.equals(Type.TYPE_VOID)) {
+                }
+                /* 
+                else if (ifType.equals(Type.TYPE_VOID) || elseType.equals(Type.TYPE_VOID)) {
                     type = Type.TYPE_VOID;
                     return type;
-                } else {
-                    throw new UnexpectedTypeException(String.format("If-Error: Expected if-Type and else-Type to be equal or void but found if-Type: %s else-Type: %s", ifType, elseType));
+                }*/
+                else {
+                    throw new UnexpectedTypeException(String.format("If-Error: Expected if-Type and else-Type to be equal but found if-Type: %s else-Type: %s", ifType, elseType));
                 }
             }
         } else {
