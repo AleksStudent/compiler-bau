@@ -1,4 +1,5 @@
 %{
+import java.util.Vector;
 class browserparser {
 %}
 
@@ -11,10 +12,9 @@ class browserparser {
 %token FLOAT
 %token INT
 %token STRING
-%token CHAR
+%token JCHAR
 %token BOOLEAN
 %token IDENTIFIER
-%token ACCESSRIGHT
 %token STATIC
 %token ABSTRACT
 %token JCLASS
@@ -23,7 +23,7 @@ class browserparser {
 %token COMMA
 %token POINT
 %token UNARYOPERATOR
-%token OPERATOR
+%token BINARYOPERATOR
 %token LBRACE
 %token RBRACE
 %token LBRACKET
@@ -62,55 +62,58 @@ class browserparser {
 %type <Return> returnstatement
 %type <Block> block
 %type <StmtExprStmt> stmtExprStmt
-%type <StmtExpr> stmtExpr
 %type <New> new
+%type <StmtExpr> stmtExpr
 %type <MethodCall> methodCall emptyMethodCall
 %type <Assign> assign
 %type <Vector> fields statements methods expressions parameters
-%type <String> IDENTIFIER INT OPERATOR UNARYOPERATOR BOOLEAN STRING CHAR EQUALS JTYPE
+%type <String> IDENTIFIER INT UNARYOPERATOR BINARYOPERATOR BOOLEAN STRING JCHAR EQUALS JTYPE
 
 %start programm
 
 %%
-programm : class { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram;}
+programm : class { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram; }
          | emptyClass { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram; }
 
-class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET { $$ = new Class($4, $5); }
+class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET { $$ = new Class(new Type($2), $4, $5); System.out.println(new Class(new Type($2), $4, $5)); }
+      | JCLASS IDENTIFIER LBRACKET methods RBRACKET { $$ = new Class(new Type($2), new Vector(), $4); }
+      | JCLASS IDENTIFIER LBRACKET fields RBRACKET { $$ = new Class(new Type($2), $4, new Vector()); }
 
-emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET { $$ = new Class( new Vector(), new Vector() ); }
+emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET { $$ = new Class(new Type($2), new Vector(), new Vector()); }
 
-fields : field { $$ = new Vector(); }
-       | fields field { $$ = new Vector(); }
+fields : field { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
+       | fields field { Vector fs = $1 ; fs.addElement($2); $$ = fs; }
 
 field : type IDENTIFIER SEMICOLON { $$ = new Field($2, $1); }
 
-type : JTYPE { $$ = new Type(); }
+type : JTYPE { $$ = new Type($1); }
 
-methods : method { $$ = new Vector(); }
-        | methods method { $$ = new Vector(); }
+methods : method { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
+        | methods method { Vector fs = $1 ; fs.addElement($2); $$ = fs; }
 
 method : type IDENTIFIER LBRACE parameters RBRACE block { $$ = new Method($2, $1, $4, $6); }
+       | type IDENTIFIER LBRACE RBRACE block { $$ = new Method($2, $1, new Vector(), $5); }
 
-parameters : parameter { $$ = new Vector(); }
-           | parameters COMMA parameter { $$ = new Vector(); }
+parameters : parameter { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
+           | parameters COMMA parameter { Vector fs = $1 ; fs.addElement($3); $$ = fs; }
 
 parameter : type IDENTIFIER{ $$ = new Parameter($2, $1); }
 
-block : LBRACKET RBRACKET { $$ = new Block( new Vector() ); }
+block : LBRACKET RBRACKET { $$ = new Block(new Vector()); }
       | LBRACKET statements RBRACKET { $$ = new Block($2); }
 
-statements : statement { $$ = new Vector(); }
-           | statements statement { $$ = new Vector(); }
+statements : statement { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
+           | statements statement { Vector fs = $1 ; fs.addElement($2); $$ = fs; }
 
-statement : ifthenstatement { $$ = new Stmt(); }
-          | ifthenelsestatement { $$ = new Stmt(); }
-          | whilestatement { $$ = new Stmt(); }
-          | block { $$ = new Stmt(); }
-          | returnstatement { $$ = new Stmt(); }
-          | stmtExprStmt { $$ = new Stmt(); }
-          | localVarDecl { $$ = new Stmt(); }
+statement : ifthenstatement {}
+          | ifthenelsestatement {}
+          | whilestatement {}
+          | block {}
+          | returnstatement {}
+          | stmtExprStmt {}
+          | localVarDecl {}
 
-ifthenstatement : JIF LBRACE expression RBRACE statement { $$ = new If($3, $5, new Stmt()); }
+ifthenstatement : JIF LBRACE expression RBRACE statement { $$ = new If($3, $5, new Jnull()); }
 
 ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement { $$ = new If($3, $5, $7); }
 
@@ -124,23 +127,23 @@ stmtExprStmt : stmtExpr { $$ = new StmtExprStmt($1); }
 
 localVarDecl : type IDENTIFIER SEMICOLON { $$ = new LocalVarDecl($1, $2); }
 
-expression : this { $$ = new Expr(); }
-           | super { $$ = new Expr(); }
-           | localOrFieldVar { $$ = new Expr(); }
-           | integer { $$ = new Expr(); }
-           | binary { $$ = new Expr(); }
-           | unary { $$ = new Expr(); }
-           | bool { $$ = new Expr(); }
-           | instVar { $$ = new Expr(); }
-           | string { $$ = new Expr(); }
-           | jnull { $$ = new Expr(); }
-           | char { $$ = new Expr(); }
-           | stmtExprExpr { $$ = new Expr(); }
+expression : this {}
+           | super {}
+           | localOrFieldVar {}
+           | integer {}
+           | binary {}
+           | unary {}
+           | bool {}
+           | instVar {}
+           | string {}
+           | jnull {}
+           | char {}
+           | stmtExprExpr {}
 
-stmtExpr : assign { $$ = new StmtExpr(); }
-         | new { $$ = new StmtExpr(); }
-         | methodCall { $$ = new StmtExpr(); }
-         | emptyMethodCall { $$ = new StmtExpr(); }
+stmtExpr : assign {}
+         | new {}
+         | methodCall {}
+         | emptyMethodCall {}
 
 this : JTHIS { $$ = new This(); }
 
@@ -150,30 +153,33 @@ localOrFieldVar : IDENTIFIER { $$ = new LocalOrFieldVar($1); }
 
 integer : INT { $$ = new Integer($1); }
 
-binary : expression OPERATOR expression { $$ = new Binary($2, $1, $3); }
+binary : expression BINARYOPERATOR expression { $$ = new Binary($2, $1, $3); }
 
 unary : UNARYOPERATOR expression { $$ = new Unary($1, $2); }
 
 bool : BOOLEAN { $$ = new Bool($1); }
 
-instVar : localOrFieldVar POINT IDENTIFIER { $$ = new InstVar($1, $3); }
+instVar : expression POINT IDENTIFIER { $$ = new InstVar($1, $3); }
 
 string : STRING { $$ = new JString($1); }
 
 jnull : NULL { $$ = new Jnull(); }
 
-char : CHAR { $$ = new Char($1); }
+char : JCHAR { $$ = new Char($1); }
 
-assign : expression EQUALS expression SEMICOLON { $$ = new Assign($2, $1, $3); }
+assign : IDENTIFIER EQUALS expression SEMICOLON { $$ = new Assign($1, $3); }
 
 new : JNEW type LBRACE expressions RBRACE { $$ = new New($2, $4); }
+    | JNEW type LBRACE RBRACE { $$ = new New($2, new Vector()); }
 
-methodCall : IDENTIFIER LBRACE expressions RBRACE { $$ = new MethodCall(new Expr(), $1, $3); }
+methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE { $$ = new MethodCall($1, $3, $5); }
+           | IDENTIFIER LBRACE expressions RBRACE { $$ = new MethodCall(new This(), $1, $3); }
 
-emptyMethodCall : IDENTIFIER LBRACE RBRACE { $$ = new MethodCall(new Expr(), $1, new Vector()); }
+emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE { $$ = new MethodCall($1, $3, new Vector()); }
+                | IDENTIFIER LBRACE RBRACE { $$ = new MethodCall(new This(), $1, new Vector()); }
 
-expressions : expression { $$ = new Vector(); }
-            | expressions expression { $$ = new Vector(); }
+expressions : expression { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
+            | expressions COMMA expression { Vector fs = $1 ; fs.addElement($3); $$ = fs; }
 
 
 %%
