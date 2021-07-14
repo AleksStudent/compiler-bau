@@ -7,6 +7,7 @@ import org.objectweb.asm.MethodVisitor;
 public class Integer extends Expr {
 
 	public String num;
+    public Type type = Type.TYPE_INT;
 
 	public Integer(final String num) {
 		this.num = num;
@@ -29,9 +30,9 @@ public class Integer extends Expr {
 				'}';
 	}
 
-	@Override
-	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-		return Type.TYPE_INT;
-	}
+    @Override
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+        return type;
+    }
 
 }

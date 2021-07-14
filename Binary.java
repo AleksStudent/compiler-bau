@@ -13,6 +13,7 @@ public class Binary extends Expr {
     public String operator;
     public Expr exprLeft;
     public Expr exprRight;
+    public Type type;
 
 
     public static Map<String, List<Type>> VALID_OPERATORS = new HashMap<>() {{
@@ -251,7 +252,8 @@ public class Binary extends Expr {
         if (VALID_OPERATORS.containsKey(operator)) {
             if (exprLeftType.equals(exprRightType)) {
                 if (VALID_OPERATORS.get(operator).contains(exprLeftType)) {
-                    return OPERATOR_RETURN_TYPE.get(operator);
+                    type = OPERATOR_RETURN_TYPE.get(operator);
+                    return type;
                 } else {
                     throw new UnexpectedTypeException(String.format("Binary-Error: The Operator %s does not support Expressions of Type %s", operator, exprLeftType));
                 }
@@ -261,11 +263,12 @@ public class Binary extends Expr {
         } else if (SPECIAL_OPERATORS.contains(operator)) {
             if (!(exprLeftType.equals(Type.TYPE_VOID) || exprRightType.equals(Type.TYPE_VOID))) {
                 if (exprLeftType.equals(exprRightType) || exprLeftType.equals(Type.TYPE_NULL) || exprRightType.equals(Type.TYPE_NULL)) {
-                    return Type.TYPE_BOOL;
-                }else{
-                    throw new UnexpectedTypeException(String.format("Binary-Error: The Left-Expression %s of Type %s does not have the same Type as the Right-Expression %s of Type %s",exprLeft,exprLeftType,exprRight,exprRightType));
+                    type = Type.TYPE_BOOL;
+                    return type;
+                } else {
+                    throw new UnexpectedTypeException(String.format("Binary-Error: The Left-Expression %s of Type %s does not have the same Type as the Right-Expression %s of Type %s", exprLeft, exprLeftType, exprRight, exprRightType));
                 }
-            }else{
+            } else {
                 throw new UnexpectedTypeException("Binary-Error: One of the Expressions has type void");
             }
         } else {

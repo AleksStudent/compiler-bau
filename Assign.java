@@ -13,6 +13,7 @@ public class Assign extends StmtExpr {
 
     public String name;
     public Expr expr;
+    public Type type;
 
     public Assign(final String name, final Expr expr) {
         this.name = name;
@@ -74,8 +75,8 @@ public class Assign extends StmtExpr {
 			}
 
 		// name = 4 (expr)
-		} else if (expr instanceof Bool || expr instanceof Char || expr instanceof Integer ||
-				   expr instanceof Jnull) {
+		} else if (type.equals(Type.TYPE_BOOL) || type.equals(Type.TYPE_CHAR) || type.equals(Type.TYPE_INT) ||
+                type.equals(Type.TYPE_NULL)) {
 			System.out.println("[Assign] name = " + expr.toString());
 
 			if (indexOf == 0) {
@@ -106,7 +107,6 @@ public class Assign extends StmtExpr {
 		}
 	}
 
-
     @Override
     public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         boolean localVariable = localVars.containsKey(name);
@@ -115,9 +115,10 @@ public class Assign extends StmtExpr {
             Type exprType = expr.typeCheck(localVars, thisClass);
             Type variableType = localVariable ? localVars.get(name) : thisClass.fields.stream().filter(field -> field.name.equals(name)).collect(Collectors.toList()).get(0).type;
             if (variableType.equals(exprType) || (!Type.PRIMITIVE_TYPES.contains(variableType) && exprType.equals(Type.TYPE_NULL))) {
-                return variableType;
-            } else{
-                throw new UnexpectedTypeException(String.format("Assign-Error: The Type %s of Expression %s does not match the Type %s of Variable %s",exprType,expr,variableType,name));
+                type = variableType;
+                return type;
+            } else {
+                throw new UnexpectedTypeException(String.format("Assign-Error: The Type %s of Expression %s does not match the Type %s of Variable %s", exprType, expr, variableType, name));
             }
         } else {
             throw new NotFoundException(String.format("Assign-Error: The Variable %s does not exist", name));

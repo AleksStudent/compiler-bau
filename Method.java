@@ -68,7 +68,7 @@ public class Method implements TypeCheckable {
 
     @Override
     public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-        if (thisClass.methods.stream().anyMatch(method -> method.name.equals(name))) {
+        if (thisClass.methods.stream().filter(method -> method.name.equals(name)).count()>1) {
             throw new DuplicateException(String.format("Method-Error: Method with name %s already exists", name));
         }
         if (!Type.VALID_VAR_TYPES.contains(returnType)) {

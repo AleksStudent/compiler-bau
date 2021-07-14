@@ -8,6 +8,7 @@ import org.objectweb.asm.Opcodes;
 public class Bool extends Expr {
 
 	public String bool;
+	public Type type=Type.TYPE_BOOL;
 
 	public Bool(final String bool) {
 		this.bool = bool;
@@ -34,6 +35,6 @@ public class Bool extends Expr {
 
 	@Override
 	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-		return Type.TYPE_BOOL;
+		return type;
 	}
 }

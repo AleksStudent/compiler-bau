@@ -7,6 +7,7 @@ import org.objectweb.asm.MethodVisitor;
 public class Char extends Expr {
 
 	public String ch;
+    public Type type = Type.TYPE_CHAR;
 
 	public Char(final String ch) {
 		this.ch = ch;
@@ -31,7 +32,6 @@ public class Char extends Expr {
 
 	@Override
 	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-		return Type.TYPE_CHAR;
+        return type;
 	}
-
 }
