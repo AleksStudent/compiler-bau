@@ -21,23 +21,28 @@ public class New extends StmtExpr {
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
 		String typeString = type.getType();
 		
+		// String(String): String, Object(): void
+		String objectOperand = "()V";
+		String stringOperand = "(Ljava/lang/String;)V";
+		String selectedOperand;
+		
+		switch(typeString) {
+		case "string": selectedOperand = stringOperand; typeString = "java/lang/String"; break;
+		case "String": selectedOperand = stringOperand; typeString = "java/lang/String"; break;
+		default: selectedOperand = objectOperand; break;
+		}
+		
+		System.out.println("[NEW] " + selectedOperand + " with expressions: " + this.expressions.toString());
+		
 		method.visitTypeInsn(Opcodes.NEW, typeString);
 		method.visitInsn(Opcodes.DUP);
 		
 		for (Expr expression: expressions) {
 			expression.codeGen(cw, method, i_class, localVar);
 		}
+	
 		
-		// String(String): String, Object(): void
-		String objectOperand = "()V";
-		String stringOperand = "(String)String";
-		String selectedOperand;
 		
-		switch(typeString) {
-			case "string": selectedOperand = stringOperand; break;
-			default: selectedOperand = objectOperand; break;
-		}
-
 		method.visitMethodInsn(Opcodes.INVOKESPECIAL, typeString, "<init>", selectedOperand, false);
 		
 	}

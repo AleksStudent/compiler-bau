@@ -46,6 +46,10 @@ public class Method implements TypeCheckable {
 		// generate code from inside the method
 		this.block.codeGen(cw, method, i_class, localVars);
 		// end method
+		
+		if (returnType.equals(Type.TYPE_VOID)) 
+			method.visitInsn(Opcodes.RETURN);	
+		
 
 		// not really necessary as it's done automatically
 		method.visitMaxs(0, localVars.size() + 1);
