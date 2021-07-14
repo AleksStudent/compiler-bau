@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -71,6 +72,7 @@ public class Method implements TypeCheckable {
         for (Parameter parameter : parameters) {
             parameter.typeCheck(localVars, thisClass);
         }
+        localVars.putAll(parameters.stream().collect(Collectors.toMap(parameter -> parameter.name,parameter ->parameter.type)));
         Type blockType = block.typeCheck(localVars, thisClass);
         if (!blockType.equals(returnType)) {
             throw new UnexpectedTypeException(String.format("Method-Error: Method Return-Type %s does not equal Block Type %s", returnType, blockType));

@@ -5,47 +5,50 @@ import java.util.Set;
 
 public class Type {
 
-    static public final Type TYPE_VOID=new Type("void");
-    static public final Type TYPE_NULL=new Type("null");
-    static public final Type TYPE_INT=new Type("int");
-    static public final Type TYPE_CHAR=new Type("char");
-    static public final Type TYPE_BOOL=new Type("bool");
-    static public final Type TYPE_STRING=new Type("string");
-    static public final Type TYPE_OBJECT=new Type("object");
-    static public final Set<Type> PRIMITIVE_TYPES=new HashSet<>(Arrays.asList(TYPE_INT,TYPE_CHAR,TYPE_BOOL));
-    static public final Set<Type> VALID_VAR_TYPES=new HashSet<>(Arrays.asList(TYPE_INT,TYPE_CHAR,TYPE_BOOL,TYPE_STRING));
+    static public final Type TYPE_VOID = new Type("void");
+    static public final Type TYPE_NULL = new Type("null");
+    static public final Type TYPE_INT = new Type("int");
+    static public final Type TYPE_CHAR = new Type("char");
+    static public final Type TYPE_BOOL = new Type("boolean");
+    static public final Type TYPE_STRING = new Type("string");
+    static public final Type TYPE_OBJECT = new Type("object");
+    static public final Set<Type> PRIMITIVE_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL));
+    static public final Set<Type> VALID_VAR_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL, TYPE_STRING));
     private final String type;
 
-    public Type(final String type){
-        this.type=type;
+    public Type(final String type) {
+        this.type = type;
     }
 
     public String getType() {
         return type;
     }
-    
+
     public static String getASMType(Type i_type) {
-    	switch (i_type.type) {
-    	case "void": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	case "null": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	case "int": return org.objectweb.asm.Type.INT_TYPE.getClassName();
-    	case "char": return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
-    	case "bool": return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
-    	case "string": return "String";
-    	default: return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	}
+        return ASMTypeMap(i_type.getType());
     }
-    
+
     public String getASMType() {
-    	switch (getType()) {
-    	case "void": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	case "null": return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	case "int": return org.objectweb.asm.Type.INT_TYPE.getClassName();
-    	case "char": return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
-    	case "bool": return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
-    	case "string": return "String";
-    	default: return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-    	}
+        return ASMTypeMap(getType());
+    }
+
+    private static String ASMTypeMap(String typeName) {
+        switch (typeName) {
+            case "void":
+                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+            case "null":
+                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+            case "int":
+                return org.objectweb.asm.Type.INT_TYPE.getClassName();
+            case "char":
+                return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
+            case "bool":
+                return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
+            case "string":
+                return "String";
+            default:
+                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+        }
     }
 
     @Override
@@ -59,5 +62,12 @@ public class Type {
     @Override
     public int hashCode() {
         return Objects.hash(type);
+    }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "type='" + type + '\'' +
+                '}';
     }
 }

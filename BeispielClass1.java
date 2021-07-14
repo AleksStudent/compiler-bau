@@ -1,9 +1,12 @@
-public class BeispielClass1
+class BeispielClass1
 {
-    int alter;
-    float note;
+    int num1;
 
-    int addNumbers(int num1, int num2) {
-        return num1 + num2;
+    int test(){
+        return add(1,3);
+    }
+
+    int add(int num1,int num2){
+        return num1+num2;
     }
 }
