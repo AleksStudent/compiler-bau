@@ -67,7 +67,7 @@ class browserparser {
   /** debugging support, requires the package jay.yydebug.
       Set to null to suppress debugging messages.
     */
-  protected jay.yydebug.yyDebug yydebug;
+//t  protected jay.yydebug.yyDebug yydebug;
 
   protected static final int yyFinal = 2;
 
@@ -75,12 +75,12 @@ class browserparser {
       @param token single character or %token value.
       @return token name or [illegal] or [unknown].
     */
-  public static final String yyname (int token) {
-    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
-    String name;
-    if ((name = YyNameClass.yyName[token]) != null) return name;
-    return "[unknown]";
-  }
+//t  public static final String yyname (int token) {
+//t    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
+//t    String name;
+//t    if ((name = YyNameClass.yyName[token]) != null) return name;
+//t    return "[unknown]";
+//t  }
 
   /** computes list of expected tokens on error by tracing the tables.
       @param state for which to compute the list.
@@ -120,7 +120,7 @@ class browserparser {
     */
   public Object yyparse (yyInput yyLex, Object yydebug)
 				throws java.io.IOException, yyException {
-    this.yydebug = (jay.yydebug.yyDebug)yydebug;
+//t    this.yydebug = (jay.yydebug.yyDebug)yydebug;
     return yyparse(yyLex);
   }
 
@@ -169,7 +169,7 @@ class browserparser {
       }
       yyStates[yyTop] = yyState;
       yyVals[yyTop] = yyVal;
-      if (yydebug != null) yydebug.push(yyState, yyVal);
+//t      if (yydebug != null) yydebug.push(yyState, yyVal);
 
       yyDiscarded: for (;;) {	// discarding a token does not change stack
         int yyN;
@@ -184,10 +184,10 @@ class browserparser {
              if "null", create EOF token */
             if (yyToken == null) {yyToken = new EOF();}
 
-            if (yydebug != null)
-          /* modified by diho, 14.04.2004
-             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
-              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
+//t            if (yydebug != null)
+//t          /* modified by diho, 14.04.2004
+//t             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
+//t              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -195,8 +195,8 @@ class browserparser {
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
               && yyN < YyTableClass.yyTable.length && YyCheckClass.yyCheck[yyN] == yyToken.tokennr) {
-            if (yydebug != null)
-              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
+//t            if (yydebug != null)
+//t              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
             yyState = YyTableClass.yyTable[yyN];		// shift to yyN
           /* modified by diho, 14.04.2004 
              replaced yyLex.value() by yyToken.value*/
@@ -219,7 +219,7 @@ class browserparser {
   
             case 0:
               yyerror("syntax error", yyExpecting(yyState));
-              if (yydebug != null) yydebug.error("syntax error");
+//t              if (yydebug != null) yydebug.error("syntax error");
   
             case 1: case 2:
               yyErrorFlag = 3;
@@ -227,31 +227,31 @@ class browserparser {
                 if ((yyN = YySindexClass.yySindex[yyStates[yyTop]]) != 0
                     && (yyN += yyErrorCode) >= 0 && yyN < YyTableClass.yyTable.length
                     && YyCheckClass.yyCheck[yyN] == yyErrorCode) {
-                  if (yydebug != null)
-                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
+//t                  if (yydebug != null)
+//t                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
                   yyState = YyTableClass.yyTable[yyN];
           /* modified by diho, 14.04.2004 
              replaced yyLex.value by yyToken.value*/
                   yyVal = yyToken.value;
                   continue yyLoop;
                 }
-                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
+//t                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
               } while (-- yyTop >= 0);
-              if (yydebug != null) yydebug.reject();
+//t              if (yydebug != null) yydebug.reject();
               throw new yyException("irrecoverable syntax error");
   
             case 3:
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0)*/
               if (yyToken == null) {
-                if (yydebug != null) yydebug.reject();
+//t                if (yydebug != null) yydebug.reject();
                 throw new yyException("irrecoverable syntax error at end-of-file");
               }
-              if (yydebug != null)
+//t              if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value by yyToken.value*/
-                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
-  							yyToken.value);
+//t                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
+//t  							yyToken.value);
           /* modified by diho, 14.04.2004 
              orig: yyToken = -1*/
               yyToken = new yyTokenclass();
@@ -259,8 +259,8 @@ class browserparser {
             }
         }
         int yyV = yyTop + 1-YyLenClass.yyLen[yyN];
-        if (yydebug != null)
-          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
+//t        if (yydebug != null)
+//t          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
         yyVal = yyDefault(yyV > yyTop ? null : yyVals[yyV]);
         switch (yyN) {
 case 1:
@@ -553,7 +553,7 @@ case 71:
         yyState = yyStates[yyTop];
         int yyM = YyLhsClass.yyLhs[yyN];
         if (yyState == 0 && yyM == 0) {
-          if (yydebug != null) yydebug.shift(0, yyFinal);
+//t          if (yydebug != null) yydebug.shift(0, yyFinal);
           yyState = yyFinal;
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -564,15 +564,15 @@ case 71:
           /* modified by diho, 14.04.2004
              if "empty token", get next token */
             if (yyToken == null) {yyToken = new EOF();}
-            if (yydebug != null)
+//t            if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value() by yyToken.value*/
-               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
+//t               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0) */
           if (yyToken.tokennr == 0) {
-            if (yydebug != null) yydebug.accept(yyVal);
+//t            if (yydebug != null) yydebug.accept(yyVal);
             return yyVal;
           }
           continue yyLoop;
@@ -582,7 +582,7 @@ case 71:
           yyState = YyTableClass.yyTable[yyN];
         else
           yyState = YyDgotoClass.yyDgoto[yyM];
-        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
+//t        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
 	 continue yyLoop;
       }
     }
@@ -788,7 +788,7 @@ protected static class yyCheck0 {
   } /* End of class YyCheckClass */
 
 
-  protected static final class YyRuleClass {
+//t  protected static final class YyRuleClass {
 
     public static final String yyRule [] = {
     "$accept : programm",
@@ -897,7 +897,6 @@ protected static class yyCheck0 {
 
 
 					// line 186 "browserparser.jay"
-}
       					// line 911 "-"
 class yyTokenclass {	
    public int tokennr;	

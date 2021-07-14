@@ -1,6 +1,7 @@
 import java.io.IOException;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.util.CheckClassAdapter;
 
 public class Program {
 
@@ -12,7 +13,7 @@ public class Program {
 	
 	public void codeGen(Program i_program) {
 		// define class writer
-		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 		
 		i_program.clazz.codeGen(cw, i_program.clazz);
 		

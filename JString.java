@@ -13,7 +13,7 @@ public class JString extends Expr {
 		this.str = str;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		method.visitLdcInsn(this.str);
 		System.out.println("[String] Writing: " + this.str);
 	}
@@ -32,11 +32,5 @@ public class JString extends Expr {
 	@Override
 	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
 		return Type.TYPE_STRING;
-	}
-
-	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
 	}
 }
