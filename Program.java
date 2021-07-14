@@ -1,7 +1,6 @@
 import java.io.IOException;
 
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.util.CheckClassAdapter;
 
 public class Program {
 

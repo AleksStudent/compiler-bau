@@ -20,8 +20,10 @@ public class MethodCall extends StmtExpr {
 	}
 
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
+		method.visitVarInsn(Opcodes.ALOAD, 0);
+		
 		for (Expr expression: expressions) {
-			expr.codeGen(cw, method, i_class, localVar, returnType);
+			expression.codeGen(cw, method, i_class, localVar, returnType);
 		}
 		String parameterInput = "";
 
@@ -44,13 +46,11 @@ public class MethodCall extends StmtExpr {
 		
 		// define extra methods
 		if (this.name.equals("toString")) {
-			method.visitVarInsn(Opcodes.ALOAD, 0);
 			methodSignature = "()Ljava/lang/String;";
 			System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
 			method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Object", this.name, methodSignature, false);	
 		} else {
 			System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
-			method.visitVarInsn(Opcodes.ALOAD, 0);
 			method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.name, this.name, methodSignature, false);	
 		}
 	}

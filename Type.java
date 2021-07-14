@@ -10,8 +10,8 @@ public class Type {
     static public final Type TYPE_INT = new Type("int");
     static public final Type TYPE_CHAR = new Type("char");
     static public final Type TYPE_BOOL = new Type("boolean");
-    static public final Type TYPE_STRING = new Type("string");
-    static public final Type TYPE_OBJECT = new Type("object");
+    static public final Type TYPE_STRING = new Type("String");
+    static public final Type TYPE_OBJECT = new Type("Object");
     static public final Set<Type> PRIMITIVE_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL));
     static public final Set<Type> VALID_VAR_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL, TYPE_STRING));
     private final String type;
@@ -34,20 +34,18 @@ public class Type {
 
     private static String ASMTypeMap(String typeName) {
         switch (typeName) {
-            case "void":
-                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-            case "null":
-                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
-            case "int":
-                return org.objectweb.asm.Type.INT_TYPE.getClassName();
-            case "char":
-                return org.objectweb.asm.Type.CHAR_TYPE.getClassName();
-            case "bool":
-                return org.objectweb.asm.Type.BOOLEAN_TYPE.getClassName();
-            case "string":
-                return "String";
-            default:
-                return org.objectweb.asm.Type.VOID_TYPE.getClassName();
+    	case "void": return org.objectweb.asm.Type.VOID_TYPE.toString();
+    	case "null": return org.objectweb.asm.Type.VOID_TYPE.toString();
+    	case "int": return org.objectweb.asm.Type.INT_TYPE.toString();
+    	case "char": return org.objectweb.asm.Type.CHAR_TYPE.toString();
+    	case "bool": return org.objectweb.asm.Type.BOOLEAN_TYPE.toString();
+    	case "boolean": return org.objectweb.asm.Type.BOOLEAN_TYPE.toString();
+    	case "Boolean": return org.objectweb.asm.Type.BOOLEAN_TYPE.toString();
+    	case "string": return "Ljava/lang/String;";
+    	case "String": return "Ljava/lang/String;";
+        case "object": return "Ljava/lang/Object;";
+        case "Object": return "Ljava/lang/Object;";
+    	default: return org.objectweb.asm.Type.VOID_TYPE.toString();
         }
     }
 
