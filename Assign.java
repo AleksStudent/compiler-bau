@@ -27,79 +27,85 @@ public class Assign extends StmtExpr {
                 ", exprLeft=" + this.expr +
                 '}';
     }
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+		System.out.println("[Assign] Start Assing");
+		int indexOf = 0;
+		for (LocalVarDecl varDecl: localVar) {
+			if (varDecl.name.equals(this.name)) {
+				indexOf = localVar.indexOf(varDecl) + 1;
+				System.out.println("[Assign] Found Local Var at Index: " + indexOf + " with Content: ");
+				System.out.println(localVar.get(indexOf - 1).toString());
+				break;
+			}
+		}
 
-    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
-        System.out.println("[Assign] Start Assing");
-        int indexOf = 0;
-        for (LocalVarDecl varDecl : localVar) {
-            if (varDecl.name.equals(this.name)) {
-                indexOf = localVar.indexOf(varDecl) + 1;
-                System.out.println("[Assign] Found Local Var at Index: " + indexOf + " with Content: ");
-                System.out.println(localVar.get(indexOf - 1).toString());
-                break;
-            }
-        }
+		String fieldType = org.objectweb.asm.Type.INT_TYPE.getClassName();
+		if (indexOf == 0) {
+			System.out.println("[Assign] No Local Var found... Trying Fields");
+			for (Field field :i_class.fields) {
+				if (field.name.equals(this.name)) {
+					fieldType = field.type.getASMType();
+					System.out.println("[Assign] Found Field Var: " + this.name + ", " + fieldType);
+					break;
+				}
+			}
+		}
 
-        String fieldType = org.objectweb.asm.Type.INT_TYPE.getClassName();
-        if (indexOf == 0) {
-            System.out.println("[Assign] No Local Var found... Trying Fields");
-            for (Field field : i_class.fields) {
-                if (field.name.equals(this.name)) {
-                    fieldType = field.type.getASMType();
-                    System.out.println("[Assign] Found Field Var: " + this.name + ", " + fieldType);
-                    break;
-                }
-            }
-        }
+		// name = expr
+		if (expr instanceof LocalOrFieldVar) {
+			System.out.println("[Assign] Name = Expr");
 
-        // name = expr
-        if (expr instanceof LocalOrFieldVar) {
-            System.out.println("[Assign] Name = Expr");
-            ((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
+			int opCode = Opcodes.ISTORE;
+			if (fieldType.equals(Type.getASMType(Type.TYPE_STRING))) {
+				opCode = Opcodes.ASTORE;
+				System.out.println("[Assign] Selected Reference");
+			} else {
+				System.out.println("[Assign] Direct Assignment of Value");
+			}
 
-            int opCode = Opcodes.ISTORE;
-            if (fieldType.equals(Type.getASMType(Type.TYPE_STRING))) {
-                opCode = Opcodes.ASTORE;
-                System.out.println("[Assign] Selected Reference");
-            } else {
-                System.out.println("[Assign] Direct Assignment of Value");
-            }
+			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
+				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+				System.out.println("[Assign] Writing to Field Var...");
+			} else {
+				expr.codeGen(cw, method, i_class, localVar);
+				method.visitVarInsn(opCode, indexOf);
+				System.out.println("[Assign] Writing to Local Var...");
+			}
 
-            if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
-                System.out.println("[Assign] Writing to Field Var...");
-            } else {
-                method.visitVarInsn(opCode, indexOf);
-                System.out.println("[Assign] Writing to Local Var...");
-            }
-
-            // name = 4 (expr)
-        } else if (type.equals(Type.TYPE_BOOL) || type.equals(Type.TYPE_CHAR) || type.equals(Type.TYPE_INT) ||
+		// name = 4 (expr)
+		} else if (type.equals(Type.TYPE_BOOL) || type.equals(Type.TYPE_CHAR) || type.equals(Type.TYPE_INT) ||
                 type.equals(Type.TYPE_NULL)) {
-            System.out.println("[Assign] name = someValue");
-            // not very elegant but as all the above mentioned type have codeGen it should be fine
-            ((Bool) expr).codeGen(cw, method);
-            if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
-                System.out.println("[Assign] Writing to Field Var...");
-            } else {
-                method.visitVarInsn(Opcodes.ISTORE, indexOf);
-                System.out.println("[Assign] Writing to Local Var...");
-            }
+			System.out.println("[Assign] name = " + expr.toString());
 
-        } else if (type.equals(Type.TYPE_STRING)) {
-            ((JString) expr).codeGen(cw, method);
-            if (indexOf == 0) {
-                method.visitFieldInsn(Opcodes.PUTFIELD, i_class.type.getType(), this.name, fieldType);
-                System.out.println("[Assign] Writing to Field Var...");
-            } else {
-                // write reference
-                method.visitVarInsn(Opcodes.ASTORE, indexOf);
-                System.out.println("[Assign] Writing to Local Var...");
-            }
-        }
-    }
+			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				expr.codeGen(cw, method, i_class, localVar);
+				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+				System.out.println("[Assign] Writing to Field Var...");
+			} else {
+				expr.codeGen(cw, method, i_class, localVar);
+				method.visitVarInsn(Opcodes.ISTORE, indexOf);
+				System.out.println("[Assign] Writing to Local Var...");
+			}
 
+		} else {
+			System.out.println("[Assign] Writing Nested Expression...");
+			System.out.println("[Assign] name = " + expr.toString());
+			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				expr.codeGen(cw, method, i_class, localVar);
+				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+				System.out.println("[Assign] Writing to Field Var...");
+			} else {
+				// write reference
+				expr.codeGen(cw, method, i_class, localVar);
+				method.visitVarInsn(Opcodes.ASTORE, indexOf);
+				System.out.println("[Assign] Writing to Local Var...");
+			}
+		}
+	}
 
     @Override
     public Type typeCheck(Map<String, Type> localVars, Class thisClass) {

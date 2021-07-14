@@ -31,9 +31,9 @@ public class Method implements TypeCheckable {
 		Vector<LocalVarDecl> localVars = new Vector<LocalVarDecl>();
 
 		for (Parameter parameter: parameters) {
-			parameterInput += parameter.type.getType();
+			parameterInput += parameter.type.getASMType();
 		}
-		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
+		String methodSignature = "(" + parameterInput + ")" + this.returnType.getASMType();
 		System.out.println("[Method] Parameter Input: " + methodSignature);
 
 		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name, methodSignature, null, null);
@@ -47,7 +47,13 @@ public class Method implements TypeCheckable {
 		// generate code from inside the method
 		this.block.codeGen(cw, method, i_class, localVars);
 		// end method
-		method.visitMaxs(1, localVars.size() + 1);
+		
+		if (returnType.equals(Type.TYPE_VOID)) 
+			method.visitInsn(Opcodes.RETURN);	
+		
+
+		// not really necessary as it's done automatically
+		method.visitMaxs(0, localVars.size() + 1);
 		method.visitEnd();
 	}
 
@@ -82,7 +88,7 @@ public class Method implements TypeCheckable {
 
 	@Override
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
+		this.codeGen(cw, i_class);
 		
 	}
 }
