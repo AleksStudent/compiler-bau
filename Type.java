@@ -10,8 +10,8 @@ public class Type {
     static public final Type TYPE_INT = new Type("int");
     static public final Type TYPE_CHAR = new Type("char");
     static public final Type TYPE_BOOL = new Type("boolean");
-    static public final Type TYPE_STRING = new Type("string");
-    static public final Type TYPE_OBJECT = new Type("object");
+    static public final Type TYPE_STRING = new Type("String");
+    static public final Type TYPE_OBJECT = new Type("Object");
     static public final Set<Type> PRIMITIVE_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL));
     static public final Set<Type> VALID_VAR_TYPES = new HashSet<>(Arrays.asList(TYPE_INT, TYPE_CHAR, TYPE_BOOL, TYPE_STRING));
     private final String type;
