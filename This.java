@@ -7,7 +7,7 @@ import org.objectweb.asm.Opcodes;
 
 public class This extends Expr {
 	
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		method.visitVarInsn(Opcodes.ALOAD, 0);
 	}
 

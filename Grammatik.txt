@@ -1,5 +1,6 @@
 programm->class
-
+	|emptyClass
+emptyClass : CLASS IDENTIFIER LBRACKET RBRACKET
 class -> CLASS IDENTIFIER LBRACKET fields methods RBRACKET
        | CLASS IDENTIFIER LBRACKET methods RBRACKET 
        | CLASS IDENTIFIER LBRACKET fields RBRACKET 
@@ -65,6 +66,8 @@ expression→ THIS
 			|JNULL
 			|CHAR
 			|stmtExprExpr
+			|LBRACE expression RBRACE
+			
 localOrFieldVar-> 	IDENTIFIER
 instVar ->		expression POINT IDENTIFIER
 binary-> 		expression OPERATOR expression 
@@ -86,9 +89,7 @@ methodCall -> 		expression POINT IDENTIFIER LBRACE expressions RBRACE SEMICOLON
 emptyMethodCall -> 	expression POINT IDENTIFIER LBRACE RBRACE
 			|IDENTIFIER LBRACE expressions RBRACE SEMICOLON
 			
-assign-> expression EQUALS expression SEMICOLON
+assign->		 expression EQUALS expression SEMICOLON
 
-Field-> TYPE IDENTIFIER
-
-expression-> 		expression
+expressions-> 		expression
 			|expressions COMMA expression	

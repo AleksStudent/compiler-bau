@@ -53,33 +53,39 @@ public class Binary extends Expr {
     }
 
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar,
-			Stmt failedTask, Stmt successTask) {
+			Stmt successTask, Stmt failedTask, Type returnType) {
 		int selectedCode = 0;
 
 		switch (operator) {
 		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
 		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
+		case ">": selectedCode = Opcodes.IF_ICMPLE; break;
+		case ">=": selectedCode = Opcodes.IF_ICMPLT; break;
+		case "<": selectedCode = Opcodes.IF_ICMPGE; break;
+		case "<=": selectedCode = Opcodes.IF_ICMPGT; break;
 		}
 
 		if (selectedCode != 0) {
 			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
+			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
 			Label successLabel = new Label();
 			Label failedLabel = new Label();
+			Label afterwards = new Label();
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
 			method.visitLabel(successLabel);
-			successTask.codeGen(cw, method, i_class, localVar);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			successTask.codeGen(cw, method, i_class, localVar, returnType);
+			method.visitJumpInsn(Opcodes.GOTO, afterwards);
 
 			method.visitLabel(failedLabel);
-			failedTask.codeGen(cw, method, i_class, localVar);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			failedTask.codeGen(cw, method, i_class, localVar, returnType);
+			
+			method.visitLabel(afterwards);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			return;
 		}
 
@@ -90,26 +96,26 @@ public class Binary extends Expr {
 
 		if (selectedCode != 0) {
 			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
+			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
 
 			Label successLabel = new Label();
 			Label deciderLabel = new Label();
 			Label failedLabel = new Label();
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
 
 			if (selectedCode == Opcodes.IFEQ) {
 				method.visitJumpInsn(selectedCode, failedLabel);
 
 				method.visitLabel(successLabel);
-				successTask.codeGen(cw, method, i_class, localVar);
+				successTask.codeGen(cw, method, i_class, localVar, returnType);
 
 				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
 				method.visitLabel(failedLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar);
+				failedTask.codeGen(cw, method, i_class, localVar, returnType);
 
 				method.visitLabel(deciderLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
@@ -118,13 +124,13 @@ public class Binary extends Expr {
 
 				method.visitLabel(failedLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar);
+				failedTask.codeGen(cw, method, i_class, localVar, returnType);
 
 				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
 				method.visitLabel(successLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				successTask.codeGen(cw, method, i_class, localVar);
+				successTask.codeGen(cw, method, i_class, localVar, returnType);
 
 				method.visitLabel(deciderLabel);
 				method.visitFrame(Opcodes.F_SAME1, 0, null, 1, null);
@@ -142,8 +148,8 @@ public class Binary extends Expr {
 
 		if (selectedCode != 0) {
 			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
+			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
 			method.visitInsn(selectedCode);
 			return;
 		}
@@ -153,16 +159,16 @@ public class Binary extends Expr {
 	}
 	
 	
-	public void codeGenWhile(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Stmt run) {
+	public void codeGenWhile(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Stmt run, Type returnType) {
 		int selectedCode = 0;
 
 		switch (operator) {
 		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
 		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
+		case ">": selectedCode = Opcodes.IF_ICMPLE; break;
+		case ">=": selectedCode = Opcodes.IF_ICMPLT; break;
+		case "<": selectedCode = Opcodes.IF_ICMPGE; break;
+		case "<=": selectedCode = Opcodes.IF_ICMPGT; break;
 		}
 
 		if (selectedCode != 0) {
@@ -172,16 +178,21 @@ public class Binary extends Expr {
 			Label failedLabel = new Label();
 			
 			method.visitLabel(initLabel);
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
-			
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
+			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
 			method.visitLabel(successLabel);
-			run.codeGen(cw, method, i_class, localVar);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			run.codeGen(cw, method, i_class, localVar, returnType);
+			
 			method.visitJumpInsn(Opcodes.GOTO, initLabel);
+			
+			method.visitLabel(failedLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			
 			return;
 		}
 
@@ -197,23 +208,23 @@ public class Binary extends Expr {
 			Label failedLabel = new Label();
 
 			method.visitLabel(initLabel);
-			this.exprLeft.codeGen(cw, method, i_class, localVar);
+			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			this.exprRight.codeGen(cw, method, i_class, localVar);
+			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
 
 			if (selectedCode == Opcodes.IFEQ) {
 				method.visitJumpInsn(selectedCode, failedLabel);
 
 				method.visitLabel(successLabel);
-				run.codeGen(cw, method, i_class, localVar);
+				run.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitJumpInsn(Opcodes.GOTO, initLabel);
 
 			} else {
 				method.visitJumpInsn(Opcodes.IFEQ, successLabel);
 
 				method.visitLabel(successLabel);
-				run.codeGen(cw, method, i_class, localVar);
+				run.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitJumpInsn(Opcodes.GOTO, initLabel);
 			}
 			return;
@@ -228,7 +239,7 @@ public class Binary extends Expr {
 		}
 
 		if (selectedCode != 0) {
-			this.codeGen(cw, method, i_class, localVar);
+			this.codeGen(cw, method, i_class, localVar, returnType);
 			return;
 		}
 
@@ -278,7 +289,7 @@ public class Binary extends Expr {
     }
 
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		int selectedCode = 0;
 		
 		switch (operator) {
@@ -291,8 +302,8 @@ public class Binary extends Expr {
 
 		if (selectedCode != 0) {
 			System.out.println("[Binary]: " + this.exprRight.toString() + operator + this.exprLeft.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVars);
-			this.exprRight.codeGen(cw, method, i_class, localVars);
+			this.exprLeft.codeGen(cw, method, i_class, localVars, returnType);
+			this.exprRight.codeGen(cw, method, i_class, localVars, returnType);
 			method.visitInsn(selectedCode);
 			return;
 		}

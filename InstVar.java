@@ -18,23 +18,32 @@ public class InstVar extends Expr {
         this.name = name;
     }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		System.out.println("[InstVar] Getting Variable for: " + expr.toString());
-		this.expr.codeGen(cw, method, i_class, localVar);
 		Type typeOfAccessedObject = Type.TYPE_VOID;
 		
 		if (expr instanceof This || expr instanceof Super) {
-			expr.codeGen(cw, method, i_class, localVar);
+			expr.codeGen(cw, method, i_class, localVar, returnType);
+			
+			for (Field f: i_class.fields) {
+				if (f.name.equals(this.name)) {
+					typeOfAccessedObject = f.type;
+				}
+			}
+			
 			System.out.println("[InstVar] Accessing This");
-		} else if (((LocalOrFieldVar) expr).isFieldVar(((LocalOrFieldVar) expr).name, i_class.fields)) {
+		} else if (expr instanceof LocalOrFieldVar && ((LocalOrFieldVar) expr).isFieldVar(((LocalOrFieldVar) expr).name, i_class.fields)) {
+			expr.codeGen(cw, method, i_class, localVar, returnType);
 			typeOfAccessedObject = ((LocalOrFieldVar) expr).getFieldVar(((LocalOrFieldVar) expr).name, i_class.fields).type;
 			System.out.println("[InstVar] Accessing Field Variable of Type: " + typeOfAccessedObject.getType());
 		} else {
+			expr.codeGen(cw, method, i_class, localVar, returnType);
 			typeOfAccessedObject = ((LocalOrFieldVar) expr).getLocalVar(((LocalOrFieldVar) expr).name, localVar).type;
 			System.out.println("[InstVar] Accessing Local Variable of Type: " + typeOfAccessedObject.getType());
 		}
 		System.out.println("[InstVar] (" + expr.toString() + ")." + name);
-		method.visitFieldInsn(Opcodes.GETFIELD, typeOfAccessedObject.getType(), this.name, Type.TYPE_STRING.getASMType());
+		
+		method.visitFieldInsn(Opcodes.GETFIELD, i_class.name, this.name, typeOfAccessedObject.getASMType());
 	}
 
     @Override

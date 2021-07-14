@@ -16,7 +16,7 @@ public class LocalOrFieldVar extends Expr {
 		this.name = name;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		if (!local) {
 			Field foundField = getFieldVar(name, i_class.fields);
 			System.out.println("[LocalOrFieldVar] Field Var: " + this.name + ", Type: " + foundField.type.getType());
@@ -36,7 +36,9 @@ public class LocalOrFieldVar extends Expr {
 
 			System.out.println("[LocalOrFieldVar] Local Var: " + this.name + ", Type: " + localVars.get(indexOfVar - 1).type.getType());
 			int opCode = Opcodes.ILOAD;
-			if (localVars.get(indexOfVar - 1).type.equals(Type.TYPE_STRING)) opCode = Opcodes.ALOAD;
+			if (localVars.get(indexOfVar - 1).type.equals(Type.TYPE_STRING) || localVars.get(indexOfVar - 1).type.equals(Type.TYPE_OBJECT)) {
+				opCode = Opcodes.ALOAD;				
+			}
 			method.visitVarInsn(opCode, indexOfVar);
 		}
 	}

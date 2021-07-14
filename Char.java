@@ -14,7 +14,7 @@ public class Char extends Expr {
 	}
 	
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		method.visitLdcInsn(java.lang.Integer.parseInt(Character.toString(getValue())));
 		System.out.println("[Char] Writing: " + getValue());
 	}

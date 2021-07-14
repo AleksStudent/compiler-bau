@@ -28,9 +28,9 @@ public class Unary extends Expr {
     }
     
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		int opCode = 0;
-		expr.codeGen(cw, method, i_class, localVars);
+		expr.codeGen(cw, method, i_class, localVars, returnType);
 		
 		if (operator.equals("+")) {
 			System.out.println("[Unary] +");

@@ -10,7 +10,7 @@ public class Jnull extends Expr {
     public Type type = Type.TYPE_NULL;
 
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		method.visitInsn(Opcodes.ACONST_NULL);
 		System.out.println("[Null] Writing: null");
 	}
