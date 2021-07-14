@@ -66,6 +66,8 @@ expression→ THIS
 			|JNULL
 			|CHAR
 			|stmtExprExpr
+			|LBRACE expression RBRACE
+			
 localOrFieldVar-> 	IDENTIFIER
 instVar ->		expression POINT IDENTIFIER
 binary-> 		expression OPERATOR expression 
