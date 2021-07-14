@@ -1,6 +1,6 @@
 programm->class
 	|emptyClass
-
+emptyClass : CLASS IDENTIFIER LBRACKET RBRACKET
 class -> CLASS IDENTIFIER LBRACKET fields methods RBRACKET
        | CLASS IDENTIFIER LBRACKET methods RBRACKET 
        | CLASS IDENTIFIER LBRACKET fields RBRACKET 
