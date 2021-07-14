@@ -27,7 +27,7 @@ public class Assign extends StmtExpr {
                 ", exprLeft=" + this.expr +
                 '}';
     }
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		System.out.println("[Assign] Start Assing");
 		int indexOf = 0;
 		for (LocalVarDecl varDecl: localVar) {
@@ -65,27 +65,27 @@ public class Assign extends StmtExpr {
 
 			if (indexOf == 0) {
 				method.visitVarInsn(Opcodes.ALOAD, 0);
-				((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar);
+				((LocalOrFieldVar) expr).codeGen(cw, method, i_class, localVar, returnType);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
-				expr.codeGen(cw, method, i_class, localVar);
+				expr.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitVarInsn(opCode, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}
 
 		// name = 4 (expr)
-		} else if (type.equals(Type.TYPE_BOOL) || type.equals(Type.TYPE_CHAR) || type.equals(Type.TYPE_INT) ||
-                type.equals(Type.TYPE_NULL)) {
+		} else if (expr instanceof Bool || expr instanceof Char || expr instanceof Integer ||
+				   expr instanceof Jnull) {
 			System.out.println("[Assign] name = " + expr.toString());
 
 			if (indexOf == 0) {
 				method.visitVarInsn(Opcodes.ALOAD, 0);
-				expr.codeGen(cw, method, i_class, localVar);
+				expr.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
-				expr.codeGen(cw, method, i_class, localVar);
+				expr.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitVarInsn(Opcodes.ISTORE, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}
@@ -95,12 +95,12 @@ public class Assign extends StmtExpr {
 			System.out.println("[Assign] name = " + expr.toString());
 			if (indexOf == 0) {
 				method.visitVarInsn(Opcodes.ALOAD, 0);
-				expr.codeGen(cw, method, i_class, localVar);
+				expr.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
 				System.out.println("[Assign] Writing to Field Var...");
 			} else {
 				// write reference
-				expr.codeGen(cw, method, i_class, localVar);
+				expr.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitVarInsn(Opcodes.ASTORE, indexOf);
 				System.out.println("[Assign] Writing to Local Var...");
 			}

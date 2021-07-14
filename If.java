@@ -20,9 +20,9 @@ public class If extends Stmt {
         this.optionalElseStmt = optionalElseStmt;
     }
 
-    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
         System.out.println("[If] Creating Construct");
-        ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt);
+        ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt, returnType);
     }
 
     @Override

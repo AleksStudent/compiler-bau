@@ -48,7 +48,7 @@ public class Field implements TypeCheckable {
     }
 
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		this.codeGen(cw);
 	}
 }

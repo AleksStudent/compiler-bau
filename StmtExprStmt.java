@@ -12,8 +12,8 @@ public class StmtExprStmt extends Stmt {
 		this.expr = expr;
 	}
 	
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		expr.codeGen(cw, method, i_class, localVars);
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
+		expr.codeGen(cw, method, i_class, localVars, returnType);
 	}
 
 	@Override

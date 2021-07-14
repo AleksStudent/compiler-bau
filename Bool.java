@@ -15,7 +15,7 @@ public class Bool extends Expr {
 	}
 
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		int codeToWrite = Opcodes.ICONST_0;
 		if (this.bool.equals("true")) codeToWrite = Opcodes.ICONST_1;
 		method.visitInsn(codeToWrite);

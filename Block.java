@@ -15,13 +15,13 @@ public class Block extends Stmt {
         this.statements = statements;
     }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		Label newBlock = new Label();
 		method.visitLabel(newBlock);
 
 		for (Stmt statement: statements) {
             System.out.println("[Block] Reading Statement: " + statement.toString());
-			statement.codeGen(cw, method, i_class, localVars);
+			statement.codeGen(cw, method, i_class, localVars, returnType);
 		}
 	}
 

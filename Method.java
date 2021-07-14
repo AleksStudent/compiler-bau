@@ -40,16 +40,16 @@ public class Method implements TypeCheckable {
 		
 		// 2nd parameter loop as the first was needed for type declarations
 		for (Parameter parameter: parameters) {
-			parameter.codeGen(cw, method, i_class, localVars);
+			parameter.codeGen(cw, method, i_class, localVars, returnType);
 		}
 
 		method.visitCode();
 		// generate code from inside the method
-		this.block.codeGen(cw, method, i_class, localVars);
+		this.block.codeGen(cw, method, i_class, localVars, returnType);
 		// end method
 		
 		if (returnType.equals(Type.TYPE_VOID)) 
-			method.visitInsn(Opcodes.RETURN);	
+			method.visitInsn(Opcodes.RETURN);
 		
 
 		// not really necessary as it's done automatically
@@ -87,7 +87,7 @@ public class Method implements TypeCheckable {
     }
 
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		this.codeGen(cw, i_class);
 		
 	}
