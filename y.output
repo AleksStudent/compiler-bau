@@ -67,47 +67,51 @@
   45             | jnull
   46             | char
   47             | stmtExprExpr
+  48             | LBRACE expression RBRACE
 
-  48  stmtExpr : assign
-  49           | new
-  50           | methodCall
-  51           | emptyMethodCall
+  49  stmtExpr : assign
+  50           | new
+  51           | methodCall
+  52           | emptyMethodCall
 
-  52  this : JTHIS
+  53  this : JTHIS
 
-  53  super : JSUPER
+  54  super : JSUPER
 
-  54  localOrFieldVar : IDENTIFIER
+  55  localOrFieldVar : IDENTIFIER
 
-  55  integer : INT
+  56  integer : INT
 
-  56  binary : expression BINARYOPERATOR expression
+  57  binary : expression BINARYOPERATOR expression
+  58         | expression PLUSMINUSOPERATOR expression
 
-  57  unary : UNARYOPERATOR expression
+  59  unary : UNARYOPERATOR expression
+  60        | PLUSMINUSOPERATOR expression
 
-  58  bool : BOOLEAN
+  61  bool : BOOLEAN
 
-  59  instVar : expression POINT IDENTIFIER
+  62  instVar : expression POINT IDENTIFIER
 
-  60  string : STRING
+  63  string : STRING
 
-  61  jnull : NULL
+  64  jnull : NULL
 
-  62  char : JCHAR
+  65  char : JCHAR
 
-  63  assign : IDENTIFIER EQUALS expression SEMICOLON
+  66  assign : IDENTIFIER EQUALS expression SEMICOLON
+  67         | expression POINT IDENTIFIER EQUALS expression SEMICOLON
 
-  64  new : JNEW type LBRACE expressions RBRACE
-  65      | JNEW type LBRACE RBRACE
+  68  new : JNEW type LBRACE expressions RBRACE
+  69      | JNEW type LBRACE RBRACE
 
-  66  methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE
-  67             | IDENTIFIER LBRACE expressions RBRACE
+  70  methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE
+  71             | IDENTIFIER LBRACE expressions RBRACE
 
-  68  emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE
-  69                  | IDENTIFIER LBRACE RBRACE
+  72  emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE
+  73                  | IDENTIFIER LBRACE RBRACE
 
-  70  expressions : expression
-  71              | expressions COMMA expression
+  74  expressions : expression
+  75              | expressions COMMA expression
 
 state 0
 	$accept : . programm $end  (0)
@@ -366,43 +370,45 @@ state 29
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
 	LBRACKET  shift 29
-	RBRACKET  shift 42
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	JRETURN  shift 47
+	RBRACKET  shift 44
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	JRETURN  shift 49
 	.  error
 
-	type  goto 48
-	expression  goto 49
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	statement  goto 62
-	localVarDecl  goto 63
-	whilestatement  goto 64
-	ifthenstatement  goto 65
-	ifthenelsestatement  goto 66
-	returnstatement  goto 67
-	block  goto 68
-	stmtExprStmt  goto 69
-	new  goto 70
-	stmtExpr  goto 71
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-	statements  goto 75
+	type  goto 50
+	expression  goto 51
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	statement  goto 64
+	localVarDecl  goto 65
+	whilestatement  goto 66
+	ifthenstatement  goto 67
+	ifthenelsestatement  goto 68
+	returnstatement  goto 69
+	block  goto 70
+	stmtExprStmt  goto 71
+	new  goto 72
+	stmtExpr  goto 73
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+	statements  goto 77
 
 
 state 30
@@ -423,7 +429,7 @@ state 32
 	JTYPE  shift 7
 	.  error
 
-	parameter  goto 76
+	parameter  goto 78
 	type  goto 27
 
 
@@ -433,13 +439,13 @@ state 33
 	LBRACKET  shift 29
 	.  error
 
-	block  goto 77
+	block  goto 79
 
 
 state 34
 	whilestatement : JWHILE . LBRACE expression RBRACE statement  (31)
 
-	LBRACE  shift 78
+	LBRACE  shift 80
 	.  error
 
 
@@ -447,51 +453,52 @@ state 35
 	ifthenstatement : JIF . LBRACE expression RBRACE statement  (29)
 	ifthenelsestatement : JIF . LBRACE expression RBRACE statement ELSE statement  (30)
 
-	LBRACE  shift 79
+	LBRACE  shift 81
 	.  error
 
 
 state 36
-	integer : INT .  (55)
+	integer : INT .  (56)
 
-	.  reduce 55
+	.  reduce 56
 
 
 state 37
-	string : STRING .  (60)
+	string : STRING .  (63)
 
-	.  reduce 60
+	.  reduce 63
 
 
 state 38
-	char : JCHAR .  (62)
+	char : JCHAR .  (65)
 
-	.  reduce 62
+	.  reduce 65
 
 
 state 39
-	bool : BOOLEAN .  (58)
+	bool : BOOLEAN .  (61)
 
-	.  reduce 58
+	.  reduce 61
 
 
 state 40
-	localOrFieldVar : IDENTIFIER .  (54)
-	assign : IDENTIFIER . EQUALS expression SEMICOLON  (63)
-	methodCall : IDENTIFIER . LBRACE expressions RBRACE  (67)
-	emptyMethodCall : IDENTIFIER . LBRACE RBRACE  (69)
+	localOrFieldVar : IDENTIFIER .  (55)
+	assign : IDENTIFIER . EQUALS expression SEMICOLON  (66)
+	methodCall : IDENTIFIER . LBRACE expressions RBRACE  (71)
+	emptyMethodCall : IDENTIFIER . LBRACE RBRACE  (73)
 
-	EQUALS  shift 80
-	LBRACE  shift 81
-	SEMICOLON  reduce 54
-	COMMA  reduce 54
-	POINT  reduce 54
-	BINARYOPERATOR  reduce 54
-	RBRACE  reduce 54
+	EQUALS  shift 82
+	LBRACE  shift 83
+	SEMICOLON  reduce 55
+	COMMA  reduce 55
+	POINT  reduce 55
+	BINARYOPERATOR  reduce 55
+	PLUSMINUSOPERATOR  reduce 55
+	RBRACE  reduce 55
 
 
 state 41
-	unary : UNARYOPERATOR . expression  (57)
+	unary : UNARYOPERATOR . expression  (59)
 
 	INT  shift 36
 	STRING  shift 37
@@ -499,67 +506,143 @@ state 41
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 82
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	expression  goto 84
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
 state 42
+	unary : PLUSMINUSOPERATOR . expression  (60)
+
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 86
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+
+
+state 43
+	expression : LBRACE . expression RBRACE  (48)
+
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 87
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+
+
+state 44
 	block : LBRACKET RBRACKET .  (18)
 
 	.  reduce 18
 
 
-state 43
-	this : JTHIS .  (52)
-
-	.  reduce 52
-
-
-state 44
-	super : JSUPER .  (53)
+state 45
+	this : JTHIS .  (53)
 
 	.  reduce 53
 
 
-state 45
-	new : JNEW . type LBRACE expressions RBRACE  (64)
-	new : JNEW . type LBRACE RBRACE  (65)
+state 46
+	super : JSUPER .  (54)
+
+	.  reduce 54
+
+
+state 47
+	new : JNEW . type LBRACE expressions RBRACE  (68)
+	new : JNEW . type LBRACE RBRACE  (69)
 
 	JTYPE  shift 7
 	.  error
 
-	type  goto 84
+	type  goto 88
 
 
-state 46
-	jnull : NULL .  (61)
+state 48
+	jnull : NULL .  (64)
 
-	.  reduce 61
+	.  reduce 64
 
 
-state 47
+state 49
 	returnstatement : JRETURN . expression SEMICOLON  (32)
 
 	INT  shift 36
@@ -568,177 +651,183 @@ state 47
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 85
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-
-
-state 48
-	localVarDecl : type . IDENTIFIER SEMICOLON  (35)
-
-	IDENTIFIER  shift 86
-	.  error
-
-
-state 49
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	.  error
+	expression  goto 89
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
 state 50
+	localVarDecl : type . IDENTIFIER SEMICOLON  (35)
+
+	IDENTIFIER  shift 90
+	.  error
+
+
+state 51
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	.  error
+
+
+state 52
 	expression : super .  (37)
 
 	.  reduce 37
 
 
-state 51
+state 53
 	expression : this .  (36)
 
 	.  reduce 36
 
 
-state 52
+state 54
 	expression : integer .  (39)
 
 	.  reduce 39
 
 
-state 53
+state 55
 	expression : bool .  (42)
 
 	.  reduce 42
 
 
-state 54
+state 56
 	expression : instVar .  (43)
 
 	.  reduce 43
 
 
-state 55
+state 57
 	expression : string .  (44)
 
 	.  reduce 44
 
 
-state 56
+state 58
 	expression : jnull .  (45)
 
 	.  reduce 45
 
 
-state 57
+state 59
 	expression : char .  (46)
 
 	.  reduce 46
 
 
-state 58
+state 60
 	expression : localOrFieldVar .  (38)
 
 	.  reduce 38
 
 
-state 59
+state 61
 	expression : binary .  (40)
 
 	.  reduce 40
 
 
-state 60
+state 62
 	expression : unary .  (41)
 
 	.  reduce 41
 
 
-state 61
+state 63
 	expression : stmtExprExpr .  (47)
 
 	.  reduce 47
 
 
-state 62
+state 64
 	statements : statement .  (20)
 
 	.  reduce 20
 
 
-state 63
+state 65
 	statement : localVarDecl .  (28)
 
 	.  reduce 28
 
 
-state 64
+state 66
 	statement : whilestatement .  (24)
 
 	.  reduce 24
 
 
-state 65
+state 67
 	statement : ifthenstatement .  (22)
 
 	.  reduce 22
 
 
-state 66
+state 68
 	statement : ifthenelsestatement .  (23)
 
 	.  reduce 23
 
 
-state 67
+state 69
 	statement : returnstatement .  (26)
 
 	.  reduce 26
 
 
-state 68
+state 70
 	statement : block .  (25)
 
 	.  reduce 25
 
 
-state 69
+state 71
 	statement : stmtExprStmt .  (27)
 
 	.  reduce 27
 
 
-state 70
-	stmtExpr : new .  (49)
+state 72
+	stmtExpr : new .  (50)
 
-	.  reduce 49
+	.  reduce 50
 
 
-state 71
+73: reduce/reduce conflict (reduce 33, reduce 34) on PLUSMINUSOPERATOR
+state 73
 	stmtExprExpr : stmtExpr .  (33)
 	stmtExprStmt : stmtExpr .  (34)
 
@@ -754,6 +843,8 @@ state 71
 	POINT  reduce 33
 	UNARYOPERATOR  reduce 34
 	BINARYOPERATOR  reduce 33
+	PLUSMINUSOPERATOR  reduce 33
+	LBRACE  reduce 34
 	LBRACKET  reduce 34
 	RBRACKET  reduce 34
 	JTHIS  reduce 34
@@ -763,25 +854,25 @@ state 71
 	JRETURN  reduce 34
 
 
-state 72
-	stmtExpr : methodCall .  (50)
-
-	.  reduce 50
-
-
-state 73
-	stmtExpr : emptyMethodCall .  (51)
+state 74
+	stmtExpr : methodCall .  (51)
 
 	.  reduce 51
 
 
-state 74
-	stmtExpr : assign .  (48)
-
-	.  reduce 48
-
-
 state 75
+	stmtExpr : emptyMethodCall .  (52)
+
+	.  reduce 52
+
+
+state 76
+	stmtExpr : assign .  (49)
+
+	.  reduce 49
+
+
+state 77
 	block : LBRACKET statements . RBRACKET  (19)
 	statements : statements . statement  (21)
 
@@ -794,57 +885,59 @@ state 75
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
 	LBRACKET  shift 29
-	RBRACKET  shift 89
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	JRETURN  shift 47
+	RBRACKET  shift 94
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	JRETURN  shift 49
 	.  error
 
-	type  goto 48
-	expression  goto 49
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	statement  goto 90
-	localVarDecl  goto 63
-	whilestatement  goto 64
-	ifthenstatement  goto 65
-	ifthenelsestatement  goto 66
-	returnstatement  goto 67
-	block  goto 68
-	stmtExprStmt  goto 69
-	new  goto 70
-	stmtExpr  goto 71
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	type  goto 50
+	expression  goto 51
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	statement  goto 95
+	localVarDecl  goto 65
+	whilestatement  goto 66
+	ifthenstatement  goto 67
+	ifthenelsestatement  goto 68
+	returnstatement  goto 69
+	block  goto 70
+	stmtExprStmt  goto 71
+	new  goto 72
+	stmtExpr  goto 73
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 76
+state 78
 	parameters : parameters COMMA parameter .  (16)
 
 	.  reduce 16
 
 
-state 77
+state 79
 	method : type IDENTIFIER LBRACE parameters RBRACE block .  (13)
 
 	.  reduce 13
 
 
-state 78
+state 80
 	whilestatement : JWHILE LBRACE . expression RBRACE statement  (31)
 
 	INT  shift 36
@@ -853,33 +946,35 @@ state 78
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 91
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	expression  goto 96
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 79
+state 81
 	ifthenstatement : JIF LBRACE . expression RBRACE statement  (29)
 	ifthenelsestatement : JIF LBRACE . expression RBRACE statement ELSE statement  (30)
 
@@ -889,166 +984,216 @@ state 79
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 92
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	expression  goto 97
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 80
-	assign : IDENTIFIER EQUALS . expression SEMICOLON  (63)
-
-	INT  shift 36
-	STRING  shift 37
-	JCHAR  shift 38
-	BOOLEAN  shift 39
-	IDENTIFIER  shift 40
-	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	.  error
-
-	expression  goto 93
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-
-
-state 81
-	methodCall : IDENTIFIER LBRACE . expressions RBRACE  (67)
-	emptyMethodCall : IDENTIFIER LBRACE . RBRACE  (69)
-
-	INT  shift 36
-	STRING  shift 37
-	JCHAR  shift 38
-	BOOLEAN  shift 39
-	IDENTIFIER  shift 40
-	UNARYOPERATOR  shift 41
-	RBRACE  shift 94
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	.  error
-
-	expression  goto 95
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-	expressions  goto 96
-
-
-82: shift/reduce conflict (shift 87, reduce 57) on POINT
-82: shift/reduce conflict (shift 88, reduce 57) on BINARYOPERATOR
 state 82
-	binary : expression . BINARYOPERATOR expression  (56)
-	unary : UNARYOPERATOR expression .  (57)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
+	assign : IDENTIFIER EQUALS . expression SEMICOLON  (66)
 
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	SEMICOLON  reduce 57
-	COMMA  reduce 57
-	RBRACE  reduce 57
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 98
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
 state 83
+	methodCall : IDENTIFIER LBRACE . expressions RBRACE  (71)
+	emptyMethodCall : IDENTIFIER LBRACE . RBRACE  (73)
+
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	RBRACE  shift 99
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 100
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+	expressions  goto 101
+
+
+84: shift/reduce conflict (shift 91, reduce 59) on POINT
+84: shift/reduce conflict (shift 92, reduce 59) on BINARYOPERATOR
+84: shift/reduce conflict (shift 93, reduce 59) on PLUSMINUSOPERATOR
+state 84
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	unary : UNARYOPERATOR expression .  (59)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	SEMICOLON  reduce 59
+	COMMA  reduce 59
+	RBRACE  reduce 59
+
+
+state 85
 	stmtExprExpr : stmtExpr .  (33)
 
 	.  reduce 33
 
 
-state 84
-	new : JNEW type . LBRACE expressions RBRACE  (64)
-	new : JNEW type . LBRACE RBRACE  (65)
-
-	LBRACE  shift 97
-	.  error
-
-
-state 85
-	returnstatement : JRETURN expression . SEMICOLON  (32)
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	SEMICOLON  shift 98
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	.  error
-
-
+86: shift/reduce conflict (shift 91, reduce 60) on POINT
+86: shift/reduce conflict (shift 92, reduce 60) on BINARYOPERATOR
+86: shift/reduce conflict (shift 93, reduce 60) on PLUSMINUSOPERATOR
 state 86
-	localVarDecl : type IDENTIFIER . SEMICOLON  (35)
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	unary : PLUSMINUSOPERATOR expression .  (60)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
 
-	SEMICOLON  shift 99
-	.  error
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	SEMICOLON  reduce 60
+	COMMA  reduce 60
+	RBRACE  reduce 60
 
 
 state 87
-	instVar : expression POINT . IDENTIFIER  (59)
-	methodCall : expression POINT . IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression POINT . IDENTIFIER LBRACE RBRACE  (68)
+	expression : LBRACE expression . RBRACE  (48)
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
 
-	IDENTIFIER  shift 100
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	RBRACE  shift 102
 	.  error
 
 
 state 88
-	binary : expression BINARYOPERATOR . expression  (56)
+	new : JNEW type . LBRACE expressions RBRACE  (68)
+	new : JNEW type . LBRACE RBRACE  (69)
+
+	LBRACE  shift 103
+	.  error
+
+
+state 89
+	returnstatement : JRETURN expression . SEMICOLON  (32)
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	SEMICOLON  shift 104
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	.  error
+
+
+state 90
+	localVarDecl : type IDENTIFIER . SEMICOLON  (35)
+
+	SEMICOLON  shift 105
+	.  error
+
+
+state 91
+	instVar : expression POINT . IDENTIFIER  (62)
+	assign : expression POINT . IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression POINT . IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression POINT . IDENTIFIER LBRACE RBRACE  (72)
+
+	IDENTIFIER  shift 106
+	.  error
+
+
+state 92
+	binary : expression BINARYOPERATOR . expression  (57)
 
 	INT  shift 36
 	STRING  shift 37
@@ -1056,115 +1201,172 @@ state 88
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 101
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	expression  goto 107
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 89
+state 93
+	binary : expression PLUSMINUSOPERATOR . expression  (58)
+
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 108
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+
+
+state 94
 	block : LBRACKET statements RBRACKET .  (19)
 
 	.  reduce 19
 
 
-state 90
+state 95
 	statements : statements statement .  (21)
 
 	.  reduce 21
 
 
-state 91
-	whilestatement : JWHILE LBRACE expression . RBRACE statement  (31)
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	RBRACE  shift 102
-	.  error
-
-
-state 92
-	ifthenstatement : JIF LBRACE expression . RBRACE statement  (29)
-	ifthenelsestatement : JIF LBRACE expression . RBRACE statement ELSE statement  (30)
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	RBRACE  shift 103
-	.  error
-
-
-state 93
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	assign : IDENTIFIER EQUALS expression . SEMICOLON  (63)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	SEMICOLON  shift 104
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	.  error
-
-
-state 94
-	emptyMethodCall : IDENTIFIER LBRACE RBRACE .  (69)
-
-	.  reduce 69
-
-
-state 95
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-	expressions : expression .  (70)
-
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	COMMA  reduce 70
-	RBRACE  reduce 70
-
-
 state 96
-	methodCall : IDENTIFIER LBRACE expressions . RBRACE  (67)
-	expressions : expressions . COMMA expression  (71)
+	whilestatement : JWHILE LBRACE expression . RBRACE statement  (31)
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
 
-	COMMA  shift 105
-	RBRACE  shift 106
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	RBRACE  shift 109
 	.  error
 
 
 state 97
-	new : JNEW type LBRACE . expressions RBRACE  (64)
-	new : JNEW type LBRACE . RBRACE  (65)
+	ifthenstatement : JIF LBRACE expression . RBRACE statement  (29)
+	ifthenelsestatement : JIF LBRACE expression . RBRACE statement ELSE statement  (30)
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	RBRACE  shift 110
+	.  error
+
+
+state 98
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : IDENTIFIER EQUALS expression . SEMICOLON  (66)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	SEMICOLON  shift 111
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	.  error
+
+
+state 99
+	emptyMethodCall : IDENTIFIER LBRACE RBRACE .  (73)
+
+	.  reduce 73
+
+
+state 100
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+	expressions : expression .  (74)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	COMMA  reduce 74
+	RBRACE  reduce 74
+
+
+state 101
+	methodCall : IDENTIFIER LBRACE expressions . RBRACE  (71)
+	expressions : expressions . COMMA expression  (75)
+
+	COMMA  shift 112
+	RBRACE  shift 113
+	.  error
+
+
+state 102
+	expression : LBRACE expression RBRACE .  (48)
+
+	.  reduce 48
+
+
+state 103
+	new : JNEW type LBRACE . expressions RBRACE  (68)
+	new : JNEW type LBRACE . RBRACE  (69)
 
 	INT  shift 36
 	STRING  shift 37
@@ -1172,76 +1374,105 @@ state 97
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	RBRACE  shift 107
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	RBRACE  shift 114
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 95
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-	expressions  goto 108
+	expression  goto 100
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+	expressions  goto 115
 
 
-state 98
+state 104
 	returnstatement : JRETURN expression SEMICOLON .  (32)
 
 	.  reduce 32
 
 
-state 99
+state 105
 	localVarDecl : type IDENTIFIER SEMICOLON .  (35)
 
 	.  reduce 35
 
 
-state 100
-	instVar : expression POINT IDENTIFIER .  (59)
-	methodCall : expression POINT IDENTIFIER . LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression POINT IDENTIFIER . LBRACE RBRACE  (68)
+state 106
+	instVar : expression POINT IDENTIFIER .  (62)
+	assign : expression POINT IDENTIFIER . EQUALS expression SEMICOLON  (67)
+	methodCall : expression POINT IDENTIFIER . LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression POINT IDENTIFIER . LBRACE RBRACE  (72)
 
-	LBRACE  shift 109
-	SEMICOLON  reduce 59
-	COMMA  reduce 59
-	POINT  reduce 59
-	BINARYOPERATOR  reduce 59
-	RBRACE  reduce 59
-
-
-101: shift/reduce conflict (shift 87, reduce 56) on POINT
-101: shift/reduce conflict (shift 88, reduce 56) on BINARYOPERATOR
-state 101
-	binary : expression . BINARYOPERATOR expression  (56)
-	binary : expression BINARYOPERATOR expression .  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	SEMICOLON  reduce 56
-	COMMA  reduce 56
-	RBRACE  reduce 56
+	EQUALS  shift 116
+	LBRACE  shift 117
+	SEMICOLON  reduce 62
+	COMMA  reduce 62
+	POINT  reduce 62
+	BINARYOPERATOR  reduce 62
+	PLUSMINUSOPERATOR  reduce 62
+	RBRACE  reduce 62
 
 
-state 102
+107: shift/reduce conflict (shift 91, reduce 57) on POINT
+107: shift/reduce conflict (shift 92, reduce 57) on BINARYOPERATOR
+107: shift/reduce conflict (shift 93, reduce 57) on PLUSMINUSOPERATOR
+state 107
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression BINARYOPERATOR expression .  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	SEMICOLON  reduce 57
+	COMMA  reduce 57
+	RBRACE  reduce 57
+
+
+108: shift/reduce conflict (shift 91, reduce 58) on POINT
+108: shift/reduce conflict (shift 92, reduce 58) on BINARYOPERATOR
+108: shift/reduce conflict (shift 93, reduce 58) on PLUSMINUSOPERATOR
+state 108
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	binary : expression PLUSMINUSOPERATOR expression .  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	SEMICOLON  reduce 58
+	COMMA  reduce 58
+	RBRACE  reduce 58
+
+
+state 109
 	whilestatement : JWHILE LBRACE expression RBRACE . statement  (31)
 
 	JWHILE  shift 34
@@ -1253,44 +1484,46 @@ state 102
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
 	LBRACKET  shift 29
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	JRETURN  shift 47
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	JRETURN  shift 49
 	.  error
 
-	type  goto 48
-	expression  goto 49
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	statement  goto 110
-	localVarDecl  goto 63
-	whilestatement  goto 64
-	ifthenstatement  goto 65
-	ifthenelsestatement  goto 66
-	returnstatement  goto 67
-	block  goto 68
-	stmtExprStmt  goto 69
-	new  goto 70
-	stmtExpr  goto 71
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	type  goto 50
+	expression  goto 51
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	statement  goto 118
+	localVarDecl  goto 65
+	whilestatement  goto 66
+	ifthenstatement  goto 67
+	ifthenelsestatement  goto 68
+	returnstatement  goto 69
+	block  goto 70
+	stmtExprStmt  goto 71
+	new  goto 72
+	stmtExpr  goto 73
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 103
+state 110
 	ifthenstatement : JIF LBRACE expression RBRACE . statement  (29)
 	ifthenelsestatement : JIF LBRACE expression RBRACE . statement ELSE statement  (30)
 
@@ -1303,51 +1536,53 @@ state 103
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
 	LBRACKET  shift 29
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	JRETURN  shift 47
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	JRETURN  shift 49
 	.  error
 
-	type  goto 48
-	expression  goto 49
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	statement  goto 111
-	localVarDecl  goto 63
-	whilestatement  goto 64
-	ifthenstatement  goto 65
-	ifthenelsestatement  goto 66
-	returnstatement  goto 67
-	block  goto 68
-	stmtExprStmt  goto 69
-	new  goto 70
-	stmtExpr  goto 71
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	type  goto 50
+	expression  goto 51
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	statement  goto 119
+	localVarDecl  goto 65
+	whilestatement  goto 66
+	ifthenstatement  goto 67
+	ifthenelsestatement  goto 68
+	returnstatement  goto 69
+	block  goto 70
+	stmtExprStmt  goto 71
+	new  goto 72
+	stmtExpr  goto 73
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 104
-	assign : IDENTIFIER EQUALS expression SEMICOLON .  (63)
+state 111
+	assign : IDENTIFIER EQUALS expression SEMICOLON .  (66)
 
-	.  reduce 63
+	.  reduce 66
 
 
-state 105
-	expressions : expressions COMMA . expression  (71)
+state 112
+	expressions : expressions COMMA . expression  (75)
 
 	INT  shift 36
 	STRING  shift 37
@@ -1355,56 +1590,57 @@ state 105
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 112
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	expression  goto 120
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 106
-	methodCall : IDENTIFIER LBRACE expressions RBRACE .  (67)
+state 113
+	methodCall : IDENTIFIER LBRACE expressions RBRACE .  (71)
 
-	.  reduce 67
-
-
-state 107
-	new : JNEW type LBRACE RBRACE .  (65)
-
-	.  reduce 65
+	.  reduce 71
 
 
-state 108
-	new : JNEW type LBRACE expressions . RBRACE  (64)
-	expressions : expressions . COMMA expression  (71)
+state 114
+	new : JNEW type LBRACE RBRACE .  (69)
 
-	COMMA  shift 105
-	RBRACE  shift 113
+	.  reduce 69
+
+
+state 115
+	new : JNEW type LBRACE expressions . RBRACE  (68)
+	expressions : expressions . COMMA expression  (75)
+
+	COMMA  shift 112
+	RBRACE  shift 121
 	.  error
 
 
-state 109
-	methodCall : expression POINT IDENTIFIER LBRACE . expressions RBRACE  (66)
-	emptyMethodCall : expression POINT IDENTIFIER LBRACE . RBRACE  (68)
+state 116
+	assign : expression POINT IDENTIFIER EQUALS . expression SEMICOLON  (67)
 
 	INT  shift 36
 	STRING  shift 37
@@ -1412,46 +1648,86 @@ state 109
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
-	RBRACE  shift 114
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
 	.  error
 
-	expression  goto 95
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	new  goto 70
-	stmtExpr  goto 83
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
-	expressions  goto 115
+	expression  goto 122
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 110
+state 117
+	methodCall : expression POINT IDENTIFIER LBRACE . expressions RBRACE  (70)
+	emptyMethodCall : expression POINT IDENTIFIER LBRACE . RBRACE  (72)
+
+	INT  shift 36
+	STRING  shift 37
+	JCHAR  shift 38
+	BOOLEAN  shift 39
+	IDENTIFIER  shift 40
+	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
+	RBRACE  shift 123
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	.  error
+
+	expression  goto 100
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	new  goto 72
+	stmtExpr  goto 85
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
+	expressions  goto 124
+
+
+state 118
 	whilestatement : JWHILE LBRACE expression RBRACE statement .  (31)
 
 	.  reduce 31
 
 
-111: shift/reduce conflict (shift 116, reduce 29) on ELSE
-state 111
+119: shift/reduce conflict (shift 125, reduce 29) on ELSE
+state 119
 	ifthenstatement : JIF LBRACE expression RBRACE statement .  (29)
 	ifthenelsestatement : JIF LBRACE expression RBRACE statement . ELSE statement  (30)
 
-	ELSE  shift 116
+	ELSE  shift 125
 	JWHILE  reduce 29
 	JIF  reduce 29
 	JTYPE  reduce 29
@@ -1461,6 +1737,8 @@ state 111
 	BOOLEAN  reduce 29
 	IDENTIFIER  reduce 29
 	UNARYOPERATOR  reduce 29
+	PLUSMINUSOPERATOR  reduce 29
+	LBRACE  reduce 29
 	LBRACKET  reduce 29
 	RBRACKET  reduce 29
 	JTHIS  reduce 29
@@ -1470,41 +1748,60 @@ state 111
 	JRETURN  reduce 29
 
 
-state 112
-	binary : expression . BINARYOPERATOR expression  (56)
-	instVar : expression . POINT IDENTIFIER  (59)
-	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (66)
-	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (68)
-	expressions : expressions COMMA expression .  (71)
+state 120
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
+	expressions : expressions COMMA expression .  (75)
 
-	POINT  shift 87
-	BINARYOPERATOR  shift 88
-	COMMA  reduce 71
-	RBRACE  reduce 71
-
-
-state 113
-	new : JNEW type LBRACE expressions RBRACE .  (64)
-
-	.  reduce 64
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
+	COMMA  reduce 75
+	RBRACE  reduce 75
 
 
-state 114
-	emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE .  (68)
+state 121
+	new : JNEW type LBRACE expressions RBRACE .  (68)
 
 	.  reduce 68
 
 
-state 115
-	methodCall : expression POINT IDENTIFIER LBRACE expressions . RBRACE  (66)
-	expressions : expressions . COMMA expression  (71)
+state 122
+	binary : expression . BINARYOPERATOR expression  (57)
+	binary : expression . PLUSMINUSOPERATOR expression  (58)
+	instVar : expression . POINT IDENTIFIER  (62)
+	assign : expression . POINT IDENTIFIER EQUALS expression SEMICOLON  (67)
+	assign : expression POINT IDENTIFIER EQUALS expression . SEMICOLON  (67)
+	methodCall : expression . POINT IDENTIFIER LBRACE expressions RBRACE  (70)
+	emptyMethodCall : expression . POINT IDENTIFIER LBRACE RBRACE  (72)
 
-	COMMA  shift 105
-	RBRACE  shift 117
+	SEMICOLON  shift 126
+	POINT  shift 91
+	BINARYOPERATOR  shift 92
+	PLUSMINUSOPERATOR  shift 93
 	.  error
 
 
-state 116
+state 123
+	emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE .  (72)
+
+	.  reduce 72
+
+
+state 124
+	methodCall : expression POINT IDENTIFIER LBRACE expressions . RBRACE  (70)
+	expressions : expressions . COMMA expression  (75)
+
+	COMMA  shift 112
+	RBRACE  shift 127
+	.  error
+
+
+state 125
 	ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE . statement  (30)
 
 	JWHILE  shift 34
@@ -1516,59 +1813,70 @@ state 116
 	BOOLEAN  shift 39
 	IDENTIFIER  shift 40
 	UNARYOPERATOR  shift 41
+	PLUSMINUSOPERATOR  shift 42
+	LBRACE  shift 43
 	LBRACKET  shift 29
-	JTHIS  shift 43
-	JSUPER  shift 44
-	JNEW  shift 45
-	NULL  shift 46
-	JRETURN  shift 47
+	JTHIS  shift 45
+	JSUPER  shift 46
+	JNEW  shift 47
+	NULL  shift 48
+	JRETURN  shift 49
 	.  error
 
-	type  goto 48
-	expression  goto 49
-	super  goto 50
-	this  goto 51
-	integer  goto 52
-	bool  goto 53
-	instVar  goto 54
-	string  goto 55
-	jnull  goto 56
-	char  goto 57
-	localOrFieldVar  goto 58
-	binary  goto 59
-	unary  goto 60
-	stmtExprExpr  goto 61
-	statement  goto 118
-	localVarDecl  goto 63
-	whilestatement  goto 64
-	ifthenstatement  goto 65
-	ifthenelsestatement  goto 66
-	returnstatement  goto 67
-	block  goto 68
-	stmtExprStmt  goto 69
-	new  goto 70
-	stmtExpr  goto 71
-	methodCall  goto 72
-	emptyMethodCall  goto 73
-	assign  goto 74
+	type  goto 50
+	expression  goto 51
+	super  goto 52
+	this  goto 53
+	integer  goto 54
+	bool  goto 55
+	instVar  goto 56
+	string  goto 57
+	jnull  goto 58
+	char  goto 59
+	localOrFieldVar  goto 60
+	binary  goto 61
+	unary  goto 62
+	stmtExprExpr  goto 63
+	statement  goto 128
+	localVarDecl  goto 65
+	whilestatement  goto 66
+	ifthenstatement  goto 67
+	ifthenelsestatement  goto 68
+	returnstatement  goto 69
+	block  goto 70
+	stmtExprStmt  goto 71
+	new  goto 72
+	stmtExpr  goto 73
+	methodCall  goto 74
+	emptyMethodCall  goto 75
+	assign  goto 76
 
 
-state 117
-	methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE .  (66)
+state 126
+	assign : expression POINT IDENTIFIER EQUALS expression SEMICOLON .  (67)
 
-	.  reduce 66
+	.  reduce 67
 
 
-state 118
+state 127
+	methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE .  (70)
+
+	.  reduce 70
+
+
+state 128
 	ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement .  (30)
 
 	.  reduce 30
 
 
-State 82 contains 2 shift/reduce conflicts.
-State 101 contains 2 shift/reduce conflicts.
-State 111 contains 1 shift/reduce conflict.
+State 73 contains 1 reduce/reduce conflict.
+State 84 contains 3 shift/reduce conflicts.
+State 86 contains 3 shift/reduce conflicts.
+State 107 contains 3 shift/reduce conflicts.
+State 108 contains 3 shift/reduce conflicts.
+State 119 contains 1 shift/reduce conflict.
 
 
-33 terminals, 39 nonterminals
-72 grammar rules, 119 states
+32 terminals, 39 nonterminals
+76 grammar rules, 129 states

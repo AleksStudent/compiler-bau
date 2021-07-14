@@ -5,45 +5,18 @@ class TestClass{
 	boolean myBool;
 
 
-	int main(int test, boolean test2) {
+	void main(){
+        boolean num3;
+        int num2;
+        num3 = true || false;
 
-		String test5;
-		int test6;
-		int test7;
-		String test8;
-		String test9;
-		String test10;
+        num3 = !true;
+        num2 = +1;
+        num2 = 1 + 2;
+        num2 = -(-4);
 
-		test5 = "sss";
-		test6 = 1;
-		test7 = 2 + 3;
-		test8 = new String("abc");
-		test9 = this.test("abc");
-		test10 = this.myNum;
-		test11 = test("abc");
+        this.myNum = 2;
+    }
 
-		if (test3) {
-
-		} else {
-
-		}
-
-		if (!test2) {
-
-		}
-
-		return 2;
-	}
-
-	int test() {
-
-		boolean test4;
-
-		while (test4) {
-
-		}
-
-		return 2;
-	}
 
 }
