@@ -19,7 +19,6 @@ bool = (true|false)
 static = (static)
 abstract = (abstract)
 class = (class)
-accessright = (public|protected|private)
 identifierfirst = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)
 identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)+
 %%
@@ -40,6 +39,7 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "=" { return new EQUALS(yytext()); }
 "," { return new COMMA(yytext()); }
 "." { return new POINT(yytext()); }
+"+" { return new UNARYOPERATOR(yytext()); }
 "-" { return new UNARYOPERATOR(yytext()); }
 "!" { return new UNARYOPERATOR(yytext()); }
 "<" { return new BINARYOPERATOR(yytext()); }
@@ -66,7 +66,6 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 {class} { return new JCLASS(yytext()); }
 {type} { return new JTYPE(yytext()); }
 {bool} { return new BOOLEAN(yytext()); }
-{accessright} { return new ACCESSRIGHT(yytext()); }
 {identifierfirst} { return new IDENTIFIER(yytext()); }
 {identifierfirst}{identifierfollow} { return new IDENTIFIER(yytext()); }
 ""{int} { return new INT(yytext()); }
