@@ -89,9 +89,7 @@ methodCall -> 		expression POINT IDENTIFIER LBRACE expressions RBRACE SEMICOLON
 emptyMethodCall -> 	expression POINT IDENTIFIER LBRACE RBRACE
 			|IDENTIFIER LBRACE expressions RBRACE SEMICOLON
 			
-assign-> expression EQUALS expression SEMICOLON
+assign->		 expression EQUALS expression SEMICOLON
 
-Field-> TYPE IDENTIFIER
-
-expression-> 		expression
+expressions-> 		expression
 			|expressions COMMA expression	
