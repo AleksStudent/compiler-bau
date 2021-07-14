@@ -58,7 +58,6 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 "if" { return new JIF(yytext()); }
 "else" { return new ELSE(yytext()); }
 "for" { return new FOR(yytext()); }
-"true" { return new TRUE(yytext()); }
 "return" { return new JRETURN(yytext()); }
 "new" { return new JNEW(yytext()); }
 {static} { return new STATIC(yytext()); }
