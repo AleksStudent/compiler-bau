@@ -15,7 +15,6 @@ class browserparser {
 %token JCHAR
 %token BOOLEAN
 %token IDENTIFIER
-%token ACCESSRIGHT
 %token STATIC
 %token ABSTRACT
 %token JCLASS
