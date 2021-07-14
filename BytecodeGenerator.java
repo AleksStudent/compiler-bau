@@ -7,6 +7,7 @@ import org.objectweb.asm.*;
 
 public class BytecodeGenerator {
 	Class classToCode;
+	Program programToCode;
 
 	static void writeClassfile(ClassWriter cw) throws IOException {
 		byte[] bytes = cw.toByteArray();
@@ -17,14 +18,10 @@ public class BytecodeGenerator {
 		output.close();
 	}
 
-	public BytecodeGenerator(Class i_class) throws IOException {
-		this.classToCode = i_class;
+	public BytecodeGenerator(Program i_program) throws IOException {
+		this.programToCode = i_program;
 
-		// define class writer
-		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-		
 		// begin bytecode generation
-		classToCode.codeGen(cw, i_class);
-		writeClassfile(cw);
+		this.programToCode.codeGen(i_program);
 	}
 }

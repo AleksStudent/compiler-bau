@@ -31,12 +31,16 @@ public class Method implements TypeCheckable {
 
 		for (Parameter parameter: parameters) {
 			parameterInput += parameter.type.getType();
-			localVars.add(new LocalVarDecl(parameter.type, parameter.name));
 		}
 		String methodSignature = "(" + parameterInput + ")" + this.returnType.getType();
 		System.out.println("[Method] Parameter Input: " + methodSignature);
 
 		MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, this.name, methodSignature, null, null);
+		
+		// 2nd parameter loop as the first was needed for type declarations
+		for (Parameter parameter: parameters) {
+			parameter.codeGen(cw, method, i_class, localVars);
+		}
 
 		method.visitCode();
 		// generate code from inside the method
@@ -58,7 +62,7 @@ public class Method implements TypeCheckable {
 
     @Override
     public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-        if (thisClass.methods.stream().anyMatch(method -> method.name.equals(name))) {
+        if (thisClass.methods.stream().filter(method -> method.name.equals(name)).count()>1) {
             throw new DuplicateException(String.format("Method-Error: Method with name %s already exists", name));
         }
         if (!Type.VALID_VAR_TYPES.contains(returnType)) {
@@ -73,4 +77,10 @@ public class Method implements TypeCheckable {
         }
         return returnType;
     }
+
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		// TODO Auto-generated method stub
+		
+	}
 }

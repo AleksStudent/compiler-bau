@@ -1,4 +1,8 @@
 import java.util.Map;
+import java.util.Vector;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 
 public class Parameter implements TypeCheckable{
 
@@ -8,6 +12,10 @@ public class Parameter implements TypeCheckable{
 	public Parameter(final String name, final Type type) {
 		this.name = name;
 		this.type = type;
+	}
+	
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+		localVar.add(new LocalVarDecl(type, name));
 	}
 
 	@Override

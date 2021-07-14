@@ -1,6 +1,8 @@
 import java.util.Map;
+import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 public class Field implements TypeCheckable {
@@ -38,6 +40,15 @@ public class Field implements TypeCheckable {
         if (!Type.VALID_VAR_TYPES.contains(type)) {
             throw new UnexpectedTypeException(String.format("Field-Error: Field %s with Type %s has invalid Type", name, type));
         }
+        if(thisClass.fields.stream().filter(field -> field.name.equals(name)).count()>1){
+            throw new DuplicateException(String.format("Field-Error: Field with name %s is not unique",name));
+        }
         return type;
     }
+
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+		// TODO Auto-generated method stub
+		
+	}
 }

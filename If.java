@@ -12,17 +12,18 @@ public class If extends Stmt {
     public Expr cond;
     public Stmt ifStmt;
     public Stmt optionalElseStmt;
+    public Type type;
 
-	public If(final Expr cond, final Stmt ifStmt, final Stmt optionalElseStmt) {
-		this.cond = cond;
-		this.ifStmt = ifStmt;
-		this.optionalElseStmt = optionalElseStmt;
-	}
+    public If(final Expr cond, final Stmt ifStmt, final Stmt optionalElseStmt) {
+        this.cond = cond;
+        this.ifStmt = ifStmt;
+        this.optionalElseStmt = optionalElseStmt;
+    }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		System.out.println("[If] Creating Construct");
-		((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt);
-	}
+    public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+        System.out.println("[If] Creating Construct");
+        ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt);
+    }
 
     @Override
     public String toString() {
@@ -39,13 +40,16 @@ public class If extends Stmt {
         if (condType.equals(Type.TYPE_BOOL)) {
             Type ifType = ifStmt.typeCheck(localVars, thisClass);
             if (optionalElseStmt == null) {
-                return ifType;
+                type = ifType;
+                return type;
             } else {
                 Type elseType = ifStmt.typeCheck(localVars, thisClass);
                 if (ifType.equals(elseType)) {
-                    return ifType;
+                    type = ifType;
+                    return type;
                 } else if (ifType.equals(Type.TYPE_VOID) || elseType.equals(Type.TYPE_VOID)) {
-                    return Type.TYPE_VOID;
+                    type = Type.TYPE_VOID;
+                    return type;
                 } else {
                     throw new UnexpectedTypeException(String.format("If-Error: Expected if-Type and else-Type to be equal or void but found if-Type: %s else-Type: %s", ifType, elseType));
                 }

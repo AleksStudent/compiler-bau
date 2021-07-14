@@ -44,20 +44,21 @@ public class Class {
     @Override
     public String toString() {
         return "Class{" +
-                "fields=" + this.fields +
-                ", methods=" + this.methods +
+                "type=" + type +
+                ", fields=" + fields +
+                ", methods=" + methods +
                 '}';
     }
 
     public Type typeCheck() {
         Class thisClass = this;
+        Type.VALID_VAR_TYPES.add(type);
         for (Field field : fields) {
             field.typeCheck(new HashMap<>(), thisClass);
         }
         for (Method method : methods) {
             method.typeCheck(new HashMap<>(), thisClass);
         }
-        Type.VALID_VAR_TYPES.add(type);
         return type;
     }
 }

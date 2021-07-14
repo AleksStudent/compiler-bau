@@ -36,6 +36,7 @@ public class LocalVarDecl extends Stmt {
         if (!Type.VALID_VAR_TYPES.contains(type)) {
             throw new UnexpectedTypeException(String.format("LocalVarDecl-Error: The Local Variable %s with Type %s has invalid Type", name, type));
         }
+        localVars.put(name,type);
         return type;
     }
 }
