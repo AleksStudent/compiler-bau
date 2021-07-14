@@ -14,7 +14,8 @@ public class Bool extends Expr {
 		this.bool = bool;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method) {
+	@Override
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
 		int codeToWrite = Opcodes.ICONST_0;
 		if (this.bool.equals("true")) codeToWrite = Opcodes.ICONST_1;
 		method.visitInsn(codeToWrite);
@@ -35,11 +36,5 @@ public class Bool extends Expr {
 	@Override
 	public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
 		return type;
-	}
-
-	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		// TODO Auto-generated method stub
-		
 	}
 }

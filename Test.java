@@ -1,4 +1,4 @@
-class Test{
+class TestClass{
 
 	int myNum;
 	String myText;
@@ -39,11 +39,10 @@ class Test{
 
 		boolean test4;
 
-		while (test4 <= test4 && !test4) {
+		while (test4) {
 
 		}
 
-	int Test() {
 		return 2;
 	}
 

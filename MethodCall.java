@@ -25,25 +25,34 @@ public class MethodCall extends StmtExpr {
 		}
 		String parameterInput = "";
 
-		for (Expr parameter: expressions) {
-			parameterInput += ((LocalOrFieldVar) parameter).getVariableType(((LocalOrFieldVar) parameter).name, i_class, localVar);
-		}
 
 		Method foundMethod = null;
 		for (Method methodIt: i_class.methods) {
-			if (methodIt.name == this.name) foundMethod = methodIt;
+			if (methodIt.name.equals(this.name)) foundMethod = methodIt;
+			for (Parameter param: methodIt.parameters) {
+				parameterInput += param.type.getASMType();
+			}
 		}
 
 		String methodSignature = "()V";
 
 		if (foundMethod != null) {
-			methodSignature = "(" + parameterInput + ")" + foundMethod.returnType.getType();
+			methodSignature = "(" + parameterInput + ")" + foundMethod.returnType.getASMType();
 		} else {
-			methodSignature = "(" + parameterInput + ")" + org.objectweb.asm.Type.VOID_TYPE.getClassName();
+			methodSignature = "(" + parameterInput + ")" + org.objectweb.asm.Type.VOID_TYPE.toString();
 		}
-
-		System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
-		method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.name, this.name, methodSignature, false);
+		
+		// define extra methods
+		if (this.name.equals("toString")) {
+			method.visitVarInsn(Opcodes.ALOAD, 0);
+			methodSignature = "()Ljava/lang/String;";
+			System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
+			method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Object", this.name, methodSignature, false);	
+		} else {
+			System.out.println("[MethodCall] Calling: " + this.name + " with Parameters: " + methodSignature);
+			method.visitVarInsn(Opcodes.ALOAD, 0);
+			method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, i_class.name, this.name, methodSignature, false);	
+		}
 	}
 
     @Override
