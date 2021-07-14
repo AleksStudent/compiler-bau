@@ -1,20 +1,26 @@
 programm->class
+
 class -> CLASS IDENTIFIER LBRACKET fields methods RBRACKET
+       | CLASS IDENTIFIER LBRACKET methods RBRACKET 
+       | CLASS IDENTIFIER LBRACKET fields RBRACKET 
 
 fields -> field
        | fields field
-
+       
+methods ->methods method
+       |method
+       
 field -> type IDENTIFIER SEMICOLON
+
 method -> type IDENTIFIER LBRACE parameters RBRACE block
-       | type IDENTIFIER LBRACE RBRACE block 
+       | type IDENTIFIER LBRACE RBRACE block
+       
 parameters -> parameter 
            | parameters COMMA parameter
 
-parameter -> type IDENTIFIER
-       
-
+parameter -> 		type IDENTIFIER     
 	 
-statement→ifthenstatement
+statement→		ifthenstatement
 			|ifthenelsestatement
 			|whilestatement
 			|block
@@ -22,20 +28,29 @@ statement→ifthenstatement
 			|returnstatement
 			|stmtExprStmt
 			|LocalVarDecl
-ifthenstatement→IF LBRACE expression RBRACE statement
-ifthenelsestatement→IF LBRACE expression RBRACE statement ELSE statement
-whilestatement→WHILE LBRACE expression RBRACE statement
-block→LBRACKET RBRACKET
-	|LBRACKET statements RBRACKET
-statements→statement
-		|statements statement
-emptystatement→SEMICOLON
-returnstatement→RETURN SEMICOLON
-				|RETURN expression SEMICOLON
+			
+ifthenstatement→	IF LBRACE expression RBRACE statement
 
-stmtExprExpr->	statementExpression				
-stmtExprStmt->statementExpression
-LocalVarDecl-> TYPE IDENTIFIER SEMICOLON			  
+ifthenelsestatement→	IF LBRACE expression RBRACE statement ELSE statement
+
+whilestatement→		WHILE LBRACE expression RBRACE statement
+
+block→			LBRACKET RBRACKET
+			|LBRACKET statements RBRACKET
+			
+statements→		statement
+			|statements statement
+			
+emptystatement→		SEMICOLON
+
+returnstatement→	RETURN SEMICOLON
+			|RETURN expression SEMICOLON
+
+stmtExprExpr->		statementExpression
+
+stmtExprStmt->		statementExpression
+
+LocalVarDecl-> 		TYPE IDENTIFIER SEMICOLON			  
 		
 	
 expression→ THIS
@@ -50,25 +65,30 @@ expression→ THIS
 			|JNULL
 			|CHAR
 			|stmtExprExpr
-localOrFieldVar-> IDENTIFIER
-instVar : expression POINT IDENTIFIER
-binary-> expression OPERATOR expression 
+localOrFieldVar-> 	IDENTIFIER
+instVar ->		expression POINT IDENTIFIER
+binary-> 		expression OPERATOR expression 
 		
-unary -> UNARYOPERATOR expression 
+unary ->		UNARYOPERATOR expression 
 		
 
-statementExpression->new
+statementExpression->	new
 			|methodCall
 			|emptyMethodCall
 			|assign
 
-
-new->  IDENTIFIER EQUALS NEW IDENTIFIER LBRACE expressions RBRACE SEMICOLON
-	|IDENTIFIER EQUALS NEW IDENTIFIER LBRACE RBRACE SEMICOLON
-methodCall -> expression POINT IDENTIFIER LBRACE expressions RBRACE SEMICOLON			
-emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE
+new->  			IDENTIFIER EQUALS NEW IDENTIFIER LBRACE expressions RBRACE SEMICOLON
+			|IDENTIFIER EQUALS NEW IDENTIFIER LBRACE RBRACE SEMICOLON
 			
-assign     -> expression EQUALS expression SEMICOLON
+methodCall -> 		expression POINT IDENTIFIER LBRACE expressions RBRACE SEMICOLON	
+			|IDENTIFIER LBRACE expressions RBRACE SEMICOLON
+			
+emptyMethodCall -> 	expression POINT IDENTIFIER LBRACE RBRACE
+			|IDENTIFIER LBRACE expressions RBRACE SEMICOLON
+			
+assign-> expression EQUALS expression SEMICOLON
+
 Field-> TYPE IDENTIFIER
-epxpression-> 	expression
-		|expressions COMMA expression	
+
+expression-> 		expression
+			|expressions COMMA expression	
