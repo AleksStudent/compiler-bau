@@ -75,8 +75,8 @@ public class Assign extends StmtExpr {
 			}
 
 		// name = 4 (expr)
-		} else if (type.equals(Type.TYPE_BOOL) || type.equals(Type.TYPE_CHAR) || type.equals(Type.TYPE_INT) ||
-                type.equals(Type.TYPE_NULL)) {
+		} else if (expr instanceof Bool || expr instanceof Char || expr instanceof Integer ||
+				   expr instanceof Jnull) {
 			System.out.println("[Assign] name = " + expr.toString());
 
 			if (indexOf == 0) {

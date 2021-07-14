@@ -53,16 +53,16 @@ public class Binary extends Expr {
     }
 
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar,
-			Stmt failedTask, Stmt successTask) {
+			Stmt successTask, Stmt failedTask) {
 		int selectedCode = 0;
 
 		switch (operator) {
 		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
 		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
+		case ">": selectedCode = Opcodes.IF_ICMPLE; break;
+		case ">=": selectedCode = Opcodes.IF_ICMPLT; break;
+		case "<": selectedCode = Opcodes.IF_ICMPGE; break;
+		case "<=": selectedCode = Opcodes.IF_ICMPGT; break;
 		}
 
 		if (selectedCode != 0) {
@@ -71,15 +71,21 @@ public class Binary extends Expr {
 			this.exprRight.codeGen(cw, method, i_class, localVar);
 			Label successLabel = new Label();
 			Label failedLabel = new Label();
+			Label afterwards = new Label();
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
 			method.visitLabel(successLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			successTask.codeGen(cw, method, i_class, localVar);
+			method.visitJumpInsn(Opcodes.GOTO, afterwards);
 
 			method.visitLabel(failedLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			failedTask.codeGen(cw, method, i_class, localVar);
+			
+			method.visitLabel(afterwards);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			return;
 		}
 
@@ -159,10 +165,10 @@ public class Binary extends Expr {
 		switch (operator) {
 		case "==": selectedCode = Opcodes.IF_ICMPNE; break;
 		case "!=": selectedCode = Opcodes.IF_ICMPEQ; break;
-		case ">": selectedCode = Opcodes.IF_ICMPLT; break;
-		case ">=": selectedCode = Opcodes.IF_ICMPLE; break;
-		case "<": selectedCode = Opcodes.IF_ICMPGT; break;
-		case "<=": selectedCode = Opcodes.IF_ICMPGE; break;
+		case ">": selectedCode = Opcodes.IF_ICMPLE; break;
+		case ">=": selectedCode = Opcodes.IF_ICMPLT; break;
+		case "<": selectedCode = Opcodes.IF_ICMPGE; break;
+		case "<=": selectedCode = Opcodes.IF_ICMPGT; break;
 		}
 
 		if (selectedCode != 0) {
@@ -172,16 +178,21 @@ public class Binary extends Expr {
 			Label failedLabel = new Label();
 			
 			method.visitLabel(initLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			this.exprLeft.codeGen(cw, method, i_class, localVar);
 			this.exprRight.codeGen(cw, method, i_class, localVar);
-			
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			method.visitJumpInsn(Opcodes.GOTO, successLabel);
 
 			method.visitLabel(successLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			run.codeGen(cw, method, i_class, localVar);
+			
 			method.visitJumpInsn(Opcodes.GOTO, initLabel);
+			
+			method.visitLabel(failedLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			
 			return;
 		}
 
