@@ -18,13 +18,13 @@ public class InstVar extends Expr {
         this.name = name;
     }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		System.out.println("[InstVar] Getting Variable for: " + expr.toString());
-		this.expr.codeGen(cw, method, i_class, localVar);
+		this.expr.codeGen(cw, method, i_class, localVar, returnType);
 		Type typeOfAccessedObject = Type.TYPE_VOID;
 		
 		if (expr instanceof This || expr instanceof Super) {
-			expr.codeGen(cw, method, i_class, localVar);
+			expr.codeGen(cw, method, i_class, localVar, returnType);
 			System.out.println("[InstVar] Accessing This");
 		} else if (((LocalOrFieldVar) expr).isFieldVar(((LocalOrFieldVar) expr).name, i_class.fields)) {
 			typeOfAccessedObject = ((LocalOrFieldVar) expr).getFieldVar(((LocalOrFieldVar) expr).name, i_class.fields).type;

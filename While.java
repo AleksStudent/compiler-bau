@@ -15,8 +15,8 @@ public class While extends Stmt {
 	}
 	
 	@Override
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
-		((Binary) cond).codeGenWhile(cw, method, i_class, localVars, stmt);
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
+		((Binary) cond).codeGenWhile(cw, method, i_class, localVars, stmt, returnType);
 	}
 
 	@Override

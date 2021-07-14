@@ -14,7 +14,7 @@ public class Parameter implements TypeCheckable{
 		this.type = type;
 	}
 	
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		localVar.add(new LocalVarDecl(type, name));
 	}
 

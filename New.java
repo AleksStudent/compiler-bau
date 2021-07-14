@@ -18,7 +18,7 @@ public class New extends StmtExpr {
 		this.expressions = expressions;
 	}
 	
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		String typeString = type.getType();
 		
 		// String(String): String, Object(): void
@@ -38,7 +38,7 @@ public class New extends StmtExpr {
 		method.visitInsn(Opcodes.DUP);
 		
 		for (Expr expression: expressions) {
-			expression.codeGen(cw, method, i_class, localVar);
+			expression.codeGen(cw, method, i_class, localVar, returnType);
 		}
 	
 		

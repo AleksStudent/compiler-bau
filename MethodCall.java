@@ -19,9 +19,9 @@ public class MethodCall extends StmtExpr {
 		this.expressions = expressions;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVar, Type returnType) {
 		for (Expr expression: expressions) {
-			((LocalOrFieldVar) expression).codeGen(cw, method, i_class, localVar);
+			expr.codeGen(cw, method, i_class, localVar, returnType);
 		}
 		String parameterInput = "";
 

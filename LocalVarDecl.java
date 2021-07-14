@@ -15,7 +15,7 @@ public class LocalVarDecl extends Stmt {
         this.name = name;
     }
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		localVars.add(new LocalVarDecl(this.type, this.name));
 		System.out.println("[LocalVarDecl] Pushed Variable to Stack at Position: " + localVars.size());
 	}

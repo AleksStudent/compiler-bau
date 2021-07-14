@@ -13,7 +13,7 @@ public class JString extends Expr {
 		this.str = str;
 	}
 
-	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars) {
+	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		method.visitLdcInsn(this.str);
 		System.out.println("[String] Writing: " + this.str);
 	}
