@@ -265,19 +265,19 @@ class browserparser {
         switch (yyN) {
 case 1:
 					// line 76 "browserparser.jay"
-  { yyVal = new Program(((Class)yyVals[0+yyTop])); System.out.println(new Program(((Class)yyVals[0+yyTop]))); }
+  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); finalProgram.typeCheck(); yyVal=finalProgram; }
   break;
 case 2:
 					// line 77 "browserparser.jay"
-  { yyVal = new Program(((Class)yyVals[0+yyTop])); }
+  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); finalProgram.typeCheck(); yyVal=finalProgram; }
   break;
 case 3:
 					// line 79 "browserparser.jay"
-  { yyVal = new Class(((Vector)yyVals[-2+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+  { yyVal = new Class(new Type(((String)yyVals[-4+yyTop])), ((Vector)yyVals[-2+yyTop]), ((Vector)yyVals[-1+yyTop])); System.out.println(new Class(new Type(((String)yyVals[-4+yyTop])), ((Vector)yyVals[-2+yyTop]), ((Vector)yyVals[-1+yyTop]))); }
   break;
 case 4:
 					// line 81 "browserparser.jay"
-  { yyVal = new Class(new Vector(), new Vector()); }
+  { yyVal = new Class(new Type(((String)yyVals[-2+yyTop])), new Vector(), new Vector()); }
   break;
 case 5:
 					// line 83 "browserparser.jay"
@@ -293,7 +293,7 @@ case 7:
   break;
 case 8:
 					// line 88 "browserparser.jay"
-  { yyVal = new Type(); }
+  { yyVal = new Type(((String)yyVals[0+yyTop])); }
   break;
 case 9:
 					// line 90 "browserparser.jay"
@@ -480,66 +480,70 @@ case 54:
   { yyVal = new Binary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[-2+yyTop]), ((Expr)yyVals[0+yyTop])); }
   break;
 case 55:
-					// line 157 "browserparser.jay"
-  { yyVal = new Unary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[0+yyTop])); }
+					// line 156 "browserparser.jay"
+  { yyVal = new Binary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[-2+yyTop]), ((Expr)yyVals[0+yyTop])); }
   break;
 case 56:
-					// line 159 "browserparser.jay"
-  { yyVal = new Bool(((String)yyVals[0+yyTop])); }
+					// line 158 "browserparser.jay"
+  { yyVal = new Unary(((String)yyVals[-1+yyTop]), ((Expr)yyVals[0+yyTop])); }
   break;
 case 57:
-					// line 161 "browserparser.jay"
-  { yyVal = new InstVar(((Expr)yyVals[-2+yyTop]), ((String)yyVals[0+yyTop])); }
+					// line 160 "browserparser.jay"
+  { yyVal = new Bool(((String)yyVals[0+yyTop])); }
   break;
 case 58:
-					// line 163 "browserparser.jay"
-  { yyVal = new JString(((String)yyVals[0+yyTop])); }
+					// line 162 "browserparser.jay"
+  { yyVal = new InstVar(((Expr)yyVals[-2+yyTop]), ((String)yyVals[0+yyTop])); }
   break;
 case 59:
-					// line 165 "browserparser.jay"
-  { yyVal = new Jnull(); }
+					// line 164 "browserparser.jay"
+  { yyVal = new JString(((String)yyVals[0+yyTop])); }
   break;
 case 60:
-					// line 167 "browserparser.jay"
-  { yyVal = new Char(((String)yyVals[0+yyTop])); }
+					// line 166 "browserparser.jay"
+  { yyVal = new Jnull(); }
   break;
 case 61:
-					// line 169 "browserparser.jay"
-  { yyVal = new Assign(((String)yyVals[-3+yyTop]), ((Expr)yyVals[-1+yyTop])); }
+					// line 168 "browserparser.jay"
+  { yyVal = new Char(((String)yyVals[0+yyTop])); }
   break;
 case 62:
-					// line 171 "browserparser.jay"
-  { yyVal = new New(((Type)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+					// line 170 "browserparser.jay"
+  { yyVal = new Assign(((String)yyVals[-3+yyTop]), ((Expr)yyVals[-1+yyTop])); }
   break;
 case 63:
 					// line 172 "browserparser.jay"
-  { yyVal = new New(((Type)yyVals[-2+yyTop]), new Vector()); }
+  { yyVal = new New(((Type)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 64:
-					// line 174 "browserparser.jay"
-  { yyVal = new MethodCall(((Expr)yyVals[-5+yyTop]), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+					// line 173 "browserparser.jay"
+  { yyVal = new New(((Type)yyVals[-2+yyTop]), new Vector()); }
   break;
 case 65:
 					// line 175 "browserparser.jay"
-  { yyVal = new MethodCall(new This(), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
+  { yyVal = new MethodCall(((Expr)yyVals[-5+yyTop]), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 66:
-					// line 177 "browserparser.jay"
-  { yyVal = new MethodCall(((Expr)yyVals[-4+yyTop]), ((String)yyVals[-2+yyTop]), new Vector()); }
+					// line 176 "browserparser.jay"
+  { yyVal = new MethodCall(new This(), ((String)yyVals[-3+yyTop]), ((Vector)yyVals[-1+yyTop])); }
   break;
 case 67:
 					// line 178 "browserparser.jay"
-  { yyVal = new MethodCall(new This(), ((String)yyVals[-2+yyTop]), new Vector()); }
+  { yyVal = new MethodCall(((Expr)yyVals[-4+yyTop]), ((String)yyVals[-2+yyTop]), new Vector()); }
   break;
 case 68:
-					// line 180 "browserparser.jay"
-  { yyVal = new Vector(); }
+					// line 179 "browserparser.jay"
+  { yyVal = new MethodCall(new This(), ((String)yyVals[-2+yyTop]), new Vector()); }
   break;
 case 69:
 					// line 181 "browserparser.jay"
   { yyVal = new Vector(); }
   break;
-					// line 542 "-"
+case 70:
+					// line 182 "browserparser.jay"
+  { yyVal = new Vector(); }
+  break;
+					// line 546 "-"
         }
         yyTop -= YyLenClass.yyLen[yyN];
         yyState = yyStates[yyTop];
@@ -588,8 +592,8 @@ case 69:
          20,   20,   20,   20,   20,   20,   23,   24,   22,   25,
          19,   27,   21,    7,    7,    7,    7,    7,    7,    7,
           7,    7,    7,    7,    7,   29,   29,   29,   29,    9,
-          8,   16,   10,   17,   18,   11,   12,   13,   14,   15,
-         32,   28,   28,   30,   30,   31,   31,   36,   36,
+          8,   16,   10,   17,   17,   18,   11,   12,   13,   14,
+         15,   32,   28,   28,   30,   30,   31,   31,   36,   36,
     };
   } /* End of class YyLhsClass */
 
@@ -601,8 +605,8 @@ case 69:
           1,    1,    1,    1,    1,    1,    5,    7,    5,    3,
           1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
           1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-          1,    1,    1,    3,    2,    1,    3,    1,    1,    1,
-          4,    5,    4,    6,    4,    5,    3,    1,    3,
+          1,    1,    1,    3,    3,    2,    1,    3,    1,    1,
+          1,    4,    5,    4,    6,    4,    5,    3,    1,    3,
     };
   } /* End class YyLenClass */
 
@@ -612,15 +616,15 @@ case 69:
           0,    0,    1,    2,    0,    0,    8,    4,    5,    0,
           0,    0,    9,    6,    0,    0,    7,    0,    3,   10,
           0,    0,    0,    0,   13,    0,    0,    0,   12,   15,
-          0,    0,    0,    0,   53,   58,   60,   56,    0,    0,
-         16,   50,   51,    0,   59,    0,    0,    0,   35,   34,
+          0,    0,    0,    0,   53,   59,   61,   57,    0,    0,
+         16,   50,   51,    0,   60,    0,    0,    0,   35,   34,
          37,   40,   41,   42,   43,   44,   36,   38,   39,   45,
          18,   26,   22,   20,   21,   24,   23,   25,   47,    0,
          48,   49,   46,    0,   14,   11,    0,    0,    0,    0,
-          0,   31,    0,    0,    0,    0,    0,   17,   19,    0,
-          0,    0,   67,    0,    0,    0,   30,   33,    0,    0,
-          0,    0,   61,    0,   65,   63,    0,    0,   29,    0,
-          0,   62,   66,    0,    0,   64,   28,
+          0,   31,    0,    0,    0,    0,    0,    0,   17,   19,
+          0,    0,    0,   68,    0,    0,    0,   30,   33,    0,
+          0,    0,    0,    0,   62,    0,   66,   64,    0,    0,
+         29,    0,    0,   63,   67,    0,    0,   65,   28,
     };
   } /* End of class YyDefRedClass */
 
@@ -630,25 +634,25 @@ case 69:
           3,    4,   13,    9,   25,   47,   48,   49,   50,   51,
          52,   53,   54,   55,   56,   57,   58,   59,   60,   61,
          62,   63,   64,   65,   66,   67,   68,   69,   82,   71,
-         72,   73,   11,   74,   16,   95,   27,
+         72,   73,   11,   74,   16,   96,   27,
     };
   } /* End of class YyDgotoClass */
 
   protected static final class YySindexClass {
 
     public static final short yySindex [] = {         -250,
-       -236,    0,    0,    0, -238, -259,    0,    0,    0, -214,
-       -203, -202,    0,    0, -198, -257,    0, -245,    0,    0,
-       -182, -258, -174, -193,    0, -173, -264, -153,    0,    0,
-       -203, -193, -163, -162,    0,    0,    0,    0, -247,   21,
-          0,    0,    0, -203,    0,   21, -148, -191,    0,    0,
+       -235,    0,    0,    0, -217, -259,    0,    0,    0, -221,
+       -210, -200,    0,    0, -181, -257,    0, -246,    0,    0,
+       -176, -256, -182, -185,    0, -161, -258, -151,    0,    0,
+       -210, -185, -172, -170,    0,    0,    0,    0, -230,   23,
+          0,    0,    0, -210,    0,   23, -156, -188,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0, -121,    0,    0,   21,   21,   21,  -32,
-       -191,    0, -158, -212, -150, -143,   21,    0,    0, -171,
-       -160, -183,    0, -191, -244,   -8,    0,    0, -154, -191,
-        -57,  -57,    0,   21,    0,    0, -239,   16,    0, -134,
-       -191,    0,    0, -230,  -57,    0,    0,
+          0,    0,    0, -119,    0,    0,   23,   23,   23,  -30,
+       -188,    0, -160, -155, -154, -146,   23,   23,    0,    0,
+        -94,  -90, -123,    0, -188, -220,   -6,    0,    0, -153,
+       -188, -188,  -55,  -55,    0,   23,    0,    0, -212,   18,
+          0, -136, -188,    0,    0, -211,  -55,    0,    0,
     };
   } /* End of class YySindexClass */
 
@@ -658,71 +662,71 @@ case 69:
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,    0,    0, -223,    0,
+          0,    0,    0,    0,    0,    0,    0,    0, -263,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0,    0,    0,    0,    0,    0,    0, -185,
+          0,    0,    0,    0,    0,    0,    0,    0,    0, -183,
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-       -265,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-          0,    0,    0, -226,    0,    0,    0,    0, -213, -260,
-          0,    0,    0,    0,    0,    0,    0,    0,    0,  -89,
-       -197,    0,    0,    0,    0,    0,    0,
+       -245,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0, -209,    0,    0,    0,    0, -222,
+       -238, -213,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,  -87, -195,    0,    0,    0,    0,    0,    0,
     };
   } /* End of class YyRindexClass */
 
   protected static final class YyGindexClass {
 
     public static final short yyGindex [] = {            0,
-          0,    0,  112,  126,  107,    3,  -39,    0,    0,    0,
+          0,    0,  112,  118,   99,   -2,  -39,    0,    0,    0,
           0,    0,    0,    0,    0,    0,    0,    0,    0,  -72,
-          0,    0,    0,    0,    0,  -12,    0,    0,  -28,    0,
-          0,    0,    0,    0,    0,  -90,    0,
+          0,    0,    0,    0,    0,  -13,    0,    0,  -28,    0,
+          0,    0,    0,    0,    0,  -89,    0,
     };
   } /* End of class YyGindexClass */
 
 protected static class yyTable0 {
   protected static final short yyTable0 [] = {            70,
-         81,   89,    7,    7,    7,  107,   84,   55,   10,   55,
-         31,   29,   54,   15,   54,   55,   32,  114,   21,   76,
-         54,    1,   24,    8,   26,   19,   79,   17,  109,  110,
-        104,    5,   80,   26,   22,  104,  105,   90,   91,   92,
-         94,  112,  117,    6,  104,   70,   83,  100,   68,   52,
-        116,   52,   52,   12,   68,   52,   94,   52,    7,   57,
-         97,   57,   57,   86,  111,   57,   87,   57,   94,   18,
-         17,   32,   70,   70,   32,   32,   32,   69,   32,   32,
-         32,   32,   32,   69,   86,   23,   70,   87,   28,  103,
-         31,   32,   86,   31,   30,   87,   32,   32,   32,   32,
-         32,   32,   32,   33,   86,   22,   34,   87,    7,  101,
-         35,   36,   37,   38,   39,   86,   77,   78,   87,   85,
-        102,   96,   98,   40,   99,  108,  115,   20,   28,   41,
-         42,   43,   44,   45,   46,   33,   14,   75,   34,    0,
-          7,    0,   35,   36,   37,   38,   39,    0,    0,    0,
-          0,    0,    0,    0,    0,   40,    0,    0,    0,    0,
-         28,   88,   42,   43,   44,   45,   46,   27,    0,    0,
-         27,    0,   27,    0,   27,   27,   27,   27,   27,    0,
-          0,    0,    0,    0,    0,    0,    0,   27,    0,    0,
-          0,    0,   27,   27,   27,   27,   27,   27,   27,   33,
-          0,    0,   34,    0,    7,    0,   35,   36,   37,   38,
-         39,    0,    0,    0,    0,    0,    0,    0,    0,   40,
-          0,    0,    0,    0,   28,    0,   42,   43,   44,   45,
-         46,   35,   36,   37,   38,   39,    0,    0,    0,    0,
-          0,    0,    0,    0,   40,    0,    0,    0,   93,    0,
-          0,   42,   43,   44,   45,   35,   36,   37,   38,   39,
-          0,    0,    0,    0,    0,    0,    0,    0,   40,    0,
-          0,    0,  106,    0,    0,   42,   43,   44,   45,   35,
-         36,   37,   38,   39,   35,   36,   37,   38,   39,    0,
-          0,    0,   40,    0,    0,    0,  113,   40,    0,   42,
-         43,   44,   45,    0,   42,   43,   44,   45,
+         81,   90,    7,   10,    7,    7,   84,  109,   15,   52,
+         29,   52,   52,   21,   52,   52,   31,   52,   76,   26,
+        116,    1,   32,    8,   24,   19,   17,   56,   26,   56,
+        111,  112,    5,   22,   55,   56,   55,   91,   92,   93,
+         95,   83,   55,   79,  119,   70,   12,  101,  102,   80,
+         58,    7,   58,   58,  106,   58,   58,   95,   58,   54,
+        107,   54,  106,  106,    6,   69,  113,   54,  114,  118,
+         95,   69,   17,   32,   70,   70,   32,   32,   32,   70,
+         32,   32,   32,   32,   32,   70,   18,   86,   70,   87,
+         88,   23,   31,   32,   31,   31,   28,   22,   32,   32,
+         32,   32,   32,   32,   32,   33,   30,   77,   34,   78,
+          7,   85,   35,   36,   37,   38,   39,   98,   99,   97,
+         86,  100,   87,   88,  117,   40,  110,   20,   14,   75,
+         28,   41,   42,   43,   44,   45,   46,   33,    0,    0,
+         34,    0,    7,    0,   35,   36,   37,   38,   39,  105,
+          0,    0,   86,    0,   87,   88,    0,   40,    0,    0,
+          0,    0,   28,   89,   42,   43,   44,   45,   46,   27,
+          0,    0,   27,    0,   27,    0,   27,   27,   27,   27,
+         27,   86,    0,   87,   88,   86,  103,   87,   88,   27,
+        104,    0,    0,    0,   27,   27,   27,   27,   27,   27,
+         27,   33,    0,    0,   34,    0,    7,    0,   35,   36,
+         37,   38,   39,    0,    0,    0,    0,    0,    0,    0,
+          0,   40,    0,    0,    0,    0,   28,    0,   42,   43,
+         44,   45,   46,   35,   36,   37,   38,   39,    0,    0,
+          0,    0,    0,    0,    0,    0,   40,    0,    0,    0,
+         94,    0,    0,   42,   43,   44,   45,   35,   36,   37,
+         38,   39,    0,    0,    0,    0,    0,    0,    0,    0,
+         40,    0,    0,    0,  108,    0,    0,   42,   43,   44,
+         45,   35,   36,   37,   38,   39,   35,   36,   37,   38,
+         39,    0,    0,    0,   40,    0,    0,    0,  115,   40,
+          0,   42,   43,   44,   45,    0,   42,   43,   44,   45,
   };
 }
   protected static final class YyTableClass {
 
-  static short[] yyTable = new short[309];
+  static short[] yyTable = new short[311];
   protected static void yyTableInit () {
      int numyycheck;
      int yyTableerun = 0;
      for (numyycheck = 0; numyycheck <= 1000; numyycheck++) {
-        if (yyTableerun < 309) {
+        if (yyTableerun < 311) {
           yyTable[yyTableerun] = yyTable0.yyTable0[numyycheck];
           yyTableerun++;
         }
@@ -732,47 +736,47 @@ protected static class yyTable0 {
 
 protected static class yyCheck0 {
   protected static final short yyCheck0 [] = {            28,
-         40,   74,  262,  262,  262,   96,   46,  273,    6,  275,
-        275,   24,  273,   11,  275,  281,  281,  108,   16,   32,
-        281,  272,  281,  283,   22,  283,  274,  273,  101,  102,
-        275,  268,  280,   31,  280,  275,  281,   77,   78,   79,
-         80,  281,  115,  282,  275,   74,   44,   87,  275,  273,
-        281,  275,  276,  268,  281,  279,   96,  281,  262,  273,
-        273,  275,  276,  276,  104,  279,  279,  281,  108,  268,
-        273,  257,  101,  102,  260,  261,  262,  275,  264,  265,
-        266,  267,  268,  281,  276,  268,  115,  279,  282,  273,
-        276,  277,  276,  279,  268,  279,  282,  283,  284,  285,
-        286,  287,  288,  257,  276,  280,  260,  279,  262,  281,
-        264,  265,  266,  267,  268,  276,  280,  280,  279,  268,
-        281,  280,  273,  277,  268,  280,  261,   16,  282,  283,
-        284,  285,  286,  287,  288,  257,   11,   31,  260,   -1,
-        262,   -1,  264,  265,  266,  267,  268,   -1,   -1,   -1,
-         -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,   -1,
+         40,   74,  262,    6,  262,  262,   46,   97,   11,  273,
+         24,  275,  276,   16,  278,  279,  275,  281,   32,   22,
+        110,  272,  281,  283,  281,  283,  273,  273,   31,  275,
+        103,  104,  268,  280,  273,  281,  275,   77,   78,   79,
+         80,   44,  281,  274,  117,   74,  268,   87,   88,  280,
+        273,  262,  275,  276,  275,  278,  279,   97,  281,  273,
+        281,  275,  275,  275,  282,  275,  106,  281,  281,  281,
+        110,  281,  273,  257,  103,  104,  260,  261,  262,  275,
+        264,  265,  266,  267,  268,  281,  268,  276,  117,  278,
+        279,  268,  276,  277,  278,  279,  282,  280,  282,  283,
+        284,  285,  286,  287,  288,  257,  268,  280,  260,  280,
+        262,  268,  264,  265,  266,  267,  268,  273,  273,  280,
+        276,  268,  278,  279,  261,  277,  280,   16,   11,   31,
         282,  283,  284,  285,  286,  287,  288,  257,   -1,   -1,
-        260,   -1,  262,   -1,  264,  265,  266,  267,  268,   -1,
-         -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,
+        260,   -1,  262,   -1,  264,  265,  266,  267,  268,  273,
+         -1,   -1,  276,   -1,  278,  279,   -1,  277,   -1,   -1,
          -1,   -1,  282,  283,  284,  285,  286,  287,  288,  257,
          -1,   -1,  260,   -1,  262,   -1,  264,  265,  266,  267,
-        268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,
-         -1,   -1,   -1,   -1,  282,   -1,  284,  285,  286,  287,
-        288,  264,  265,  266,  267,  268,   -1,   -1,   -1,   -1,
-         -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,  281,   -1,
-         -1,  284,  285,  286,  287,  264,  265,  266,  267,  268,
-         -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,
-         -1,   -1,  281,   -1,   -1,  284,  285,  286,  287,  264,
-        265,  266,  267,  268,  264,  265,  266,  267,  268,   -1,
-         -1,   -1,  277,   -1,   -1,   -1,  281,  277,   -1,  284,
-        285,  286,  287,   -1,  284,  285,  286,  287,
+        268,  276,   -1,  278,  279,  276,  281,  278,  279,  277,
+        281,   -1,   -1,   -1,  282,  283,  284,  285,  286,  287,
+        288,  257,   -1,   -1,  260,   -1,  262,   -1,  264,  265,
+        266,  267,  268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+         -1,  277,   -1,   -1,   -1,   -1,  282,   -1,  284,  285,
+        286,  287,  288,  264,  265,  266,  267,  268,   -1,   -1,
+         -1,   -1,   -1,   -1,   -1,   -1,  277,   -1,   -1,   -1,
+        281,   -1,   -1,  284,  285,  286,  287,  264,  265,  266,
+        267,  268,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+        277,   -1,   -1,   -1,  281,   -1,   -1,  284,  285,  286,
+        287,  264,  265,  266,  267,  268,  264,  265,  266,  267,
+        268,   -1,   -1,   -1,  277,   -1,   -1,   -1,  281,  277,
+         -1,  284,  285,  286,  287,   -1,  284,  285,  286,  287,
   };
 }
   protected static final class YyCheckClass {
 
-  static short[] yyCheck = new short[309];
+  static short[] yyCheck = new short[311];
   protected static void yyCheckInit () {
      int numyycheck;
      int yyCheckerun = 0;
      for (numyycheck = 0; numyycheck <= 1000; numyycheck++) {
-        if (yyCheckerun < 309) {
+        if (yyCheckerun < 311) {
           yyCheck[yyCheckerun] = yyCheck0.yyCheck0[numyycheck];
           yyCheckerun++;
         }
@@ -840,6 +844,7 @@ protected static class yyCheck0 {
     "localOrFieldVar : IDENTIFIER",
     "integer : INT",
     "binary : expression OPERATOR expression",
+    "binary : expression BINARYOPERATOR expression",
     "unary : UNARYOPERATOR expression",
     "bool : BOOLEAN",
     "instVar : expression POINT IDENTIFIER",
@@ -889,9 +894,9 @@ protected static class yyCheck0 {
   } /* End of class YyNameClass */
 
 
-					// line 185 "browserparser.jay"
+					// line 186 "browserparser.jay"
 }
-      					// line 903 "-"
+      					// line 908 "-"
 class yyTokenclass {	
    public int tokennr;	
    public Object value;

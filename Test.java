@@ -39,7 +39,7 @@ class Test{
 
 		boolean test4;
 
-		while (test4) {
+		while (test4 <= test4 && !test4) {
 
 		}
 

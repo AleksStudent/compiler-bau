@@ -242,19 +242,19 @@ class browserlexer {
 		/* 47 */ YY_NO_ANCHOR,
 		/* 48 */ YY_NO_ANCHOR,
 		/* 49 */ YY_NO_ANCHOR,
-		/* 50 */ YY_NOT_ACCEPT,
-		/* 51 */ YY_NO_ANCHOR,
+		/* 50 */ YY_NO_ANCHOR,
+		/* 51 */ YY_NOT_ACCEPT,
 		/* 52 */ YY_NO_ANCHOR,
 		/* 53 */ YY_NO_ANCHOR,
-		/* 54 */ YY_NOT_ACCEPT,
-		/* 55 */ YY_NO_ANCHOR,
+		/* 54 */ YY_NO_ANCHOR,
+		/* 55 */ YY_NOT_ACCEPT,
 		/* 56 */ YY_NO_ANCHOR,
 		/* 57 */ YY_NO_ANCHOR,
-		/* 58 */ YY_NOT_ACCEPT,
-		/* 59 */ YY_NO_ANCHOR,
+		/* 58 */ YY_NO_ANCHOR,
+		/* 59 */ YY_NOT_ACCEPT,
 		/* 60 */ YY_NO_ANCHOR,
-		/* 61 */ YY_NOT_ACCEPT,
-		/* 62 */ YY_NO_ANCHOR,
+		/* 61 */ YY_NO_ANCHOR,
+		/* 62 */ YY_NOT_ACCEPT,
 		/* 63 */ YY_NO_ANCHOR,
 		/* 64 */ YY_NO_ANCHOR,
 		/* 65 */ YY_NO_ANCHOR,
@@ -326,47 +326,48 @@ class browserlexer {
 		/* 131 */ YY_NO_ANCHOR,
 		/* 132 */ YY_NO_ANCHOR,
 		/* 133 */ YY_NO_ANCHOR,
-		/* 134 */ YY_NO_ANCHOR
+		/* 134 */ YY_NO_ANCHOR,
+		/* 135 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
-"42:8,43:2,1,42:2,1,42:18,43,14,41,42:3,17,44,2,3,9,7,12,8,13,10,40:10,42,6," +
-"15,11,16,42:2,39:18,36,39:7,42:6,33,35,34,30,25,32,37,20,21,39:2,28,39,27,3" +
-"1,24,39,26,22,19,23,38,29,39:3,4,18,5,42:2,0:2")[0];
+"43:8,44:2,1,43:2,1,43:18,44,15,42,43:2,11,18,45,2,3,9,7,13,8,14,10,41:10,43" +
+",6,16,12,17,43:2,40:18,37,40:7,43:6,34,36,35,31,26,33,38,21,22,40:2,29,40,2" +
+"8,32,25,40,27,23,20,24,39,30,40:3,4,19,5,43:2,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,135,
-"0,1,2,1:6,3,1:2,4,1:2,5,6,7,8,9,10,11,1:6,12:6,13,14,1,15,12:12,13,16,17,18" +
+	private int yy_rmap[] = unpackFromString(1,136,
+"0,1,2,1:6,3,1:3,4,1:2,5,6,7,8,9,10,11,1:6,12:6,13,14,1,15,12:12,13,16,17,18" +
 ",14,19,20,21,22,1,23,15,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40," +
 "41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,12,60,61,62,63,64," +
 "65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89," +
 "90,91,92,93,94,95")[0];
 
-	private int yy_nxt[][] = unpackFromString(96,45,
-"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,51,19,98,52,100,98,117,102,119" +
-",79,98,104,56,98,81,133,106,128,121,98:3,20,55,59,2,62,-1:46,2,-1:41,2,-1:4" +
-"1,21,-1:15,22,-1:44,23,-1:44,24,-1:44,25,-1:50,26,-1:46,28,80,28:5,82,28:14" +
-",-1:17,50,-1:26,20,-1:17,61,-1:26,21,-1:23,28:22,-1:44,34,-1:6,54:39,35,54:" +
-"3,-1:40,37,-1:22,27,-1:45,28:8,53,28:4,29,28:8,-1:23,31,28:21,-1:6,54:43,-1" +
-":19,28:12,30,28:9,-1:23,28:10,32,28:11,-1:48,36,-1:19,28:7,33,28:14,-1:6,58" +
-":43,-1:19,28:3,38,28:18,-1:23,28:6,39,28:15,-1:23,28:6,40,28:15,-1:23,28:9," +
-"41,28:12,-1:23,28:7,42,28:14,-1:23,28:6,43,28:15,-1:23,28:6,44,28:15,-1:23," +
-"28:3,45,28:18,-1:23,28:15,46,28:6,-1:23,28:15,47,28:6,-1:23,28:8,48,28:13,-" +
-"1:23,28:18,31,28:3,-1:23,28:6,47,28:15,-1:23,28:8,31,28:13,-1:23,49,28:21,-" +
-"1:23,28:11,47,28:10,-1:23,28:4,84,28,57,28:15,-1:23,28:2,63,28:19,-1:23,28:" +
-"9,103,28:2,60,28,105,28:7,-1:23,28:4,64,28:17,-1:23,28:3,65,28:18,-1:23,28:" +
-"9,66,28:12,-1:23,28:6,67,28:15,-1:23,28:9,68,28:12,-1:23,28:14,53,28:7,-1:2" +
-"3,28:3,69,28:18,-1:23,28:3,70,28:18,-1:23,28:2,71,28:19,-1:23,28:2,72,28:19" +
-",-1:23,28:7,73,28:14,-1:23,28:8,74,28:13,-1:23,75,28:21,-1:23,28:14,76,28:7" +
-",-1:23,28:15,77,28:6,-1:23,28:6,78,28:15,-1:23,28:5,85,28:16,-1:23,116,28:3" +
-",99,28:17,-1:23,28:2,86,28:19,-1:23,28:9,83,28:12,-1:23,28:12,87,28:9,-1:23" +
-",28,101,28:20,-1:23,28:9,88,28:12,-1:23,28:9,107,28:12,-1:23,28:14,89,28:7," +
-"-1:23,90,28:21,-1:23,28:9,91,28:12,-1:23,28:4,92,28:17,-1:23,28:2,93,28:19," +
-"-1:23,28:14,94,28:7,-1:23,28:6,95,28:15,-1:23,28:14,96,28:7,-1:23,97,28:21," +
-"-1:23,28:14,108,28:7,-1:23,28:4,118,28:2,127,28:14,-1:23,28:16,109,28:5,-1:" +
-"23,28:6,120,28:15,-1:23,110,28:21,-1:23,122,28:21,-1:23,28:7,111,28:14,-1:2" +
-"3,28:19,112,28:2,-1:23,28:9,113,28:12,-1:23,28:7,114,28:14,-1:23,28:15,115," +
-"28:6,-1:23,28:2,123,28:9,134,28:9,-1:23,28:12,129,28:9,-1:23,28:12,124,28:9" +
-",-1:23,125,28:21,-1:23,28:6,126,28:15,-1:23,28:3,130,28:18,-1:23,28:16,132," +
-"28:5,-1:23,131,28:21,-1:4");
+	private int yy_nxt[][] = unpackFromString(96,46,
+"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,52,20,99,53,101,99,118,103," +
+"120,80,99,105,57,99,82,134,107,129,122,99:3,21,56,60,2,63,-1:47,2,-1:42,2,-" +
+"1:42,22,-1:16,23,-1:45,24,-1:45,25,-1:45,26,-1:51,27,-1:47,29,81,29:5,83,29" +
+":14,-1:18,51,-1:26,21,-1:18,62,-1:26,22,-1:24,29:22,-1:45,35,-1:6,55:40,36," +
+"55:3,-1:41,38,-1:23,28,-1:46,29:8,54,29:4,30,29:8,-1:24,32,29:21,-1:6,55:44" +
+",-1:20,29:12,31,29:9,-1:24,29:10,33,29:11,-1:49,37,-1:20,29:7,34,29:14,-1:6" +
+",59:44,-1:20,29:3,39,29:18,-1:24,29:6,40,29:15,-1:24,29:6,41,29:15,-1:24,29" +
+":9,42,29:12,-1:24,29:7,43,29:14,-1:24,29:6,44,29:15,-1:24,29:6,45,29:15,-1:" +
+"24,29:3,46,29:18,-1:24,29:15,47,29:6,-1:24,29:15,48,29:6,-1:24,29:8,49,29:1" +
+"3,-1:24,29:18,32,29:3,-1:24,29:6,48,29:15,-1:24,29:8,32,29:13,-1:24,50,29:2" +
+"1,-1:24,29:11,48,29:10,-1:24,29:4,85,29,58,29:15,-1:24,29:2,64,29:19,-1:24," +
+"29:9,104,29:2,61,29,106,29:7,-1:24,29:4,65,29:17,-1:24,29:3,66,29:18,-1:24," +
+"29:9,67,29:12,-1:24,29:6,68,29:15,-1:24,29:9,69,29:12,-1:24,29:14,54,29:7,-" +
+"1:24,29:3,70,29:18,-1:24,29:3,71,29:18,-1:24,29:2,72,29:19,-1:24,29:2,73,29" +
+":19,-1:24,29:7,74,29:14,-1:24,29:8,75,29:13,-1:24,76,29:21,-1:24,29:14,77,2" +
+"9:7,-1:24,29:15,78,29:6,-1:24,29:6,79,29:15,-1:24,29:5,86,29:16,-1:24,117,2" +
+"9:3,100,29:17,-1:24,29:2,87,29:19,-1:24,29:9,84,29:12,-1:24,29:12,88,29:9,-" +
+"1:24,29,102,29:20,-1:24,29:9,89,29:12,-1:24,29:9,108,29:12,-1:24,29:14,90,2" +
+"9:7,-1:24,91,29:21,-1:24,29:9,92,29:12,-1:24,29:4,93,29:17,-1:24,29:2,94,29" +
+":19,-1:24,29:14,95,29:7,-1:24,29:6,96,29:15,-1:24,29:14,97,29:7,-1:24,98,29" +
+":21,-1:24,29:14,109,29:7,-1:24,29:4,119,29:2,128,29:14,-1:24,29:16,110,29:5" +
+",-1:24,29:6,121,29:15,-1:24,111,29:21,-1:24,123,29:21,-1:24,29:7,112,29:14," +
+"-1:24,29:19,113,29:2,-1:24,29:9,114,29:12,-1:24,29:7,115,29:14,-1:24,29:15," +
+"116,29:6,-1:24,29:2,124,29:9,135,29:9,-1:24,29:12,130,29:9,-1:24,29:12,125," +
+"29:9,-1:24,126,29:21,-1:24,29:6,127,29:15,-1:24,29:3,131,29:18,-1:24,29:16," +
+"133,29:5,-1:24,132,29:21,-1:4");
 
 	public yyTokenclass yylex ()
 		throws java.io.IOException {
@@ -458,23 +459,23 @@ class browserlexer {
 					case -12:
 						break;
 					case 12:
-						{ return new EQUALS(yytext()); }
+						{ return new OPERATOR(yytext()); }
 					case -13:
 						break;
 					case 13:
-						{ return new COMMA(yytext()); }
+						{ return new EQUALS(yytext()); }
 					case -14:
 						break;
 					case 14:
-						{ return new POINT(yytext()); }
+						{ return new COMMA(yytext()); }
 					case -15:
 						break;
 					case 15:
-						{ return new UNARYOPERATOR(yytext()); }
+						{ return new POINT(yytext()); }
 					case -16:
 						break;
 					case 16:
-						{ return new BINARYOPERATOR(yytext()); }
+						{ return new UNARYOPERATOR(yytext()); }
 					case -17:
 						break;
 					case 17:
@@ -482,15 +483,15 @@ class browserlexer {
 					case -18:
 						break;
 					case 18:
-						{ System.out.println("ERROR: "+yytext()); }
+						{ return new BINARYOPERATOR(yytext()); }
 					case -19:
 						break;
 					case 19:
-						{ return new IDENTIFIER(yytext()); }
+						{ System.out.println("ERROR: "+yytext()); }
 					case -20:
 						break;
 					case 20:
-						{ return new INT(yytext()); }
+						{ return new IDENTIFIER(yytext()); }
 					case -21:
 						break;
 					case 21:
@@ -498,7 +499,7 @@ class browserlexer {
 					case -22:
 						break;
 					case 22:
-						{ return new BINARYOPERATOR(yytext()); }
+						{ return new INT(yytext()); }
 					case -23:
 						break;
 					case 23:
@@ -522,131 +523,131 @@ class browserlexer {
 					case -28:
 						break;
 					case 28:
-						{ return new IDENTIFIER(yytext()); }
+						{ return new BINARYOPERATOR(yytext()); }
 					case -29:
 						break;
 					case 29:
-						{ return new JIF(yytext()); }
+						{ return new IDENTIFIER(yytext()); }
 					case -30:
 						break;
 					case 30:
-						{ return new DO(yytext()); }
+						{ return new JIF(yytext()); }
 					case -31:
 						break;
 					case 31:
-						{ return new JTYPE(yytext()); }
+						{ return new DO(yytext()); }
 					case -32:
 						break;
 					case 32:
-						{ return new JNEW(yytext()); }
+						{ return new JTYPE(yytext()); }
 					case -33:
 						break;
 					case 33:
-						{ return new FOR(yytext()); }
+						{ return new JNEW(yytext()); }
 					case -34:
 						break;
 					case 34:
-						{ return new FLOAT(yytext()); }
+						{ return new FOR(yytext()); }
 					case -35:
 						break;
 					case 35:
-						{ return new STRING(yytext()); }
+						{ return new FLOAT(yytext()); }
 					case -36:
 						break;
 					case 36:
-						{ return new JCHAR(yytext()); }
+						{ return new STRING(yytext()); }
 					case -37:
 						break;
 					case 37:
-						{ return new FLOAT(yytext()); }
+						{ return new JCHAR(yytext()); }
 					case -38:
 						break;
 					case 38:
-						{ return new JTHIS(yytext()); }
+						{ return new FLOAT(yytext()); }
 					case -39:
 						break;
 					case 39:
-						{ return new TRUE(yytext()); }
+						{ return new JTHIS(yytext()); }
 					case -40:
 						break;
 					case 40:
-						{ return new ELSE(yytext()); }
+						{ return new TRUE(yytext()); }
 					case -41:
 						break;
 					case 41:
-						{ return new NULL(yytext()); }
+						{ return new ELSE(yytext()); }
 					case -42:
 						break;
 					case 42:
-						{ return new JSUPER(yytext()); }
+						{ return new NULL(yytext()); }
 					case -43:
 						break;
 					case 43:
-						{ return new JWHILE(yytext()); }
+						{ return new JSUPER(yytext()); }
 					case -44:
 						break;
 					case 44:
-						{ return new BOOLEAN(yytext()); }
+						{ return new JWHILE(yytext()); }
 					case -45:
 						break;
 					case 45:
-						{ return new JCLASS(yytext()); }
+						{ return new BOOLEAN(yytext()); }
 					case -46:
 						break;
 					case 46:
-						{ return new STATIC(yytext()); }
+						{ return new JCLASS(yytext()); }
 					case -47:
 						break;
 					case 47:
-						{ return new ACCESSRIGHT(yytext()); }
+						{ return new STATIC(yytext()); }
 					case -48:
 						break;
 					case 48:
-						{ return new JRETURN(yytext()); }
+						{ return new ACCESSRIGHT(yytext()); }
 					case -49:
 						break;
 					case 49:
-						{ return new ABSTRACT(yytext()); }
+						{ return new JRETURN(yytext()); }
 					case -50:
 						break;
-					case 51:
-						{ System.out.println("ERROR: "+yytext()); }
+					case 50:
+						{ return new ABSTRACT(yytext()); }
 					case -51:
 						break;
 					case 52:
-						{ return new IDENTIFIER(yytext()); }
+						{ System.out.println("ERROR: "+yytext()); }
 					case -52:
 						break;
 					case 53:
 						{ return new IDENTIFIER(yytext()); }
 					case -53:
 						break;
-					case 55:
-						{ System.out.println("ERROR: "+yytext()); }
+					case 54:
+						{ return new IDENTIFIER(yytext()); }
 					case -54:
 						break;
 					case 56:
-						{ return new IDENTIFIER(yytext()); }
+						{ System.out.println("ERROR: "+yytext()); }
 					case -55:
 						break;
 					case 57:
 						{ return new IDENTIFIER(yytext()); }
 					case -56:
 						break;
-					case 59:
-						{ System.out.println("ERROR: "+yytext()); }
+					case 58:
+						{ return new IDENTIFIER(yytext()); }
 					case -57:
 						break;
 					case 60:
-						{ return new IDENTIFIER(yytext()); }
+						{ System.out.println("ERROR: "+yytext()); }
 					case -58:
 						break;
-					case 62:
-						{ System.out.println("ERROR: "+yytext()); }
+					case 61:
+						{ return new IDENTIFIER(yytext()); }
 					case -59:
 						break;
 					case 63:
-						{ return new IDENTIFIER(yytext()); }
+						{ System.out.println("ERROR: "+yytext()); }
 					case -60:
 						break;
 					case 64:
@@ -932,6 +933,10 @@ class browserlexer {
 					case 134:
 						{ return new IDENTIFIER(yytext()); }
 					case -131:
+						break;
+					case 135:
+						{ return new IDENTIFIER(yytext()); }
+					case -132:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
