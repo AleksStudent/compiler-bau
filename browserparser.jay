@@ -139,6 +139,7 @@ expression : this {}
            | jnull {}
            | char {}
            | stmtExprExpr {}
+           | LBRACE expression RBRACE {$$ = $2;}
 
 stmtExpr : assign {}
          | new {}
