@@ -72,8 +72,8 @@ class browserparser {
 %start programm
 
 %%
-programm : class { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram; }
-         | emptyClass { Program finalProgram = new Program($1); finalProgram.typeCheck(); $$=finalProgram; }
+programm : class { Program finalProgram = new Program($1); finalProgram.typeCheck(); BytecodeGenerator.codeGen(finalProgram); $$=finalProgram; }
+         | emptyClass { Program finalProgram = new Program($1); finalProgram.typeCheck(); BytecodeGenerator.codeGen(finalProgram); $$=finalProgram; }
 
 class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET { $$ = new Class(new Type($2), $4, $5); System.out.println(new Class(new Type($2), $4, $5)); }
       | JCLASS IDENTIFIER LBRACKET methods RBRACKET { $$ = new Class(new Type($2), new Vector(), $4); }
