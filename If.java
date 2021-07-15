@@ -21,7 +21,9 @@ public class If extends Stmt {
     }
 
     public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
-        System.out.println("[If] Creating Construct");
+        System.out.println("[If] Creating Construct for: " + cond.toString());
+        System.out.println("[If] True: " + ifStmt.toString());
+        System.out.println("[If] False: " + (optionalElseStmt == null ? "" : optionalElseStmt.toString()));
         ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt, returnType);
     }
 

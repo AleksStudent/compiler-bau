@@ -74,9 +74,25 @@ public class Assign extends StmtExpr {
 				System.out.println("[Assign] Writing to Local Var...");
 			}
 
+		} else if (expr instanceof Binary) {
+			
+			System.out.println("[Assign] Name = " + expr.toString());
+
+			if (indexOf == 0) {
+				method.visitVarInsn(Opcodes.ALOAD, 0);
+				((Binary) expr).codeGen(cw, method, i_class, localVar, null, null, returnType);
+				method.visitFieldInsn(Opcodes.PUTFIELD, i_class.name, this.name, fieldType);
+				System.out.println("[Assign] Writing to Field Var...");
+			} else {
+				((Binary) expr).codeGen(cw, method, i_class, localVar, null, null, returnType);
+				method.visitVarInsn(Opcodes.ISTORE, indexOf);
+				System.out.println("[Assign] Writing to Local Var...");
+			}
+			
+			
 		// name = 4 (expr)
 		} else if (expr instanceof Bool || expr instanceof Char || expr instanceof Integer ||
-				   expr instanceof Jnull) {
+				   expr instanceof Jnull || expr instanceof Unary) {
 			System.out.println("[Assign] name = " + expr.toString());
 
 			if (indexOf == 0) {

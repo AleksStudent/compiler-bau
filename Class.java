@@ -18,7 +18,7 @@ public class Class {
         this.type = type;
         this.fields = fields;
         this.methods = methods;
-        this.name = "Test";
+        this.name = type.getType();
     }
 
 	public void codeGen(ClassWriter cw, Class i_class) {
