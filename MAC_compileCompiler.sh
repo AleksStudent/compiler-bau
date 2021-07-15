@@ -6,7 +6,7 @@ chmod +x jaooy_mac
 mv javaParser.java ./compiled/javaParser.java
 cd compiled
 javac -d . -cp ../javaFiles/asm.jar:../javaFiles/. javaParser.java
-cp -b ../javaLexer .
+cp ../javaLexer .
 java -cp ../JLex2.jar JLex2.Main javaLexer
 rm javaLexer
 javac -d . -cp ../javaFiles/asm.jar:. javaLexer.java
