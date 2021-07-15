@@ -53,8 +53,12 @@ public class Method implements TypeCheckable {
 		
 
 		// not really necessary as it's done automatically
-		method.visitMaxs(0, 0);
 		method.visitEnd();
+		try {
+			method.visitMaxs(0, 0);	
+		} catch (NullPointerException e) {
+			System.out.println("visitMaxs Threw an Exception");
+		}
 	}
 
     @Override
