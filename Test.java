@@ -15,7 +15,7 @@ class TestClass{
         num2 = 1 + 2;
         num2 = -(-4);
 
-        this.myNum = 2;
+        
     }
 
 
