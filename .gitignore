@@ -87,3 +87,7 @@ modules.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+iml
 /bin/
+/browserparser$YyRuleClass.class
+/Main3.class
+/TestClass.class
+/Main2.class

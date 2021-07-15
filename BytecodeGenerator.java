@@ -10,6 +10,7 @@ public class BytecodeGenerator {
 	static void writeClassfile(ClassWriter cw, String classname) throws IOException {
 		byte[] bytes = cw.toByteArray();
 		String className = new ClassReader(bytes).getClassName();
+		System.out.println(classname);
 		File outputFile = new File("./", classname + ".class");
 		FileOutputStream output = new FileOutputStream(outputFile);
 		output.write(bytes);

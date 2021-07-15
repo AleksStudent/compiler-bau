@@ -67,7 +67,7 @@ class browserparser {
   /** debugging support, requires the package jay.yydebug.
       Set to null to suppress debugging messages.
     */
-  protected jay.yydebug.yyDebug yydebug;
+//t  protected jay.yydebug.yyDebug yydebug;
 
   protected static final int yyFinal = 2;
 
@@ -75,12 +75,12 @@ class browserparser {
       @param token single character or %token value.
       @return token name or [illegal] or [unknown].
     */
-  public static final String yyname (int token) {
-    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
-    String name;
-    if ((name = YyNameClass.yyName[token]) != null) return name;
-    return "[unknown]";
-  }
+//t  public static final String yyname (int token) {
+//t    if (token < 0 || token > YyNameClass.yyName.length) return "[illegal]";
+//t    String name;
+//t    if ((name = YyNameClass.yyName[token]) != null) return name;
+//t    return "[unknown]";
+//t  }
 
   /** computes list of expected tokens on error by tracing the tables.
       @param state for which to compute the list.
@@ -120,7 +120,7 @@ class browserparser {
     */
   public Object yyparse (yyInput yyLex, Object yydebug)
 				throws java.io.IOException, yyException {
-    this.yydebug = (jay.yydebug.yyDebug)yydebug;
+//t    this.yydebug = (jay.yydebug.yyDebug)yydebug;
     return yyparse(yyLex);
   }
 
@@ -169,7 +169,7 @@ class browserparser {
       }
       yyStates[yyTop] = yyState;
       yyVals[yyTop] = yyVal;
-      if (yydebug != null) yydebug.push(yyState, yyVal);
+//t      if (yydebug != null) yydebug.push(yyState, yyVal);
 
       yyDiscarded: for (;;) {	// discarding a token does not change stack
         int yyN;
@@ -184,10 +184,10 @@ class browserparser {
              if "null", create EOF token */
             if (yyToken == null) {yyToken = new EOF();}
 
-            if (yydebug != null)
-          /* modified by diho, 14.04.2004
-             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
-              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
+//t            if (yydebug != null)
+//t          /* modified by diho, 14.04.2004
+//t             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
+//t              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -195,8 +195,8 @@ class browserparser {
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
               && yyN < YyTableClass.yyTable.length && YyCheckClass.yyCheck[yyN] == yyToken.tokennr) {
-            if (yydebug != null)
-              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
+//t            if (yydebug != null)
+//t              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
             yyState = YyTableClass.yyTable[yyN];		// shift to yyN
           /* modified by diho, 14.04.2004 
              replaced yyLex.value() by yyToken.value*/
@@ -219,7 +219,7 @@ class browserparser {
   
             case 0:
               yyerror("syntax error", yyExpecting(yyState));
-              if (yydebug != null) yydebug.error("syntax error");
+//t              if (yydebug != null) yydebug.error("syntax error");
   
             case 1: case 2:
               yyErrorFlag = 3;
@@ -227,31 +227,31 @@ class browserparser {
                 if ((yyN = YySindexClass.yySindex[yyStates[yyTop]]) != 0
                     && (yyN += yyErrorCode) >= 0 && yyN < YyTableClass.yyTable.length
                     && YyCheckClass.yyCheck[yyN] == yyErrorCode) {
-                  if (yydebug != null)
-                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
+//t                  if (yydebug != null)
+//t                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
                   yyState = YyTableClass.yyTable[yyN];
           /* modified by diho, 14.04.2004 
              replaced yyLex.value by yyToken.value*/
                   yyVal = yyToken.value;
                   continue yyLoop;
                 }
-                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
+//t                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
               } while (-- yyTop >= 0);
-              if (yydebug != null) yydebug.reject();
+//t              if (yydebug != null) yydebug.reject();
               throw new yyException("irrecoverable syntax error");
   
             case 3:
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0)*/
               if (yyToken == null) {
-                if (yydebug != null) yydebug.reject();
+//t                if (yydebug != null) yydebug.reject();
                 throw new yyException("irrecoverable syntax error at end-of-file");
               }
-              if (yydebug != null)
+//t              if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value by yyToken.value*/
-                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
-  							yyToken.value);
+//t                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
+//t  							yyToken.value);
           /* modified by diho, 14.04.2004 
              orig: yyToken = -1*/
               yyToken = new yyTokenclass();
@@ -259,13 +259,13 @@ class browserparser {
             }
         }
         int yyV = yyTop + 1-YyLenClass.yyLen[yyN];
-        if (yydebug != null)
-          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
+//t        if (yydebug != null)
+//t          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
         yyVal = yyDefault(yyV > yyTop ? null : yyVals[yyV]);
         switch (yyN) {
 case 1:
 					// line 74 "browserparser.jay"
-  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); finalProgram.typeCheck(); yyVal=finalProgram; }
+  { Program finalProgram = new Program(((Class)yyVals[0+yyTop])); finalProgram.typeCheck(); BytecodeGenerator.codeGen(finalProgram); yyVal=finalProgram; }
   break;
 case 2:
 					// line 75 "browserparser.jay"
@@ -565,7 +565,7 @@ case 74:
         yyState = yyStates[yyTop];
         int yyM = YyLhsClass.yyLhs[yyN];
         if (yyState == 0 && yyM == 0) {
-          if (yydebug != null) yydebug.shift(0, yyFinal);
+//t          if (yydebug != null) yydebug.shift(0, yyFinal);
           yyState = yyFinal;
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr*/
@@ -576,15 +576,15 @@ case 74:
           /* modified by diho, 14.04.2004
              if "empty token", get next token */
             if (yyToken == null) {yyToken = new EOF();}
-            if (yydebug != null)
+//t            if (yydebug != null)
           /* modified by diho, 14.04.2004 
              replaced yyToken by yyToken.tokennr, yyLex.value() by yyToken.value*/
-               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
+//t               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
           }
           /* modified by diho, 14.04.2004 
              orig.: if (yyToken == 0) */
           if (yyToken.tokennr == 0) {
-            if (yydebug != null) yydebug.accept(yyVal);
+//t            if (yydebug != null) yydebug.accept(yyVal);
             return yyVal;
           }
           continue yyLoop;
@@ -594,7 +594,7 @@ case 74:
           yyState = YyTableClass.yyTable[yyN];
         else
           yyState = YyDgotoClass.yyDgoto[yyM];
-        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
+//t        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
 	 continue yyLoop;
       }
     }
@@ -805,86 +805,86 @@ protected static class yyCheck0 {
   } /* End of class YyCheckClass */
 
 
-  protected static final class YyRuleClass {
+//t  protected static final class YyRuleClass {
 
-    public static final String yyRule [] = {
-    "$accept : programm",
-    "programm : class",
-    "programm : emptyClass",
-    "class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET",
-    "class : JCLASS IDENTIFIER LBRACKET methods RBRACKET",
-    "class : JCLASS IDENTIFIER LBRACKET fields RBRACKET",
-    "emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET",
-    "fields : field",
-    "fields : fields field",
-    "field : type IDENTIFIER SEMICOLON",
-    "type : JTYPE",
-    "methods : method",
-    "methods : methods method",
-    "method : type IDENTIFIER LBRACE parameters RBRACE block",
-    "method : type IDENTIFIER LBRACE RBRACE block",
-    "parameters : parameter",
-    "parameters : parameters COMMA parameter",
-    "parameter : type IDENTIFIER",
-    "block : LBRACKET RBRACKET",
-    "block : LBRACKET statements RBRACKET",
-    "statements : statement",
-    "statements : statements statement",
-    "statement : ifthenstatement",
-    "statement : ifthenelsestatement",
-    "statement : whilestatement",
-    "statement : block",
-    "statement : returnstatement SEMICOLON",
-    "statement : stmtExprStmt SEMICOLON",
-    "statement : localVarDecl SEMICOLON",
-    "ifthenstatement : JIF LBRACE expression RBRACE statement",
-    "ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement",
-    "whilestatement : JWHILE LBRACE expression RBRACE statement",
-    "returnstatement : JRETURN expression",
-    "stmtExprExpr : stmtExpr",
-    "stmtExprStmt : stmtExpr",
-    "localVarDecl : type IDENTIFIER",
-    "expression : this",
-    "expression : super",
-    "expression : localOrFieldVar",
-    "expression : integer",
-    "expression : binary",
-    "expression : unary",
-    "expression : bool",
-    "expression : instVar",
-    "expression : string",
-    "expression : jnull",
-    "expression : char",
-    "expression : stmtExprExpr",
-    "expression : LBRACE expression RBRACE",
-    "stmtExpr : assign",
-    "stmtExpr : new",
-    "stmtExpr : methodCall",
-    "stmtExpr : emptyMethodCall",
-    "this : JTHIS",
-    "super : JSUPER",
-    "localOrFieldVar : IDENTIFIER",
-    "integer : INT",
-    "binary : expression BINARYOPERATOR expression",
-    "binary : expression PLUSMINUSOPERATOR expression",
-    "unary : UNARYOPERATOR expression",
-    "unary : PLUSMINUSOPERATOR expression",
-    "bool : BOOLEAN",
-    "instVar : expression POINT IDENTIFIER",
-    "string : STRING",
-    "jnull : NULL",
-    "char : JCHAR",
-    "assign : IDENTIFIER EQUALS expression",
-    "new : JNEW type LBRACE expressions RBRACE",
-    "new : JNEW type LBRACE RBRACE",
-    "methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE",
-    "methodCall : IDENTIFIER LBRACE expressions RBRACE",
-    "emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE",
-    "emptyMethodCall : IDENTIFIER LBRACE RBRACE",
-    "expressions : expression",
-    "expressions : expressions COMMA expression",
-    };
-  } /* End of class YyRuleClass */
+//t    public static final String yyRule [] = {
+//t    "$accept : programm",
+//t    "programm : class",
+//t    "programm : emptyClass",
+//t    "class : JCLASS IDENTIFIER LBRACKET fields methods RBRACKET",
+//t    "class : JCLASS IDENTIFIER LBRACKET methods RBRACKET",
+//t    "class : JCLASS IDENTIFIER LBRACKET fields RBRACKET",
+//t    "emptyClass : JCLASS IDENTIFIER LBRACKET RBRACKET",
+//t    "fields : field",
+//t    "fields : fields field",
+//t    "field : type IDENTIFIER SEMICOLON",
+//t    "type : JTYPE",
+//t    "methods : method",
+//t    "methods : methods method",
+//t    "method : type IDENTIFIER LBRACE parameters RBRACE block",
+//t    "method : type IDENTIFIER LBRACE RBRACE block",
+//t    "parameters : parameter",
+//t    "parameters : parameters COMMA parameter",
+//t    "parameter : type IDENTIFIER",
+//t    "block : LBRACKET RBRACKET",
+//t    "block : LBRACKET statements RBRACKET",
+//t    "statements : statement",
+//t    "statements : statements statement",
+//t    "statement : ifthenstatement",
+//t    "statement : ifthenelsestatement",
+//t    "statement : whilestatement",
+//t    "statement : block",
+//t    "statement : returnstatement SEMICOLON",
+//t    "statement : stmtExprStmt SEMICOLON",
+//t    "statement : localVarDecl SEMICOLON",
+//t    "ifthenstatement : JIF LBRACE expression RBRACE statement",
+//t    "ifthenelsestatement : JIF LBRACE expression RBRACE statement ELSE statement",
+//t    "whilestatement : JWHILE LBRACE expression RBRACE statement",
+//t    "returnstatement : JRETURN expression",
+//t    "stmtExprExpr : stmtExpr",
+//t    "stmtExprStmt : stmtExpr",
+//t    "localVarDecl : type IDENTIFIER",
+//t    "expression : this",
+//t    "expression : super",
+//t    "expression : localOrFieldVar",
+//t    "expression : integer",
+//t    "expression : binary",
+//t    "expression : unary",
+//t    "expression : bool",
+//t    "expression : instVar",
+//t    "expression : string",
+//t    "expression : jnull",
+//t    "expression : char",
+//t    "expression : stmtExprExpr",
+//t    "expression : LBRACE expression RBRACE",
+//t    "stmtExpr : assign",
+//t    "stmtExpr : new",
+//t    "stmtExpr : methodCall",
+//t    "stmtExpr : emptyMethodCall",
+//t    "this : JTHIS",
+//t    "super : JSUPER",
+//t    "localOrFieldVar : IDENTIFIER",
+//t    "integer : INT",
+//t    "binary : expression BINARYOPERATOR expression",
+//t    "binary : expression PLUSMINUSOPERATOR expression",
+//t    "unary : UNARYOPERATOR expression",
+//t    "unary : PLUSMINUSOPERATOR expression",
+//t    "bool : BOOLEAN",
+//t    "instVar : expression POINT IDENTIFIER",
+//t    "string : STRING",
+//t    "jnull : NULL",
+//t    "char : JCHAR",
+//t    "assign : IDENTIFIER EQUALS expression",
+//t    "new : JNEW type LBRACE expressions RBRACE",
+//t    "new : JNEW type LBRACE RBRACE",
+//t    "methodCall : expression POINT IDENTIFIER LBRACE expressions RBRACE",
+//t    "methodCall : IDENTIFIER LBRACE expressions RBRACE",
+//t    "emptyMethodCall : expression POINT IDENTIFIER LBRACE RBRACE",
+//t    "emptyMethodCall : IDENTIFIER LBRACE RBRACE",
+//t    "expressions : expression",
+//t    "expressions : expressions COMMA expression",
+//t    };
+//t  } /* End of class YyRuleClass */
 
   protected static final class YyNameClass {
 

@@ -520,7 +520,7 @@ class browserlexer {
 					case -34:
 						break;
 					case 34:
-						{ return new STRING(yytext()); }
+						{ String temp=yytext();return new STRING(temp.substring( 1, temp.length() - 1 )); }
 					case -35:
 						break;
 					case 35:
