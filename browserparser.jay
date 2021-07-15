@@ -109,7 +109,7 @@ statement : ifthenstatement {}
           | whilestatement {}
           | block {}
           | returnstatement SEMICOLON {}
-          | stmtExprStmt {}
+          | stmtExprStmt SEMICOLON {}
           | localVarDecl SEMICOLON {}
 
 ifthenstatement : JIF LBRACE expression RBRACE statement { $$ = new If($3, $5, null); }
@@ -140,8 +140,8 @@ expression : this {}
            | stmtExprExpr {}
            | LBRACE expression RBRACE {$$ = $2;}
 
-stmtExpr : assign SEMICOLON {}
-         | new SEMICOLON {}
+stmtExpr : assign {}
+         | new {}
          | methodCall {}
          | emptyMethodCall {}
 

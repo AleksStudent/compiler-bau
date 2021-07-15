@@ -15,6 +15,19 @@ class TestClass{
         num2 = 1 + 2;
         num2 = -(-4);
 
+        main2();
+    }
+
+    void main2(){
+        boolean num3;
+        int num2;
+        num3 = true || false;
+
+        num3 = !true;
+        num2 = +1;
+        num2 = 1 + 2;
+        num2 = -(-4);
+
         
     }
 
