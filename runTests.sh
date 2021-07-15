@@ -1,6 +1,9 @@
 set -e
 cd Tests
-java -cp ../ Main < TestMethodCalls.java
-java -cp ../ Main < TestOperators.java
 javac TesterOfTestClasses.java
+java -cp ../asm.jar:../. Main < TestMethodCalls.java
+java -cp ../asm.jar:../. Main < TestOperators.java
+java -cp ../asm.jar:../. Main < TestWhile.java
+java -cp ../asm.jar:../. Main < TestRecursion.java
+java -cp ../asm.jar:../. Main < TestVariables.java
 java TesterOfTestClasses
