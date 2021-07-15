@@ -2,10 +2,9 @@
 import java.lang.Integer;
 //End of usercode
 %%
-%jayscanner browserscanner
-%jayparser browserparser
+%jayparser javaParser
 
-%class browserlexer
+%class javaLexer
 %eofval{
   return new EOF();
 %eofval}

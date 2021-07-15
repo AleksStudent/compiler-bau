@@ -1,6 +1,6 @@
 %{
 import java.util.Vector;
-class browserparser {
+class javaParser {
 %}
 
 %token JWHILE

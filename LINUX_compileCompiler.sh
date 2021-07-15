@@ -2,12 +2,12 @@ cd compiled
 javac  -d . -cp ../javaFiles/asm.jar:../javaFiles/. @../sources.txt
 cd ..
 chmod +x jaooy_linux
-./jaooy_linux -v browserparser.jay < skeleton.jaooy > browserparser.java
-mv browserparser.java ./compiled/browserparser.java
+./jaooy_linux -v javaParser.jay < skeleton.jaooy > javaParser.java
+mv javaParser.java ./compiled/javaParser.java
 cd compiled
-javac -d . -cp ../javaFiles/asm.jar:../javaFiles/. browserparser.java
-cp -b ../browserlexer .
-java -cp ../JLex2.jar JLex2.Main browserlexer
-rm browserlexer
-javac -d . -cp ../javaFiles/asm.jar:. browserlexer.java
+javac -d . -cp ../javaFiles/asm.jar:../javaFiles/. javaParser.java
+cp -b ../javaLexer .
+java -cp ../JLex2.jar JLex2.Main javaLexer
+rm javaLexer
+javac -d . -cp ../javaFiles/asm.jar:. javaLexer.java
 javac -d . -cp ../javaFiles/asm.jar:. ../JavaFiles/Main.java
