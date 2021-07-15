@@ -30,9 +30,11 @@ public class MethodCall extends StmtExpr {
 
 		Method foundMethod = null;
 		for (Method methodIt: i_class.methods) {
-			if (methodIt.name.equals(this.name)) foundMethod = methodIt;
-			for (Parameter param: methodIt.parameters) {
-				parameterInput += param.type.getASMType();
+			if (methodIt.name.equals(this.name)) {
+				foundMethod = methodIt;
+				for (Parameter param: methodIt.parameters) {
+					parameterInput += param.type.getASMType();
+				}
 			}
 		}
 

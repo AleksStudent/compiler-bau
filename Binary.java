@@ -104,14 +104,23 @@ public class Binary extends Expr {
 
 		if (selectedCode != 0) {
 			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
+			
+			if (exprLeft instanceof Binary) {
+				((Binary) this.exprLeft).codeGen(cw, method, i_class, localVar, null, null, returnType);
+			} else {
+				this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);	
+			}
 
 			Label successLabel = new Label();
 			Label deciderLabel = new Label();
 			Label failedLabel = new Label();
 
 			method.visitJumpInsn(selectedCode, failedLabel);
-			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
+			if (exprRight instanceof Binary) {
+				((Binary) this.exprRight).codeGen(cw, method, i_class, localVar, null, null, returnType);
+			} else {
+				this.exprRight.codeGen(cw, method, i_class, localVar, returnType);	
+			}
 
 			if (selectedCode == Opcodes.IFEQ) {
 				method.visitJumpInsn(selectedCode, failedLabel);
@@ -147,7 +156,7 @@ public class Binary extends Expr {
 					(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
 				} else if (failedTask == null) {
 					// ignore
-				} else {
+				} else if (successTask != null) {
 					successTask.codeGen(cw, method, i_class, localVar, returnType);	
 				}
 
@@ -157,7 +166,7 @@ public class Binary extends Expr {
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 				if (successTask == null) {
 					(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
-				} else {
+				} else if (failedTask != null) {
 					failedTask.codeGen(cw, method, i_class, localVar, returnType);	
 				}
 

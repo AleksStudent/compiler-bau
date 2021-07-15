@@ -28,7 +28,12 @@ public class Return extends Stmt {
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		System.out.println("[RETURN] Returning: " + expr.toString());
 		
-		expr.codeGen(cw, method, i_class, localVars, returnType);
+        if (expr instanceof Binary) {
+            ((Binary) expr).codeGen(cw, method, i_class, localVars, null, null, returnType);
+        } else {
+        	expr.codeGen(cw, method, i_class, localVars, returnType);	
+        }
+		
 		if (returnType.equals(Type.TYPE_STRING) || returnType.equals(Type.TYPE_OBJECT)) {
 			System.out.println("[RETURN] Returning Reference");
 			method.visitInsn(Opcodes.ARETURN);
