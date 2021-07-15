@@ -79,4 +79,16 @@ class TestOperators{
     boolean orBoolean(boolean bool1,boolean bool2){
         return bool1||bool2;
     }
+
+    boolean notBoolean(boolean bool1){
+        return !bool1;
+    }
+
+    int unaryPlus(int num1){
+        return +num1;
+    }
+
+    int unaryMinus(int num1){
+        return -num1;
+    }
 }
