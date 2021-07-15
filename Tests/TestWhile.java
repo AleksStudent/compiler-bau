@@ -11,15 +11,4 @@ class TestWhile {
         }
         return result;
     }
-
-    int whileInsideWhile(){
-        int i;
-        i=0;
-        while(true){
-            while(i<2147483647){
-                i=i+1;
-            }
-            return 1;
-        }
-    }
 }

@@ -8,7 +8,6 @@ class browserparser {
 %token FOR
 %token JIF
 %token ELSE
-%token JTYPE
 %token INT
 %token STRING
 %token JCHAR
@@ -66,7 +65,7 @@ class browserparser {
 %type <MethodCall> methodCall emptyMethodCall
 %type <Assign> assign
 %type <Vector> fields statements methods expressions parameters
-%type <String> IDENTIFIER INT UNARYOPERATOR BINARYOPERATOR PLUSMINUSOPERATOR BOOLEAN STRING JCHAR EQUALS JTYPE
+%type <String> IDENTIFIER INT UNARYOPERATOR BINARYOPERATOR PLUSMINUSOPERATOR BOOLEAN STRING JCHAR EQUALS
 
 %start programm
 
@@ -85,7 +84,7 @@ fields : field { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
 
 field : type IDENTIFIER SEMICOLON { $$ = new Field($2, $1); }
 
-type : JTYPE { $$ = new Type($1); }
+type : IDENTIFIER { $$ = new Type($1); }
 
 methods : method { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
         | methods method { Vector fs = $1 ; fs.addElement($2); $$ = fs; }
@@ -96,7 +95,7 @@ method : type IDENTIFIER LBRACE parameters RBRACE block { $$ = new Method($2, $1
 parameters : parameter { Vector fs = new Vector(); fs.addElement($1); $$ = fs; }
            | parameters COMMA parameter { Vector fs = $1 ; fs.addElement($3); $$ = fs; }
 
-parameter : type IDENTIFIER{ $$ = new Parameter($2, $1); }
+parameter : type IDENTIFIER { $$ = new Parameter($2, $1); }
 
 block : LBRACKET RBRACKET { $$ = new Block(new Vector()); }
       | LBRACKET statements RBRACKET { $$ = new Block($2); }

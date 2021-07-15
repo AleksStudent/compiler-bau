@@ -19,14 +19,19 @@ class TestVariables {
 
     int checkObject(){
         a=4;
-        TestVariables testVariables= new TestVariables();
-        testVariables.a=3;
+        TestVariables testVariables;
+        testVariables= new TestVariables();
+        testVariables.setA(3);
         boolean a;
         a=false;
 
-        if(a!=false||this.a!=4||testVariables.a!=3){
+        if((a!=false)||(this.a!=4)||(testVariables.a!=3)){
             return 1;
         }
         return 0;
+    }
+
+    void setA(int b){
+        a=b;
     }
 }

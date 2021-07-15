@@ -223,9 +223,6 @@ public class TesterOfTestClasses{
                 throw new RuntimeException(String.format("testWhile has failed, got %s expected %s",testWhile.fakultaet(i),fakultät(i)));
             }
         }
-        if(testWhile.whileInsideWhile()!=1){
-            throw new RuntimeException("testWhile while inside while failed");
-        }
         System.out.println("While Test successful");
     }
 

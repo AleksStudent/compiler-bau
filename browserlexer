@@ -61,7 +61,6 @@ identifierfollow = (a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|
 {static} { return new STATIC(yytext()); }
 {abstract} { return new ABSTRACT(yytext()); }
 {class} { return new JCLASS(yytext()); }
-{type} { return new JTYPE(yytext()); }
 {bool} { return new BOOLEAN(yytext()); }
 {identifierfirst} { return new IDENTIFIER(yytext()); }
 {identifierfirst}{identifierfollow} { return new IDENTIFIER(yytext()); }
