@@ -53,7 +53,7 @@ public class Method implements TypeCheckable {
 		
 
 		// not really necessary as it's done automatically
-		method.visitMaxs(0, localVars.size() + 1);
+		method.visitMaxs(0, 0);
 		method.visitEnd();
 	}
 

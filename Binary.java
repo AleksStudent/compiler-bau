@@ -78,7 +78,7 @@ public class Binary extends Expr {
 			method.visitLabel(successLabel);
 			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			if (successTask == null) {
-				(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
+				(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
 			} else {
 				successTask.codeGen(cw, method, i_class, localVar, returnType);	
 			}
@@ -87,7 +87,7 @@ public class Binary extends Expr {
 			method.visitLabel(failedLabel);
 			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			if (failedTask == null) {
-				(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
+				(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
 			} else {
 				failedTask.codeGen(cw, method, i_class, localVar, returnType);	
 			}

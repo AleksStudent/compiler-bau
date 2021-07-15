@@ -21,7 +21,8 @@ class TestVariables {
         a=4;
         TestVariables testVariables= new TestVariables();
         testVariables.a=3;
-        boolean a=false;
+        boolean a;
+        a=false;
 
         if(a!=false||this.a!=4||testVariables.a!=3){
             return 1;

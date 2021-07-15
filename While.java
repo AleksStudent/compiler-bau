@@ -3,6 +3,7 @@ import java.util.Vector;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class While extends Stmt {
 
@@ -18,10 +19,11 @@ public class While extends Stmt {
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
 		if (cond instanceof Binary) {
 			((Binary) cond).codeGenWhile(cw, method, i_class, localVars, stmt, returnType);	
-		} if (cond instanceof Bool) {
+		} else {
         	// questionable workaround :/
         	(new Binary("||", cond, new Bool("false"))).codeGenWhile(cw, method, i_class, localVars, stmt, returnType);
 		}
+		method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 	}
 
 	@Override
