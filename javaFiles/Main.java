@@ -1,8 +1,8 @@
 
 public class Main {
     public static void main (String [] args) {
-        browserscanner scanner = new browserscanner(new java.io.InputStreamReader (System.in));
-        browserparser parser = new browserparser() ;
+        javaScanner scanner = new javaScanner(new java.io.InputStreamReader (System.in));
+        javaParser parser = new javaParser() ;
         try {
 	    //Ohne Animation
             parser.yyparse(scanner);

@@ -10,6 +10,7 @@ public class Integer extends Expr {
     public Type type = Type.TYPE_INT;
 
 	public Integer(final String num) {
+		java.lang.Integer.parseInt(num);
 		this.num = num;
 	}
 

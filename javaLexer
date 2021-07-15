@@ -2,8 +2,8 @@
 import java.lang.Integer;
 //End of usercode
 %%
+%jayscanner javaScanner
 %jayparser javaParser
-
 %class javaLexer
 %eofval{
   return new EOF();
