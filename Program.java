@@ -12,12 +12,12 @@ public class Program {
 	
 	public void codeGen(Program i_program) {
 		// define class writer
-		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 		
 		i_program.clazz.codeGen(cw, i_program.clazz);
 		
 		try {
-			BytecodeGenerator.writeClassfile(cw);
+			BytecodeGenerator.writeClassfile(cw, i_program.clazz.type.getType());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

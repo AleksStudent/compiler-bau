@@ -7,10 +7,10 @@ import org.objectweb.asm.*;
 
 public class BytecodeGenerator {
 
-	static void writeClassfile(ClassWriter cw) throws IOException {
+	static void writeClassfile(ClassWriter cw, String classname) throws IOException {
 		byte[] bytes = cw.toByteArray();
 		String className = new ClassReader(bytes).getClassName();
-		File outputFile = new File("./", "test" + ".class");
+		File outputFile = new File("./", classname + ".class");
 		FileOutputStream output = new FileOutputStream(outputFile);
 		output.write(bytes);
 		output.close();

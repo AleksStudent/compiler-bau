@@ -29,7 +29,10 @@ public class Unary extends Expr {
     
 	@Override
 	public void codeGen(ClassWriter cw, MethodVisitor method, Class i_class, Vector<LocalVarDecl> localVars, Type returnType) {
-		int opCode = 0;
+		Label initLabel = new Label();
+		method.visitLabel(initLabel);
+		method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+		
 		expr.codeGen(cw, method, i_class, localVars, returnType);
 		
 		if (operator.equals("+")) {
@@ -39,15 +42,19 @@ public class Unary extends Expr {
 			method.visitInsn(Opcodes.INEG);
 		} else if (operator.equals("!")) {
 			System.out.println("[Unary] !");
-			Label trueLabel = new Label();
 			Label falseLabel = new Label();
+			Label continueLabel = new Label();
 			
-			method.visitJumpInsn(Opcodes.IFNE, trueLabel);
+			method.visitJumpInsn(Opcodes.IFNE, falseLabel);
 			method.visitInsn(Opcodes.ICONST_1);
 			
-			method.visitJumpInsn(Opcodes.GOTO, falseLabel);
+			method.visitJumpInsn(Opcodes.GOTO, continueLabel);
 			method.visitLabel(falseLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			method.visitInsn(Opcodes.ICONST_0);
+			
+			method.visitLabel(continueLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 		} else {
 			System.out.println("[Unary] ?");
 		}
