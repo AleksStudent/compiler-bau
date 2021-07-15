@@ -24,7 +24,12 @@ public class If extends Stmt {
         System.out.println("[If] Creating Construct for: " + cond.toString());
         System.out.println("[If] True: " + ifStmt.toString());
         System.out.println("[If] False: " + (optionalElseStmt == null ? "" : optionalElseStmt.toString()));
-        ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt, returnType);
+        if (cond instanceof Binary) {
+            ((Binary) cond).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt, returnType);
+        } else if (cond instanceof Bool) {
+        	// questionable workaround :/
+        	(new Binary("||", cond, new Bool("false"))).codeGen(cw, method, i_class, localVars, ifStmt, optionalElseStmt, returnType);
+        }
     }
 
     @Override
