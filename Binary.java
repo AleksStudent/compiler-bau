@@ -77,12 +77,20 @@ public class Binary extends Expr {
 
 			method.visitLabel(successLabel);
 			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-			successTask.codeGen(cw, method, i_class, localVar, returnType);
+			if (successTask == null) {
+				(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
+			} else {
+				successTask.codeGen(cw, method, i_class, localVar, returnType);	
+			}
 			method.visitJumpInsn(Opcodes.GOTO, afterwards);
 
 			method.visitLabel(failedLabel);
 			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-			failedTask.codeGen(cw, method, i_class, localVar, returnType);
+			if (failedTask == null) {
+				(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
+			} else {
+				failedTask.codeGen(cw, method, i_class, localVar, returnType);	
+			}
 			
 			method.visitLabel(afterwards);
 			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
@@ -109,13 +117,24 @@ public class Binary extends Expr {
 				method.visitJumpInsn(selectedCode, failedLabel);
 
 				method.visitLabel(successLabel);
-				successTask.codeGen(cw, method, i_class, localVar, returnType);
+				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+				if (successTask == null) {
+					(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
+				} else {
+					successTask.codeGen(cw, method, i_class, localVar, returnType);	
+				}
 
 				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
 				method.visitLabel(failedLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar, returnType);
+				if (failedTask == null && successTask == null) {
+					(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
+				} else if (failedTask == null) {
+					// ignore case where failed is an optional stmt	
+				} else {
+					failedTask.codeGen(cw, method, i_class, localVar, returnType);
+				}
 
 				method.visitLabel(deciderLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
@@ -124,16 +143,26 @@ public class Binary extends Expr {
 
 				method.visitLabel(failedLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				failedTask.codeGen(cw, method, i_class, localVar, returnType);
+				if (failedTask == null && successTask == null) {
+					(new Bool("true")).codeGen(cw, method, i_class, localVar, returnType);
+				} else if (failedTask == null) {
+					// ignore
+				} else {
+					successTask.codeGen(cw, method, i_class, localVar, returnType);	
+				}
 
 				method.visitJumpInsn(Opcodes.GOTO, deciderLabel);
 
 				method.visitLabel(successLabel);
 				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				successTask.codeGen(cw, method, i_class, localVar, returnType);
+				if (successTask == null) {
+					(new Bool("false")).codeGen(cw, method, i_class, localVar, returnType);
+				} else {
+					failedTask.codeGen(cw, method, i_class, localVar, returnType);	
+				}
 
 				method.visitLabel(deciderLabel);
-				method.visitFrame(Opcodes.F_SAME1, 0, null, 1, null);
+				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			}
 			return;
 		}
@@ -147,14 +176,11 @@ public class Binary extends Expr {
 		}
 
 		if (selectedCode != 0) {
-			System.out.println("[Binary] Selected Operation: " + operator + "\nBetween:" + exprLeft.toString() + ", " + exprRight.toString());
-			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
-			this.exprRight.codeGen(cw, method, i_class, localVar, returnType);
-			method.visitInsn(selectedCode);
+			this.codeGen(cw, method, i_class, localVar, returnType);
 			return;
 		}
 
-		System.out.println("ERROR: No Operator selected");
+		System.out.println("[Binary] ERROR: No Operator selected");
 
 	}
 	
@@ -208,6 +234,7 @@ public class Binary extends Expr {
 			Label failedLabel = new Label();
 
 			method.visitLabel(initLabel);
+			method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 			this.exprLeft.codeGen(cw, method, i_class, localVar, returnType);
 
 			method.visitJumpInsn(selectedCode, failedLabel);
@@ -217,6 +244,7 @@ public class Binary extends Expr {
 				method.visitJumpInsn(selectedCode, failedLabel);
 
 				method.visitLabel(successLabel);
+				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 				run.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitJumpInsn(Opcodes.GOTO, initLabel);
 
@@ -224,6 +252,7 @@ public class Binary extends Expr {
 				method.visitJumpInsn(Opcodes.IFEQ, successLabel);
 
 				method.visitLabel(successLabel);
+				method.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 				run.codeGen(cw, method, i_class, localVar, returnType);
 				method.visitJumpInsn(Opcodes.GOTO, initLabel);
 			}
@@ -243,7 +272,7 @@ public class Binary extends Expr {
 			return;
 		}
 
-		System.out.println("[Binary]: ERROR NO OPERATOR SET");
+		System.out.println("[Binary] ERROR NO OPERATOR SET");
 
 	}
 
@@ -301,14 +330,14 @@ public class Binary extends Expr {
 		}
 
 		if (selectedCode != 0) {
-			System.out.println("[Binary]: " + this.exprRight.toString() + operator + this.exprLeft.toString());
+			System.out.println("[Binary] " + this.exprRight.toString() + operator + this.exprLeft.toString());
 			this.exprLeft.codeGen(cw, method, i_class, localVars, returnType);
 			this.exprRight.codeGen(cw, method, i_class, localVars, returnType);
 			method.visitInsn(selectedCode);
 			return;
 		}
 		
-		System.out.println("[Binary]: Invalid Binary Operators for While");
+		System.out.println("[Binary] Invalid Binary Operators for While");
 		
 	}
 }
