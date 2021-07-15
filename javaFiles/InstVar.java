@@ -22,6 +22,7 @@ public class InstVar extends Expr {
 		System.out.println("[InstVar] Getting Variable for: " + expr.toString());
 		Type typeOfAccessedObject = Type.TYPE_VOID;
 		
+		
 		if (expr instanceof This || expr instanceof Super) {
 			expr.codeGen(cw, method, i_class, localVar, returnType);
 			
@@ -43,7 +44,7 @@ public class InstVar extends Expr {
 		}
 		System.out.println("[InstVar] (" + expr.toString() + ")." + name);
 		
-		method.visitFieldInsn(Opcodes.GETFIELD, i_class.name, this.name,this.type.getASMType());
+		method.visitFieldInsn(Opcodes.GETFIELD, i_class.name, this.name, this.type.getASMType());
 	}
 
     @Override

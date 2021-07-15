@@ -36,7 +36,8 @@ public class LocalOrFieldVar extends Expr {
 
 			System.out.println("[LocalOrFieldVar] Local Var: " + this.name + ", Type: " + localVars.get(indexOfVar - 1).type.getType());
 			int opCode = Opcodes.ILOAD;
-			if (localVars.get(indexOfVar - 1).type.equals(Type.TYPE_STRING) || localVars.get(indexOfVar - 1).type.equals(Type.TYPE_OBJECT)) {
+			if (localVars.get(indexOfVar - 1).type.equals(Type.TYPE_STRING) || localVars.get(indexOfVar - 1).type.equals(Type.TYPE_OBJECT) ||
+					localVars.get(indexOfVar - 1).type.equals(i_class.type)) {
 				opCode = Opcodes.ALOAD;				
 			}
 			method.visitVarInsn(opCode, indexOfVar);
